@@ -29,3 +29,6 @@ schemas:
   career.evidence:
     version: 1
     file: career/evidence.schema.yaml
+  career.job-target:
+    version: 1
+    file: career/job-target.schema.yaml

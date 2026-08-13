@@ -1,0 +1,80 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Job Target
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - company
+  - role_title
+  - created_at
+  - provenance
+properties:
+  company:
+    type: string
+  role_title:
+    type: string
+  seniority:
+    type: string
+  hiring_intent:
+    type: string
+    description: The business problem this role is being hired to solve.
+  candidate_archetype:
+    type: string
+    description: Likely ideal candidate profile inferred from the description.
+  responsibilities:
+    type: array
+    items:
+      type: string
+  requirements:
+    type: array
+    items:
+      type: object
+      required:
+        - text
+        - category
+        - priority
+      properties:
+        text:
+          type: string
+        category:
+          type: string
+          enum:
+            - technical
+            - leadership
+            - communication
+            - domain
+            - education
+            - experience
+            - business
+        priority:
+          type: string
+          enum:
+            - critical
+            - important
+            - supporting
+            - incidental
+        notes:
+          type: string
+  themes:
+    type: array
+    items:
+      type: string
+  vocabulary:
+    type: array
+    items:
+      type: string
+    description: Terms that may be reflected in evidence if genuinely supported.
+  evaluation_criteria:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
