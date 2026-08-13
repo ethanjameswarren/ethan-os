@@ -1,0 +1,161 @@
+% Ethan Resume Style Package
+% Centralizes all presentation decisions for the Ethan OS LaTeX resume template.
+% Visual interpretation of ethan-life/global/design-philosophy.md:
+%   restrained, precise, intentional, premium without being cold.
+% Presentation must never override content accuracy, ATS parsing, or readability.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ethan-resume}[2026/08/13 v1.0 Ethan OS resume style]
+
+% ------------------------------------------------------------------
+% PAGE
+% ------------------------------------------------------------------
+\RequirePackage[letterpaper, margin=0.70in, top=0.65in, bottom=0.65in]{geometry}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ------------------------------------------------------------------
+% TYPOGRAPHY
+% ------------------------------------------------------------------
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}           % clean, readable, ATS-safe
+\RequirePackage{microtype}          % refined letter spacing and justification
+
+% Body text
+\renewcommand{\familydefault}{\rmdefault}
+
+% ------------------------------------------------------------------
+% COLORS
+% ------------------------------------------------------------------
+% Neutral foundation with a single restrained accent.
+\RequirePackage{xcolor}
+\definecolor{ethanblack}{HTML}{1A1A1A}
+\definecolor{ethandarkgray}{HTML}{333333}
+\definecolor{ethanmidgray}{HTML}{666666}
+\definecolor{ethanlightgray}{HTML}{AAAAAA}
+\definecolor{ethanrulegray}{HTML}{CCCCCC}
+\definecolor{ethanaccent}{HTML}{2A3F54} % deep steel blue, used sparingly
+
+\color{ethanblack}
+
+% ------------------------------------------------------------------
+% LINKS
+% ------------------------------------------------------------------
+\RequirePackage[hidelinks]{hyperref}
+\urlstyle{same}
+
+% ------------------------------------------------------------------
+% LISTS
+% ------------------------------------------------------------------
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+\setlist[itemize]{
+  leftmargin=1.15em,
+  label=\textbullet,
+  itemsep=0.18em,
+  parsep=0pt,
+  topsep=0.28em,
+  partopsep=0pt
+}
+
+% ------------------------------------------------------------------
+% SECTION HEADERS
+% ------------------------------------------------------------------
+\RequirePackage{titlesec}
+
+\newcommand{\ethansectionrule}{%
+  \textcolor{ethanrulegray}{\rule{\linewidth}{0.4pt}}%
+}
+\titleformat{\section}
+  {\normalfont\fontsize{11}{13}\selectfont\bfseries\scshape\color{ethanblack}}
+  {}
+  {0em}
+  {}
+  [\ethansectionrule]
+\titlespacing*{\section}{0pt}{0.85em}{0.5em}
+
+% ------------------------------------------------------------------
+% SPACING SCALE
+% ------------------------------------------------------------------
+\newcommand{\ethansmallskip}{\vspace{0.35em}}
+\newcommand{\ethanmedskip}{\vspace{0.55em}}
+
+% ------------------------------------------------------------------
+% HEADER
+% ------------------------------------------------------------------
+\newcommand{\@name}{}
+\newcommand{\name}[1]{\renewcommand{\@name}{#1}}
+
+\newcommand{\@contacts}{}
+\newcommand{\contacts}[1]{\renewcommand{\@contacts}{#1}}
+
+\newcommand{\makeheader}{%
+  \begin{center}
+    {\fontsize{22}{26}\selectfont\bfseries\color{ethanblack}\@name}\\[0.32em]
+    {\small\color{ethandarkgray}\@contacts}
+  \end{center}
+  \vspace{0.15em}
+}
+
+% ------------------------------------------------------------------
+% CONTENT MACROS
+% ------------------------------------------------------------------
+% These hold content supplied by the resume builder workflow.
+\newcommand{\@summary}{}
+\newcommand{\summary}[1]{\renewcommand{\@summary}{#1}}
+\newcommand{\makesummary}{%
+  \section{Summary}
+  \@summary
+}
+
+\newcommand{\@skills}{}
+\newcommand{\skills}[1]{\renewcommand{\@skills}{#1}}
+\newcommand{\makeskills}{%
+  \section{Skills}
+  \@skills
+}
+
+\newcommand{\@experience}{}
+\newcommand{\experience}[1]{\renewcommand{\@experience}{#1}}
+\newcommand{\makeexperience}{%
+  \section{Experience}
+  \@experience
+}
+
+\newcommand{\@projects}{}
+\newcommand{\projects}[1]{\renewcommand{\@projects}{#1}}
+\newcommand{\makeprojects}{%
+  \section{Selected Projects}
+  \@projects
+}
+
+\newcommand{\@education}{}
+\newcommand{\education}[1]{\renewcommand{\@education}{#1}}
+\newcommand{\makeeducation}{%
+  \section{Education}
+  \@education
+}
+
+% ------------------------------------------------------------------
+% ENTRY FORMATTING
+% ------------------------------------------------------------------
+% Resume entry: role/degree, employer/institution, date range, optional location.
+%   #1 = role or degree
+%   #2 = employer or institution
+%   #3 = date range
+%   #4 = location (optional, pass empty for none)
+\newcommand{\resumeentry}[4]{%
+  \noindent
+  \begin{tabular}[t]{@{}p{0.72\linewidth}@{\hspace{0.03\linewidth}}p{0.25\linewidth}@{}}
+    \textbf{#1} \textcolor{ethanmidgray}{|} #2 & \hfill\textcolor{ethanmidgray}{#3} \\[0.05em]
+  \end{tabular}%
+  \ifstrempty{#4}{}{\par\vspace{0.05em}{\small\color{ethandarkgray} #4}}
+  \vspace{0.1em}
+}
+
+% ------------------------------------------------------------------
+% SELECTED ACCENT
+% ------------------------------------------------------------------
+% Use the accent color only where it genuinely clarifies structure.
+\newcommand{\accent}[1]{\textcolor{ethanaccent}{#1}}

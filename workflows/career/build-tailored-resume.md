@@ -190,7 +190,19 @@ Career Evidence → Resume Content → LaTeX Template → PDF
 
 Do not embed career facts directly into template logic.
 
-The LaTeX template controls formatting, spacing, typography, and section layout. It should reflect the Personal Design Philosophy loaded earlier (restrained typography, clear hierarchy, efficient whitespace, minimal decoration).
+Presentation decisions are centralized in `ethan-os/templates/ethan-resume.sty`. The template (`resume.tex`) only defines content macros:
+
+- `\name{}`
+- `\contacts{}`
+- `\summary{}`
+- `\skills{}`
+- `\experience{}`
+- `\projects{}`
+- `\education{}`
+
+Use `\resumeentry{role}{employer}{dates}{location}` for roles, projects, and education entries. The fourth argument is optional.
+
+The LaTeX template reflects the Personal Design Philosophy loaded earlier (restrained typography, clear hierarchy, efficient whitespace, minimal decoration). See `ethan-os/templates/README.md` for template architecture and ATS-related compromises.
 
 ### 13. Validate final output
 

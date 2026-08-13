@@ -1,46 +1,73 @@
 % Ethan OS Career Resume Template
-% Separates presentation from content. Populate with career.resume object fields.
+% Presentation is separated from content. Populate via the macros defined in ethan-resume.sty.
 % Shaped by the Personal Design Philosophy in ethan-life/global/design-philosophy.md:
-% restrained typography, clear hierarchy, efficient whitespace, minimal decoration.
+%   restrained, precise, intentional, premium without being cold.
+% The resume builder workflow injects content into the commands below.
 \documentclass[11pt,letterpaper]{article}
-\usepackage[margin=0.75in]{geometry}
-\usepackage{enumitem}
-\usepackage{titlesec}
-\usepackage{hyperref}
-\usepackage{xcolor}
+\usepackage{ethan-resume}
 
-\pagestyle{empty}
-\setlength{\parindent}{0pt}
-
-\titleformat{\section}{\large\bfseries\uppercase}{}{0em}{}[\titlerule]
-\titlespacing*{\section}{0pt}{12pt}{6pt}
-
-\newcommand{\jobentry}[4]{%
-  \textbf{#1} \hfill #2 \\
-  \textit{#3} \hfill #4
+% ------------------------------------------------------------------
+% CONTENT (populated by the build-tailored-resume workflow)
+% ------------------------------------------------------------------
+\name{Ethan Warren}
+\contacts{
+  San Francisco, CA \quad
+  \href{mailto:ethan@example.com}{ethan@example.com} \quad
+  \href{https://github.com/ethanjameswarren}{github.com/ethanjameswarren}
 }
 
+\summary{
+  Staff analytics engineer and platform builder with deep experience designing data-intensive systems, leading cross-functional technical initiatives, and turning ambiguous business problems into reliable production capabilities. Strong bias toward clarity, ownership, and evidence-backed impact.
+}
+
+\skills{
+  Python, SQL, dbt, Snowflake, BigQuery, Airflow, Dagster, AWS, Azure, Docker, Kubernetes,
+  FastAPI, Streamlit, Tableau, Looker, probabilistic modeling, forecasting,
+  distributed systems, platform architecture, data modeling, MLOps.
+}
+
+\experience{
+  \resumeentry{Staff Analytics Engineer}{Insight Data Corp}{2022 -- Present}{Remote}
+  \begin{itemize}
+    \item Designed and shipped a self-serve metrics platform that reduced time-to-answer for executive requests from days to minutes, serving 200+ internal users.
+    \item Led architecture for a real-time anomaly detection pipeline processing 5M events per day, cutting false-positive incident response by 40\%.
+    \item Drove cross-functional alignment between data, product, and engineering to standardize core business definitions across 12 source systems.
+    \item Mentored senior engineers and established code-review and documentation standards for the analytics platform team.
+  \end{itemize}
+
+  \resumeentry{Senior Data Engineer}{Scale Systems Inc.}{2019 -- 2022}{San Francisco, CA}
+  \begin{itemize}
+    \item Rebuilt the revenue data pipeline from brittle nightly batch jobs into an incremental, tested dbt workflow, improving freshness from 24 hours to under 1 hour.
+    \item Introduced automated data-quality checks and incident triage playbooks that reduced critical data outages by 60\% over one year.
+    \item Owned the technical roadmap for the data platform team and presented quarterly platform health reviews to engineering leadership.
+  \end{itemize}
+
+  \resumeentry{Data Engineer}{Acme Analytics}{2016 -- 2019}{Oakland, CA}
+  \begin{itemize}
+    \item Built the foundational data warehouse and reporting layer supporting the company's first enterprise-grade customer-facing analytics product.
+    \item Implemented demand-forecasting models used by the operations team to optimize inventory across three regional distribution centers.
+  \end{itemize}
+}
+
+\projects{
+  \resumeentry{Open-Source Water Dashboard}{Personal Project}{2024}{}
+  \begin{itemize}
+    \item Released a public Streamlit dashboard aggregating California water-reservoir data, serving 10K+ monthly users and featured in a regional planning newsletter.
+  \end{itemize}
+}
+
+\education{
+  \resumeentry{BS Computer Science}{University of California, Berkeley}{2012 -- 2016}{}
+}
+
+% ------------------------------------------------------------------
+% DOCUMENT
+% ------------------------------------------------------------------
 \begin{document}
-
-% HEADER: populated from resume content object
-\begin{center}
-  {\LARGE\bfseries {{name}}}\\[4pt]
-  {{contact}}
-\end{center}
-
-\section{Summary}
-{{summary}}
-
-\section{Skills}
-{{skills}}
-
-\section{Experience}
-{{experience}}
-
-\section{Selected Projects}
-{{projects}}
-
-\section{Education}
-{{education}}
-
+\makeheader
+\makesummary
+\makeskills
+\makeexperience
+\makeprojects
+\makeeducation
 \end{document}
