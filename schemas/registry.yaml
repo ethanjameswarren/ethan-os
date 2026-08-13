@@ -35,3 +35,6 @@ schemas:
   career.resume:
     version: 1
     file: career/resume.schema.yaml
+  career.interview-prep:
+    version: 1
+    file: career/interview-prep.schema.yaml

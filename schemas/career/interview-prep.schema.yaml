@@ -1,0 +1,95 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Interview Prep
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - target_id
+  - status
+  - created_at
+  - provenance
+properties:
+  target_id:
+    type: string
+    description: ID of the related career.job-target.
+  status:
+    type: string
+    enum:
+      - draft
+      - validated
+      - confirmed
+  stories:
+    type: array
+    items:
+      type: object
+      required:
+        - category
+        - framework
+        - action
+        - result
+        - evidence_ids
+        - confidence
+      properties:
+        category:
+          type: string
+          enum:
+            - technical_leadership
+            - stakeholder
+            - architecture
+            - failure_lesson
+            - ownership
+            - mentoring
+            - business_impact
+            - complexity
+            - conflict
+            - adaptability
+        framework:
+          type: string
+          enum:
+            - star
+            - car
+            - soar
+        situation:
+          type: string
+        task:
+          type: string
+        obstacle:
+          type: string
+        action:
+          type: string
+        result:
+          type: string
+        lessons_learned:
+          type: string
+        evidence_ids:
+          type: array
+          items:
+            type: string
+        target_requirements:
+          type: array
+          items:
+            type: string
+        confidence:
+          type: string
+          enum:
+            - high
+            - medium
+            - low
+  gaps:
+    type: array
+    items:
+      type: string
+    description: Story categories where no strong evidence exists.
+  tailoring_notes:
+    type: string
+    description: How to adjust delivery for the specific target role.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
