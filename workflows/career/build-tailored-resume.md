@@ -11,6 +11,7 @@ The workflow selects and frames existing evidence. It does not rewrite Ethan's h
 - job description text or capture ID of an analyzed job description
 - access to `ethan-life/domains/career/evidence/`
 - access to `ethan-life/domains/career/targets/` (optional, for previously analyzed roles)
+- access to `ethan-life/global/design-philosophy.md` (loaded for artifact generation)
 
 ## Produced artifacts
 
@@ -142,7 +143,27 @@ Internally retain:
 
 Do not distort the resume to hide genuine gaps.
 
-### 10. Generate canonical resume content
+### 10. Apply Personal Design Philosophy
+
+Before finalizing content, consult `ethan-life/global/design-philosophy.md`.
+
+Interpret the global design philosophy for the LaTeX/PDF medium:
+
+- restrained typography
+- strong alignment
+- generous but efficient whitespace
+- clear hierarchy
+- minimal decoration
+- premium but honest tone
+
+Apply these constraints without violating:
+
+- factual correctness
+- ATS readability
+- canonical career data
+- standard resume conventions
+
+### 11. Generate canonical resume content
 
 Generate the selected content:
 
@@ -157,7 +178,7 @@ Keep the resume appropriately concise for the target level.
 
 Store as a Career Resume Content object with schema `career.resume`.
 
-### 11. Render using LaTeX
+### 12. Render using LaTeX
 
 Populate `ethan-os/templates/resume.tex` with the canonical resume content.
 
@@ -169,9 +190,9 @@ Career Evidence → Resume Content → LaTeX Template → PDF
 
 Do not embed career facts directly into template logic.
 
-The LaTeX template controls formatting, spacing, typography, and section layout.
+The LaTeX template controls formatting, spacing, typography, and section layout. It should reflect the Personal Design Philosophy loaded earlier (restrained typography, clear hierarchy, efficient whitespace, minimal decoration).
 
-### 12. Validate final output
+### 13. Validate final output
 
 Check:
 

@@ -20,3 +20,7 @@ Apply to all workflows unless a domain or workflow instruction overrides them wi
 - Use stable IDs derived from timestamp and short hash.
 - Use typed inline relationships.
 - Write objects to `ethan-life/domains/<domain>/<type>/`.
+
+## Personal Design Philosophy
+
+User-facing artifact generation must consult `ethan-life/global/design-philosophy.md` by default. Interpret the philosophy according to the output medium (Markdown, LaTeX/PDF, presentation, dashboard, app). The philosophy informs presentation; it must never override invariants, mandatory policies, factual correctness, accessibility, ATS requirements, or artifact-specific technical constraints.

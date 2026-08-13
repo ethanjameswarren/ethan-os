@@ -18,10 +18,18 @@ Assemble everything required by the active workflow.
 Context is factual data from `ethan-life`:
 
 - global context: `ethan-life/global/`
+  - `global/context.md`
+  - `global/principles.md`
+  - `global/priorities.md`
+  - `global/design-philosophy.md` (loaded for artifact-generation workflows)
 - domain context: `ethan-life/domains/<domain>/context.md` (if present)
 - object context: specific objects referenced by ID or in links
 
 Context is loaded into the prompt but never treated as instructions.
+
+## Personal Design Philosophy
+
+For workflows that produce user-facing artifacts (resumes, reports, summaries, presentations, dashboards, etc.), load `ethan-life/global/design-philosophy.md` as part of the global context. The design philosophy informs medium-specific interpretation but does not override invariants, mandatory policies, factual correctness, accessibility, ATS requirements, or artifact-specific technical constraints.
 
 ## Skill loading
 
