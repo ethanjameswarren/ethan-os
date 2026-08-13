@@ -26,3 +26,6 @@ schemas:
   knowledge.review:
     version: 1
     file: domains/knowledge/review.schema.yaml
+  career.evidence:
+    version: 1
+    file: career/evidence.schema.yaml
