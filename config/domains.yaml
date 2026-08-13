@@ -1,0 +1,27 @@
+domains:
+  knowledge:
+    enabled: true
+    schema_prefix: knowledge
+    life_prefix: domains/knowledge
+    instructions: instructions/domains/knowledge/instructions.md
+    object_prompts: instructions/domains/knowledge/object-prompts
+    context: global
+    description: Capture, understand, connect, summarize, review, and revise learning material.
+
+  # Future domains (not implemented in v0.1)
+  # planning:
+  #   enabled: false
+  # finance:
+  #   enabled: false
+  # career:
+  #   enabled: false
+  # projects:
+  #   enabled: false
+  # health:
+  #   enabled: false
+  # food:
+  #   enabled: false
+  # home:
+  #   enabled: false
+  # interests:
+  #   enabled: false

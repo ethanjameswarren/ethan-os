@@ -1,0 +1,28 @@
+schemas:
+  core.object:
+    version: 1
+    file: core/object.schema.yaml
+  core.provenance:
+    version: 1
+    file: core/provenance.schema.yaml
+  core.relationship:
+    version: 1
+    file: core/relationship.schema.yaml
+  core.context:
+    version: 1
+    file: core/context.schema.yaml
+  knowledge.source:
+    version: 1
+    file: domains/knowledge/source.schema.yaml
+  knowledge.capture:
+    version: 1
+    file: domains/knowledge/capture.schema.yaml
+  knowledge.idea:
+    version: 1
+    file: domains/knowledge/idea.schema.yaml
+  knowledge.summary:
+    version: 1
+    file: domains/knowledge/summary.schema.yaml
+  knowledge.review:
+    version: 1
+    file: domains/knowledge/review.schema.yaml

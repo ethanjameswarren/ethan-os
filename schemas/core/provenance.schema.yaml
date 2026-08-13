@@ -1,0 +1,24 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Provenance
+type: object
+required:
+  - agent_version
+  - provenance_note
+properties:
+  capture_id:
+    type: string
+    description: ID of the originating capture, if any.
+  source_id:
+    type: string
+    description: ID of the related source, if any.
+  agent_version:
+    type: string
+    description: Ethan OS version or skill that produced the object.
+  provenance_note:
+    type: string
+    description: Human-readable description of origin.
+  derived_from:
+    type: array
+    items:
+      type: string
+    description: IDs of objects this object was derived from.

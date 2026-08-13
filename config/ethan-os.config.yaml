@@ -1,0 +1,7 @@
+ethan_os:
+  name: Ethan OS
+  version: 1.0.0
+  default_domain: knowledge
+  capture_channel: prompt
+  supported_schema_versions:
+    - 1

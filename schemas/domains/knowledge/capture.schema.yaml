@@ -1,0 +1,25 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Capture
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+properties:
+  capture_type:
+    type: string
+    enum:
+      - raw
+      - transcript
+      - annotated
+    default: raw
+  source_id:
+    type: string
+    description: Optional ID of an associated source.
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

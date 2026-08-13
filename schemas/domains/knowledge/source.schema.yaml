@@ -1,0 +1,46 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Source
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - source_type
+  - created_at
+  - provenance
+properties:
+  source_type:
+    type: string
+    enum:
+      - book
+      - article
+      - paper
+      - podcast
+      - video
+      - course
+      - conversation
+      - experience
+      - observation
+  author:
+    type: string
+  url:
+    type: string
+  published_date:
+    type: string
+    format: date
+  summary:
+    type: string
+  status:
+    type: string
+    enum:
+      - unread
+      - reading
+      - finished
+      - reference
+  rating:
+    type: string
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

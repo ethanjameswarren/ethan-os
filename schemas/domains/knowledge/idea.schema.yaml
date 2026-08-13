@@ -1,0 +1,50 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Idea
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - claim
+  - created_at
+  - provenance
+properties:
+  claim:
+    type: string
+    description: What the source claims.
+  interpretation:
+    type: string
+    description: Ethan's interpretation of the claim.
+  position:
+    type: string
+    enum:
+      - agree
+      - disagree
+      - neutral
+      - exploring
+  confidence:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+  status:
+    type: string
+    enum:
+      - captured
+      - understood
+      - connected
+      - testing
+      - practicing
+      - internalized
+  lifecycle_note:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

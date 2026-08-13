@@ -1,0 +1,30 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Ethan OS Core Object
+-type: object
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+properties:
+  id:
+    type: string
+    description: Stable unique identifier.
+  schema:
+    type: string
+    description: Logical schema identifier registered in schemas/registry.yaml.
+  schema_version:
+    type: integer
+    description: Schema version.
+  title:
+    type: string
+    description: Human-readable title.
+  created_at:
+    type: string
+    format: date
+    description: Creation date in ISO 8601 format (YYYY-MM-DD).
+  updated_at:
+    type: string
+    format: date
+    description: Last update date in ISO 8601 format (YYYY-MM-DD).

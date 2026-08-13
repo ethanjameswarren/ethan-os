@@ -1,0 +1,31 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Summary
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+properties:
+  source_id:
+    type: string
+    description: ID of the source this summary describes.
+  topic:
+    type: string
+    description: Optional topic if summarizing across sources.
+  summary_level:
+    type: string
+    enum:
+      - source
+      - topic
+      - domain
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

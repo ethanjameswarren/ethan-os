@@ -1,0 +1,38 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Review
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+properties:
+  review_type:
+    type: string
+    enum:
+      - stale
+      - low_confidence
+      - contradictory
+      - disconnected
+      - manual
+  scope:
+    type: string
+    enum:
+      - source
+      - idea
+      - domain
+  target_ids:
+    type: array
+    items:
+      type: string
+    description: IDs of objects surfaced for review.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

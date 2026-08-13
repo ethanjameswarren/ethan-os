@@ -1,0 +1,19 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Context
+type: object
+required:
+  - level
+properties:
+  level:
+    type: string
+    enum:
+      - global
+      - domain
+      - object
+    description: Context hierarchy level.
+  source_path:
+    type: string
+    description: Relative path within ethan-life where the context is stored.
+  summary:
+    type: string
+    description: Optional summary of the context content.

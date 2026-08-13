@@ -1,0 +1,26 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Relationship
+type: object
+required:
+  - target
+  - relation
+properties:
+  target:
+    type: string
+    description: ID of the target object.
+  relation:
+    type: string
+    enum:
+      - sourced_from
+      - supports
+      - contradicts
+      - related_to
+      - derived_from
+      - applies_to
+      - tested_by
+      - revised_by
+      - part_of
+    description: Typed semantic relationship.
+  note:
+    type: string
+    description: Optional human-readable justification for the relationship.

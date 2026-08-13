@@ -1,0 +1,6 @@
+ethan_os:
+  repository: ../../..
+  version: 1.0.0
+  domains:
+    knowledge:
+      enabled: true
