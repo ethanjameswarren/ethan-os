@@ -1,0 +1,44 @@
+% Ethan OS Career Resume Template
+% Separates presentation from content. Populate with career.resume object fields.
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\titleformat{\section}{\large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+
+\newcommand{\jobentry}[4]{%
+  \textbf{#1} \hfill #2 \\
+  \textit{#3} \hfill #4
+}
+
+\begin{document}
+
+% HEADER: populated from resume content object
+\begin{center}
+  {\LARGE\bfseries {{name}}}\\[4pt]
+  {{contact}}
+\end{center}
+
+\section{Summary}
+{{summary}}
+
+\section{Skills}
+{{skills}}
+
+\section{Experience}
+{{experience}}
+
+\section{Selected Projects}
+{{projects}}
+
+\section{Education}
+{{education}}
+
+\end{document}

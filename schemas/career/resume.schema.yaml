@@ -1,0 +1,106 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Resume Content
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - target_id
+  - created_at
+  - provenance
+properties:
+  target_id:
+    type: string
+    description: ID of the career.job-target this resume is built for.
+  status:
+    type: string
+    enum:
+      - draft
+      - validated
+      - confirmed
+  narrative:
+    type: string
+    description: Selected resume strategy / persona.
+  summary:
+    type: string
+  skills:
+    type: array
+    items:
+      type: string
+  experience:
+    type: array
+    items:
+      type: object
+      properties:
+        employer:
+          type: string
+        role:
+          type: string
+        timeframe:
+          type: string
+        bullets:
+          type: array
+          items:
+            type: string
+        evidence_ids:
+          type: array
+          items:
+            type: string
+          description: IDs of Career Evidence objects supporting these bullets.
+  projects:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        bullets:
+          type: array
+          items:
+            type: string
+        evidence_ids:
+          type: array
+          items:
+            type: string
+  education:
+    type: array
+    items:
+      type: object
+  match_analysis:
+    type: object
+    properties:
+      strongest_matches:
+        type: array
+        items:
+          type: string
+      transferable_matches:
+        type: array
+        items:
+          type: string
+      genuine_gaps:
+        type: array
+        items:
+          type: string
+      evidence_used:
+        type: array
+        items:
+          type: string
+      evidence_omitted:
+        type: array
+        items:
+          type: string
+      rationale:
+        type: string
+  confirmation_needed:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

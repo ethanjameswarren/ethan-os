@@ -32,3 +32,6 @@ schemas:
   career.job-target:
     version: 1
     file: career/job-target.schema.yaml
+  career.resume:
+    version: 1
+    file: career/resume.schema.yaml
