@@ -13,9 +13,10 @@ The visual design is a direct translation of `ethan-life/global/design-philosoph
 
 - **Restrained and precise**: no decorative sidebars, progress bars, skill ratings, icons, or heavy boxes.
 - **Premium but honest**: clean hierarchy and efficient whitespace rather than ornate styling.
-- **Modern and minimal**: single-column structure, small caps section titles with a thin rule, generous but efficient margins.
-- **Typography**: Latin Modern Roman (via `lmodern`) for ATS safety and readability; `microtype` for refined text.
-- **Color**: near-black body text, dark gray metadata, light gray divider rule, and a single restrained deep-steel-blue accent reserved for rare structural emphasis.
+- **Modern and minimal**: single-column structure, sentence-case section titles, whitespace-driven hierarchy, efficient margins.
+- **Typography**: TeX Gyre Heros (via the `tex-gyre` package) for a clean, modern sans-serif; `microtype` for refined text.
+- **Header**: left-aligned name and contact line with restrained separators, no centered academic treatment.
+- **Color**: near-black body text, gray metadata, and a single restrained deep-steel-blue accent reserved for rare structural emphasis.
 - **Spacing scale**: consistent section and list spacing defined in `ethan-resume.sty`, avoiding brittle negative spacing hacks.
 
 ## ATS compromises
@@ -34,16 +35,16 @@ Specific compromises made in service of ATS compatibility:
 - Single-column layout (avoids parser column-confusion).
 - Standard document flow; no text boxes, graphics, tables for primary content, or decorative floats.
 - Real text for all important information; no graphical skill indicators.
-- Standard fonts (`lmodern` ships with most TeX systems and maps to common Roman glyphs).
-- Thin horizontal rules are structural, but all essential content is plain text.
+- Standard, widely available fonts (TeX Gyre Heros is a standard Helvetica-style sans-serif).
+- No horizontal rules or decorative graphics; all content is plain text in standard document flow.
 
 ## How the workflow injects content
 
-The `build-tailored-resume` workflow writes content into the commands at the top of `resume.tex`:
+The `build-tailored-resume` workflow writes content into the commands at the top of `resume.tex`. Presentation is fully controlled by `ethan-resume.sty`.
 
 ```latex
 \name{Ethan Warren}
-\contacts{City, ST \quad email@example.com \quad linkedin.com/in/...}
+\contacts{City, ST ~|~ email@example.com ~|~ linkedin.com/in/...}
 \summary{...}
 \skills{...}
 \experience{...}
@@ -72,7 +73,7 @@ Adjust presentation globally in `ethan-resume.sty`:
 
 - `margin`, `top`, `bottom` in the `geometry` package call.
 - Font size and family.
-- Section title format, rule thickness, and color.
+- Section title format and color.
 - List spacing and indentation.
 
 Do not embed career facts or job-specific formatting into the style file. Content belongs in `resume.tex` or in the `career.resume` object.

@@ -5,12 +5,12 @@
 % Presentation must never override content accuracy, ATS parsing, or readability.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ethan-resume}[2026/08/13 v1.0 Ethan OS resume style]
+\ProvidesPackage{ethan-resume}[2026/08/13 v2.0 Ethan OS resume style]
 
 % ------------------------------------------------------------------
 % PAGE
 % ------------------------------------------------------------------
-\RequirePackage[letterpaper, margin=0.70in, top=0.65in, bottom=0.65in]{geometry}
+\RequirePackage[letterpaper, margin=0.65in, top=0.55in, bottom=0.55in]{geometry}
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
@@ -19,11 +19,10 @@
 % TYPOGRAPHY
 % ------------------------------------------------------------------
 \RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern}           % clean, readable, ATS-safe
-\RequirePackage{microtype}          % refined letter spacing and justification
+\RequirePackage[scale=0.95]{tgheros} % clean, modern sans-serif, ATS-safe
+\RequirePackage{microtype}          % refined letter spacing
 
-% Body text
-\renewcommand{\familydefault}{\rmdefault}
+\renewcommand{\familydefault}{\sfdefault}
 
 % ------------------------------------------------------------------
 % COLORS
@@ -33,7 +32,7 @@
 \definecolor{ethanblack}{HTML}{1A1A1A}
 \definecolor{ethandarkgray}{HTML}{333333}
 \definecolor{ethanmidgray}{HTML}{666666}
-\definecolor{ethanlightgray}{HTML}{AAAAAA}
+\definecolor{ethanlightgray}{HTML}{888888}
 \definecolor{ethanrulegray}{HTML}{CCCCCC}
 \definecolor{ethanaccent}{HTML}{2A3F54} % deep steel blue, used sparingly
 
@@ -51,11 +50,11 @@
 \RequirePackage{etoolbox}
 \RequirePackage{enumitem}
 \setlist[itemize]{
-  leftmargin=1.15em,
+  leftmargin=1.1em,
   label=\textbullet,
-  itemsep=0.18em,
+  itemsep=0.10em,
   parsep=0pt,
-  topsep=0.28em,
+  topsep=0.18em,
   partopsep=0pt
 }
 
@@ -63,23 +62,21 @@
 % SECTION HEADERS
 % ------------------------------------------------------------------
 \RequirePackage{titlesec}
+\RequirePackage{array}
 
-\newcommand{\ethansectionrule}{%
-  \textcolor{ethanrulegray}{\rule{\linewidth}{0.4pt}}%
-}
 \titleformat{\section}
-  {\normalfont\fontsize{11}{13}\selectfont\bfseries\scshape\color{ethanblack}}
+  {\normalfont\fontsize{11.5}{13}\selectfont\bfseries\color{ethanblack}}
   {}
   {0em}
   {}
-  [\ethansectionrule]
-\titlespacing*{\section}{0pt}{0.85em}{0.5em}
+  []
+\titlespacing*{\section}{0pt}{0.70em}{0.25em}
 
 % ------------------------------------------------------------------
 % SPACING SCALE
 % ------------------------------------------------------------------
-\newcommand{\ethansmallskip}{\vspace{0.35em}}
-\newcommand{\ethanmedskip}{\vspace{0.55em}}
+\newcommand{\ethansmallskip}{\vspace{0.25em}}
+\newcommand{\ethanmedskip}{\vspace{0.45em}}
 
 % ------------------------------------------------------------------
 % HEADER
@@ -91,11 +88,10 @@
 \newcommand{\contacts}[1]{\renewcommand{\@contacts}{#1}}
 
 \newcommand{\makeheader}{%
-  \begin{center}
-    {\fontsize{22}{26}\selectfont\bfseries\color{ethanblack}\@name}\\[0.32em]
-    {\small\color{ethandarkgray}\@contacts}
-  \end{center}
-  \vspace{0.15em}
+  \noindent
+  {\fontsize{18}{22}\selectfont\bfseries\color{ethanblack}\@name}\\[0.18em]
+  {\small\color{ethanlightgray}\@contacts}
+  \vspace{0.60em}
 }
 
 % ------------------------------------------------------------------
@@ -146,16 +142,17 @@
 %   #3 = date range
 %   #4 = location (optional, pass empty for none)
 \newcommand{\resumeentry}[4]{%
+  \vspace{0.30em}
   \noindent
-  \begin{tabular}[t]{@{}p{0.72\linewidth}@{\hspace{0.03\linewidth}}p{0.25\linewidth}@{}}
-    \textbf{#1} \textcolor{ethanmidgray}{|} #2 & \hfill\textcolor{ethanmidgray}{#3} \\[0.05em]
+  \begin{tabular}[t]{@{}p{0.67\linewidth}@{\hspace{0.02\linewidth}}>{\raggedleft\arraybackslash}p{0.29\linewidth}@{}}%
+    \textbf{#1} \textcolor{ethanmidgray}{| #2} & \textcolor{ethanmidgray}{#3} \\
   \end{tabular}%
-  \ifstrempty{#4}{}{\par\vspace{0.05em}{\small\color{ethandarkgray} #4}}
-  \vspace{0.1em}
+  \ifstrempty{#4}{}{\par\nobreak\vspace{0.05em}{\small\color{ethanlightgray} #4}}%
+  \vspace{0.05em}
 }
 
 % ------------------------------------------------------------------
 % SELECTED ACCENT
 % ------------------------------------------------------------------
 % Use the accent color only where it genuinely clarifies structure.
-\newcommand{\accent}[1]{\textcolor{ethanaccent}{#1}}
+\newcommand{\ethanaccenttext}[1]{\textcolor{ethanaccent}{#1}}
