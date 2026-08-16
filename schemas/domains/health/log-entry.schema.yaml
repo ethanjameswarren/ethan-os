@@ -1,0 +1,35 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Health Log Entry
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - date
+  - metric_type
+  - created_at
+  - provenance
+properties:
+  habit_id:
+    type: string
+    description: ID of the health.habit this entry counts toward, if any.
+  date:
+    type: string
+    format: date
+  metric_type:
+    type: string
+    description: "e.g. exercise, sleep, weight, mood, water, medication_adherence."
+  value:
+    type: string
+    description: "Freeform value appropriate to metric_type, e.g. '7.5 hours', '32 min run', '4/5'."
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

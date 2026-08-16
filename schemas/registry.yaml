@@ -56,3 +56,12 @@ schemas:
   finance.budget:
     version: 1
     file: domains/finance/budget.schema.yaml
+  health.habit:
+    version: 1
+    file: domains/health/habit.schema.yaml
+  health.log-entry:
+    version: 1
+    file: domains/health/log-entry.schema.yaml
+  health.medical-note:
+    version: 1
+    file: domains/health/medical-note.schema.yaml

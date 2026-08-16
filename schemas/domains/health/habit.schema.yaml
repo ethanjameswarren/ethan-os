@@ -1,0 +1,38 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Health Habit
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  metric_type:
+    type: string
+    description: "What this habit tracks, e.g. exercise, sleep, meditation, water, medication_adherence."
+  target_frequency:
+    type: string
+    description: "Plain description of the target cadence, e.g. '5x per week' or 'daily'."
+  status:
+    type: string
+    enum:
+      - active
+      - paused
+      - dropped
+  current_streak:
+    type: integer
+    description: Recomputed from linked log entries, not hand-maintained.
+  goal_id:
+    type: string
+    description: ID of a related planning.goal, if this habit supports a broader goal.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

@@ -35,10 +35,17 @@ domains:
     context: global
     description: Track accounts, log transactions, and maintain budgets against categories and financial goals.
 
+  health:
+    enabled: true
+    schema_prefix: health
+    life_prefix: domains/health
+    instructions: instructions/domains/health/instructions.md
+    object_prompts: instructions/domains/health/object-prompts
+    context: global
+    description: Track recurring health habits, log metrics against them, and record medical notes.
+
   # Future domains (not implemented in v0.1)
   # projects:
-  #   enabled: false
-  # health:
   #   enabled: false
   # food:
   #   enabled: false
