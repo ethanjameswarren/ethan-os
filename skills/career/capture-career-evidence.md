@@ -130,4 +130,4 @@ Use typed relationships from the core relationship model where applicable:
 
 ## Note
 
-This skill is an extension point for the future Career domain. It does not create a full Career domain implementation in v0.1 and does not generate tailored resumes.
+This skill is part of the Career domain. It does not generate tailored resumes; see `workflows/career/build-tailored-resume.md`.

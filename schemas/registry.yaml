@@ -28,13 +28,13 @@ schemas:
     file: domains/knowledge/review.schema.yaml
   career.evidence:
     version: 1
-    file: career/evidence.schema.yaml
+    file: domains/career/evidence.schema.yaml
   career.job-target:
     version: 1
-    file: career/job-target.schema.yaml
+    file: domains/career/job-target.schema.yaml
   career.resume:
     version: 1
-    file: career/resume.schema.yaml
+    file: domains/career/resume.schema.yaml
   career.interview-prep:
     version: 1
-    file: career/interview-prep.schema.yaml
+    file: domains/career/interview-prep.schema.yaml

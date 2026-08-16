@@ -120,4 +120,4 @@ Use typed relationships where applicable:
 
 ## Note
 
-This skill is an extension point for the future Career domain. It reuses the same evidence-match result as `build-tailored-resume` to avoid duplicating Career Evidence or matching logic.
+This skill is part of the Career domain. It reuses the same evidence-match result as `build-tailored-resume` to avoid duplicating Career Evidence or matching logic.

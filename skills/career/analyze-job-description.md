@@ -131,4 +131,4 @@ Use typed relationships where applicable:
 
 ## Note
 
-This skill is an extension point for the future Career domain. It does not write a resume or modify knowledge-domain objects.
+This skill is part of the Career domain. It does not write a resume or modify knowledge-domain objects.
