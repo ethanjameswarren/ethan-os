@@ -17,9 +17,16 @@ domains:
     context: global
     description: Capture career evidence, analyze target roles, and build evidence-backed resumes and interview prep.
 
+  planning:
+    enabled: true
+    schema_prefix: planning
+    life_prefix: domains/planning
+    instructions: instructions/domains/planning/instructions.md
+    object_prompts: instructions/domains/planning/object-prompts
+    context: global
+    description: Capture goals, break them into projects and tasks, and surface what to do next.
+
   # Future domains (not implemented in v0.1)
-  # planning:
-  #   enabled: false
   # finance:
   #   enabled: false
   # projects:

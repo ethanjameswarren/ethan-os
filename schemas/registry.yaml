@@ -38,3 +38,12 @@ schemas:
   career.interview-prep:
     version: 1
     file: domains/career/interview-prep.schema.yaml
+  planning.goal:
+    version: 1
+    file: domains/planning/goal.schema.yaml
+  planning.project:
+    version: 1
+    file: domains/planning/project.schema.yaml
+  planning.task:
+    version: 1
+    file: domains/planning/task.schema.yaml

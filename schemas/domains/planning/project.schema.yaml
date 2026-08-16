@@ -1,0 +1,56 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Planning Project
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  goal_id:
+    type: string
+    description: ID of the planning.goal this project serves, if any.
+  status:
+    type: string
+    enum:
+      - planned
+      - active
+      - blocked
+      - completed
+      - abandoned
+  description:
+    type: string
+  milestones:
+    type: array
+    items:
+      type: object
+      required:
+        - title
+        - status
+      properties:
+        title:
+          type: string
+        target_date:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+            - pending
+            - in_progress
+            - done
+  next_actions:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

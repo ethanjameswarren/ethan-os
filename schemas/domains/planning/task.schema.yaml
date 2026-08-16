@@ -1,0 +1,48 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Planning Task
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  project_id:
+    type: string
+    description: ID of the planning.project this task belongs to, if any.
+  goal_id:
+    type: string
+    description: ID of the planning.goal this task serves directly, if not tied to a project.
+  status:
+    type: string
+    enum:
+      - todo
+      - in_progress
+      - blocked
+      - done
+      - dropped
+  priority:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+  due_date:
+    type: string
+    format: date
+  context:
+    type: string
+    description: Situational context needed to act, e.g. energy level, location, or tool required.
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

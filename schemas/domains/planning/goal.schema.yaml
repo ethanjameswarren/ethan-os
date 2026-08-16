@@ -1,0 +1,42 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Planning Goal
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  horizon:
+    type: string
+    enum:
+      - short_term
+      - medium_term
+      - long_term
+  status:
+    type: string
+    enum:
+      - active
+      - achieved
+      - abandoned
+      - on_hold
+  why_it_matters:
+    type: string
+  success_criteria:
+    type: array
+    items:
+      type: string
+  target_date:
+    type: string
+    format: date
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
