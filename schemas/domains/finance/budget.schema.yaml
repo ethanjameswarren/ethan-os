@@ -1,0 +1,44 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Finance Budget
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - category
+  - period
+  - amount_planned
+  - created_at
+  - provenance
+properties:
+  category:
+    type: string
+  period:
+    type: string
+    description: "Budget period, e.g. 2026-08 for a monthly budget."
+  amount_planned:
+    type: number
+  amount_actual:
+    type: number
+    description: Sum of linked transactions; recomputed during review, not hand-maintained.
+  currency:
+    type: string
+  status:
+    type: string
+    enum:
+      - on_track
+      - over
+      - under
+      - unknown
+  goal_id:
+    type: string
+    description: ID of a related planning.goal, if this budget supports a broader financial goal.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

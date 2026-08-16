@@ -1,0 +1,52 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Finance Account
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - account_type
+  - created_at
+  - provenance
+properties:
+  institution:
+    type: string
+  account_type:
+    type: string
+    enum:
+      - checking
+      - savings
+      - credit_card
+      - investment
+      - loan
+      - other
+  status:
+    type: string
+    enum:
+      - active
+      - closed
+  currency:
+    type: string
+    description: ISO 4217 currency code, e.g. USD.
+  balance_snapshots:
+    type: array
+    items:
+      type: object
+      required:
+        - date
+        - balance
+      properties:
+        date:
+          type: string
+          format: date
+        balance:
+          type: number
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

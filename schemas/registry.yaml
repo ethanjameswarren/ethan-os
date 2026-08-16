@@ -47,3 +47,12 @@ schemas:
   planning.task:
     version: 1
     file: domains/planning/task.schema.yaml
+  finance.account:
+    version: 1
+    file: domains/finance/account.schema.yaml
+  finance.transaction:
+    version: 1
+    file: domains/finance/transaction.schema.yaml
+  finance.budget:
+    version: 1
+    file: domains/finance/budget.schema.yaml

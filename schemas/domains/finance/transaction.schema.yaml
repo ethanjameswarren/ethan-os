@@ -1,0 +1,48 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Finance Transaction
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - amount
+  - date
+  - direction
+  - created_at
+  - provenance
+properties:
+  account_id:
+    type: string
+    description: ID of the finance.account this transaction belongs to.
+  amount:
+    type: number
+    description: Always a positive magnitude; sign is expressed via `direction`.
+  currency:
+    type: string
+  direction:
+    type: string
+    enum:
+      - expense
+      - income
+      - transfer
+  date:
+    type: string
+    format: date
+  category:
+    type: string
+  merchant:
+    type: string
+  budget_id:
+    type: string
+    description: ID of the finance.budget this transaction counts against, if any.
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
