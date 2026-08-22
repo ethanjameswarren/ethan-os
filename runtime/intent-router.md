@@ -19,5 +19,8 @@ Classify user input into an intent and select the corresponding workflow.
 ## Routing rules
 
 - If intent is ambiguous, ask for clarification.
+- For substantive Life OS requests, follow the cross-repository execution order:
+  `ethan-os` → `ethan-life` → `ethan-notion` → live Notion.
+  Do not route directly to Notion unless the user explicitly asks for a pure Notion infrastructure or presentation change (e.g., add a database property, fix a relation, update a database ID, change a mapping).
 - If input matches multiple domains but only Knowledge is enabled, route to Knowledge.
 - Future domains (food, health, etc.) require enablement in `ethan-life/.ethan-os.yaml`.
