@@ -126,9 +126,24 @@ def get_current_user_id(token):
 
 
 def create_playlist(token, user_id, name, description, public=False):
+    """Creates a playlist for the currently-authenticated user via POST /me/playlists.
+
+    `user_id` is accepted for backward compatibility with callers but is unused: the older
+    POST /users/{user_id}/playlists endpoint is being restricted for apps registered after
+    Spotify's Nov 2024 API changes and returns 403 for this app; /me/playlists is the current,
+    non-deprecated endpoint and always targets the token's own user.
+
+    KNOWN SPOTIFY PLATFORM LIMITATION (observed live, 2026-08): passing public=False is honored in
+    this call's own response, but a subsequent GET on the playlist reports public=True regardless.
+    This matches long-standing community reports that the Web API's public/private flag on
+    playlist creation is unreliable. EJ OS still requests public=False (harmless, and correct if
+    Spotify fixes this), but do not rely on it for real privacy -- see
+    docs/domains/music/spotify-setup.md for the current workaround (set it to private manually in
+    the Spotify app after creation).
+    """
     return request(
         "POST",
-        f"/users/{urllib.parse.quote(user_id)}/playlists",
+        "/me/playlists",
         token,
         json_body={"name": name, "description": description, "public": public},
     )
@@ -144,12 +159,16 @@ def get_playlist(token, playlist_id):
 
 
 def replace_playlist_items(token, playlist_id, uris):
-    """Full idempotent replace, chunked to Spotify's 100-URI-per-request limit."""
+    """Full idempotent replace, chunked to Spotify's 100-URI-per-request limit.
+
+    Uses /playlists/{id}/items (not the older /playlists/{id}/tracks, removed in Spotify's
+    February 2026 Web API changes -- see docs/domains/music/spotify-setup.md).
+    """
     first, rest = uris[:100], uris[100:]
-    request("PUT", f"/playlists/{playlist_id}/tracks", token, json_body={"uris": first})
+    request("PUT", f"/playlists/{playlist_id}/items", token, json_body={"uris": first})
     for i in range(0, len(rest), 100):
         chunk = rest[i : i + 100]
-        request("POST", f"/playlists/{playlist_id}/tracks", token, json_body={"uris": chunk})
+        request("POST", f"/playlists/{playlist_id}/items", token, json_body={"uris": chunk})
 
 
 def update_playlist_details(token, playlist_id, name=None, description=None):

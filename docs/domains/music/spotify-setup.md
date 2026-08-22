@@ -59,6 +59,15 @@ revoke access in your Spotify account or switch developer apps, in which case ju
 playlists and verify they still exist. No read access to listening history, top tracks, follows,
 or public-profile playlist publishing is requested.
 
+## Known Spotify platform limitation: playlist privacy
+
+Verified live against the current Spotify Web API (2026-08): EJ OS requests `public: false` when
+creating a playlist, but Spotify's API currently reports the playlist as public (`public: true`)
+immediately afterward regardless. This matches long-standing community reports that the Web API's
+public/private flag is unreliable, not a bug in EJ OS's request. Until Spotify fixes this,
+if you want a set's playlist to actually be private, set it to private manually from the Spotify
+app after EJ OS creates it (playlist menu → "Make secret"/"Make private").
+
 ## What EJ OS never does with your Spotify account
 
 - Never makes a playlist public without being asked.
