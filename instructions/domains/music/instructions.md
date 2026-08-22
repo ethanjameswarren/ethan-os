@@ -361,6 +361,17 @@ remix into the same normalized title).
 
 A false match is worse than an unmatched track — never guess to avoid reporting "not found."
 
+### Collection style playlists (existing, Ethan-owned playlists)
+
+Ethan may also want an existing playlist he already curates (e.g. "my Techno playlist") kept in
+sync with matching tracks from his collection. This is **not** a DJ Set/Candidate playlist — EJ OS
+does not own or fully control it, so sync here is **additive only**: only ever add tracks that are
+missing, never remove or reorder anything already present. A full replace would risk destroying
+manual curation and is never done without an explicit, unambiguous request from Ethan. The
+relationship is tracked in `ethan-life/data/music/record-collection/spotify_collection_playlists.csv`
+(`playlist_key: style:<value>`), separate from `data/music/dj-sets/spotify_playlists.csv`, since it
+isn't tied to a DJ set at all. See `workflows/music/sync-collection-style-to-spotify.md`.
+
 ### Playlist types
 
 - **DJ Set playlist** (`playlist_type: dj_set`): the canonical, ordered `set_tracks.csv` tracklist

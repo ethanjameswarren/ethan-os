@@ -29,6 +29,7 @@ Classify user input into an intent and select the corresponding workflow.
 | export dj set to spotify | "Put this set on Spotify", "Send Hypnotic 01 to Spotify", "Put the candidates for Hypnotic 01 on Spotify", "Make a Spotify playlist from these candidates" | `workflows/music/export-dj-set-to-spotify.md` |
 | sync dj set to spotify | "Sync Hypnotic 01 to Spotify", "Sync the Spotify playlist" | `workflows/music/sync-dj-set-to-spotify.md` |
 | review spotify matches | "Show Spotify matches that need review", "Approve the Spotify match for RYCL016-A1", "Reject that Spotify match", "Use this Spotify track instead" | `workflows/music/review-spotify-matches.md` |
+| sync collection style to spotify | "Make sure my Techno records are in this playlist", "Add my [style] vinyl tracks to my [style] Spotify playlist", "Sync my collection's Techno tracks into <playlist>" | `workflows/music/sync-collection-style-to-spotify.md` |
 
 ## Routing rules
 

@@ -171,6 +171,33 @@ def replace_playlist_items(token, playlist_id, uris):
         request("POST", f"/playlists/{playlist_id}/items", token, json_body={"uris": chunk})
 
 
+def get_playlist_items(token, playlist_id):
+    """Return the set of track URIs currently in a playlist (paginated). Uses the current
+    /playlists/{id}/items endpoint; each entry's track/episode object is under the "item" key
+    (renamed from "track" in Spotify's February 2026 Web API changes)."""
+    uris = set()
+    endpoint = f"/playlists/{playlist_id}/items"
+    params = {"limit": 100, "offset": 0}
+    while True:
+        resp = request("GET", endpoint, token, params=params)
+        for entry in resp.get("items", []):
+            item = entry.get("item")
+            if item and item.get("uri"):
+                uris.add(item["uri"])
+        if not resp.get("next"):
+            break
+        params["offset"] += 100
+    return uris
+
+
+def add_playlist_items(token, playlist_id, uris):
+    """Purely additive: appends URIs not already checked, never replaces/removes existing items.
+    Chunked to Spotify's 100-URI-per-request limit."""
+    for i in range(0, len(uris), 100):
+        chunk = uris[i : i + 100]
+        request("POST", f"/playlists/{playlist_id}/items", token, json_body={"uris": chunk})
+
+
 def update_playlist_details(token, playlist_id, name=None, description=None):
     body = {}
     if name is not None:
