@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Deterministic validation for Ethan OS v0.1.
+Deterministic validation for Ethan OS 0.1.0.
 
 Checks:
 - valid YAML frontmatter
@@ -124,7 +124,7 @@ def validate_object(path: Path, registry: dict, all_ids: dict, broken: list):
 
 
 def main():
-    print("Ethan OS v0.1 deterministic validation")
+    print("Ethan OS 0.1.0 deterministic validation")
     print("=" * 40)
 
     if not HAS_YAML:

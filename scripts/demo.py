@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-End-to-end demo flow for Ethan OS v0.1.
+End-to-end demo flow for Ethan OS 0.1.0.
 
 Simulates:
   capture -> process learning notes -> extract ideas -> relationships
@@ -40,7 +40,7 @@ def load_objects(folder: Path):
 
 
 def main():
-    print("Ethan OS v0.1 End-to-End Demo")
+    print("Ethan OS 0.1.0 End-to-End Demo")
     print("=" * 50)
 
     # 1. Capture

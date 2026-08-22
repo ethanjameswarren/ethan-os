@@ -7,7 +7,7 @@ capture_type: raw
 source_id: src-20260115-001
 created_at: 2026-01-15
 provenance:
-  agent_version: ethan-os-1.0.0
+  agent_version: ethan-os-0.1.0
   provenance_note: Raw user capture submitted via prompt.
 ---
 

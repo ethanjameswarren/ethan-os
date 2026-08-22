@@ -19,7 +19,7 @@ updated_at: 2026-01-15
 provenance:
   capture_id: cap-20260115-001
   source_id: src-20260115-001
-  agent_version: ethan-os-1.0.0
+  agent_version: ethan-os-0.1.0
   provenance_note: Generated from capture cap-20260115-001 and extracted ideas during process-learning-notes workflow.
 ---
 

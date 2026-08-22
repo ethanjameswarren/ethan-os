@@ -35,7 +35,7 @@ c:\Users\ethan\git\ethan-life
 
 ```yaml
 ethan_os:
-  version: 1.0.0
+  version: 0.1.0
 ```
 
 The runtime checks that `ethan-os` supports this version.

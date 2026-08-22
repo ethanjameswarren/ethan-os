@@ -13,7 +13,7 @@ links:
     note: Low-confidence identity idea flagged for reconsideration
 created_at: 2026-01-15
 provenance:
-  agent_version: ethan-os-1.0.0
+  agent_version: ethan-os-0.1.0
   provenance_note: Created by review workflow based on low-confidence and contradictory items.
 ---
 
