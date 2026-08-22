@@ -39,7 +39,8 @@ Use `web_search` and `webfetch` in this order:
 2. **Hard Wax** — `site:hardwax.com <identifier>`.
 3. **Official label pages / Bandcamp** — `<identifier> <label> Bandcamp` or label site.
 4. **Other reputable record stores** (Juno, Decks, Red Eye, etc.).
-5. **Broader web search** only if the above fail.
+5. **SongBPM** — `https://songbpm.com/` for explicit track-level BPM values.
+6. **Broader web search** only if the above fail.
 
 ## Instructions
 
@@ -48,7 +49,7 @@ Use `web_search` and `webfetch` in this order:
 - Prefer the source that explicitly lists the catalog number matching the query.
 - Do not fabricate missing values. Leave them blank.
 - Do not pre-fill subjective fields (Energy, Rating, Special, Base, Tags, Comment).
-- Apply the external-BPM policy: only include BPM if a credible source explicitly lists it; do not infer it; do not overwrite an existing Ethan-entered BPM.
+- Apply the external-BPM policy: only include BPM if a credible source (e.g., SongBPM) explicitly lists it; do not infer it; do not overwrite an existing Ethan-entered BPM.
 
 ## Confidence rules
 
