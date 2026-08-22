@@ -1,0 +1,93 @@
+% Ethan OS Avery 5160 Print Batch Template
+% Presentation is separated from content (see avery-5160.sty). The print-record-labels workflow
+% (via the render-avery-5160-sheet skill) generates a file like this per print batch, with one
+% \PrintLabel{...} call per physical label, in canonical order (album label, then its tracks).
+%
+% This file is a worked EXAMPLE using two real releases from the collection (RYCL016, SK11X015),
+% starting at Avery position 1. Real batches are written to
+% ethan-life/data/music/record-collection/print-batches/<batch_id>/sheet.tex — this file in
+% ethan-os/templates/ is the reusable starting point, not itself a canonical print batch.
+\documentclass[11pt,letterpaper]{article}
+\usepackage{avery-5160}
+
+% Uncomment for a first alignment test print on plain paper before using real Avery sheets:
+% \ShowLabelGuides
+
+\LabelStartAt{1}
+
+\begin{document}
+
+% --- RYCL016 (album label) ---
+% Real data: albums.csv Year=2022, Album="Enigma", Release=RYCL016, Label="Reclaim Your City",
+% Comment (Hard Wax-style) present. Avg BPM/Energy/Rating computed live from tracks.csv (136 /
+% 2.8 / 3.8) -- not stored anywhere, recomputed each time this label is generated.
+\PrintLabel{%
+  \LabelTitle{2022 - Enigma}\\
+  \LabelMeta{RYCL016 | Reclaim Your City}\\[0.15em]
+  \LabelBody{BPM: 136 | Energy: 2.8 | Rating: 3.8}\\[0.25em]
+  \LabelBody{Superbly effective, pure big room minimal techno space trips}
+}
+
+% --- RYCL016 tracks, canonical order (A1, A2, B1, B2) ---
+\PrintLabel{%
+  \LabelTitle{5 - Enigma}\\
+  \LabelMeta{Jeroen Search}\\
+  \LabelBody{Bouncy / Minimal}\\[0.2em]
+  \LabelBody{Crisp and driving, definitely a weapon.}
+}
+\PrintLabel{%
+  \LabelTitle{2 - Modules}\\
+  \LabelMeta{Jeroen Search}\\
+  \LabelBody{Groovy / Trippy}\\[0.2em]
+  \LabelBody{Groovy minimal bleeper with trippy arpeggiated synth.}
+}
+\PrintLabel{%
+  \LabelTitle{2 - Object of Ridicule}\\
+  \LabelMeta{Jeroen Search}\\
+  \LabelBody{Boomy / Atmospheric}\\[0.2em]
+  \LabelBody{Boomy drums with trippy atmospheric background.}
+}
+\PrintLabel{%
+  \LabelTitle{2 - Circle Park}\\
+  \LabelMeta{Jeroen Search}\\
+  \LabelBody{Rumbly / Minimal}\\[0.2em]
+  \LabelBody{Rumbly minimal track with an explorative synth lead.}
+}
+
+% --- SK11X015 (album label) ---
+% Real data: Year=2022, Album="Time in Motion", Label="SK Eleven". Avg BPM/Energy/Rating computed
+% live (143 / 2.5 / 3.0).
+\PrintLabel{%
+  \LabelTitle{2022 - Time in Motion}\\
+  \LabelMeta{SK11X015 | SK Eleven}\\[0.15em]
+  \LabelBody{BPM: 143 | Energy: 2.5 | Rating: 3.0}\\[0.25em]
+  \LabelBody{Excellently effective, proper big room techno machinery}
+}
+
+% --- SK11X015 tracks ---
+\PrintLabel{%
+  \LabelTitle{3 - Shagohod}\\
+  \LabelMeta{Altinbas, Cirkle}\\
+  \LabelBody{Boomy}\\[0.2em]
+  \LabelBody{Boomy drums with a rocking baseline that occasionally escapes.}
+}
+\PrintLabel{%
+  \LabelTitle{2 - Enlightenment}\\
+  \LabelMeta{Altinbas, Cirkle}\\
+  \LabelBody{Rumbly / Spacy}\\[0.2em]
+  \LabelBody{Rumbly drums with a spacy vibe.}
+}
+\PrintLabel{%
+  \LabelTitle{3 - Bold}\\
+  \LabelMeta{Altinbas, Cirkle}\\
+  \LabelBody{Hard / Dark}\\[0.2em]
+  \LabelBody{Harder and darker techno banger.}
+}
+\PrintLabel{%
+  \LabelTitle{2 - Time in Motion}\\
+  \LabelMeta{Altinbas, Cirkle}\\
+  \LabelBody{Minimal / Atmospheric}\\[0.2em]
+  \LabelBody{Minimal techno with atmospheric vibe.}
+}
+
+\end{document}

@@ -1,0 +1,102 @@
+% Ethan OS Avery 5160 Label Sheet Style Package
+% Precise geometry for Avery 5160 Easy Peel address labels, US Letter, 3 x 10 = 30 labels/sheet.
+% Presentation (geometry, typography) lives here; content is generated per print batch by the
+% render-avery-5160-sheet skill and injected via \PrintLabel, matching the ethan-resume.sty
+% content/presentation split.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{avery-5160}[2026/08/22 v1.0 Avery 5160 label sheet layout]
+
+% ------------------------------------------------------------------
+% PAGE
+% ------------------------------------------------------------------
+\RequirePackage[paperwidth=8.5in, paperheight=11in, margin=0pt]{geometry}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ------------------------------------------------------------------
+% ABSOLUTE POSITIONING
+% ------------------------------------------------------------------
+\RequirePackage[absolute, overlay]{textpos}
+\setlength{\TPHorizModule}{1in}
+\setlength{\TPVertModule}{1in}
+\textblockorigin{0in}{0in}
+
+% Integer arithmetic (mod/div) for computing label row/column.
+\RequirePackage{pgf}
+
+% ------------------------------------------------------------------
+% TYPOGRAPHY
+% ------------------------------------------------------------------
+% Reuses the same sans-serif family as the resume template for a consistent Ethan OS look.
+\RequirePackage[T1]{fontenc}
+\RequirePackage[scale=0.92]{tgheros}
+\RequirePackage{xcolor}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ------------------------------------------------------------------
+% AVERY 5160 OFFICIAL GEOMETRY (US Letter, 3 columns x 10 rows = 30 labels/sheet)
+% ------------------------------------------------------------------
+\newlength{\AveryLabelWidth}   \setlength{\AveryLabelWidth}{2.625in}
+\newlength{\AveryLabelHeight}  \setlength{\AveryLabelHeight}{1.0in}
+\newlength{\AveryLeftMargin}   \setlength{\AveryLeftMargin}{0.1875in}
+\newlength{\AveryTopMargin}    \setlength{\AveryTopMargin}{0.5in}
+\newlength{\AveryColPitch}     \setlength{\AveryColPitch}{2.75in}  % 2.625in label + 0.125in gutter
+\newlength{\AveryRowPitch}     \setlength{\AveryRowPitch}{1.0in}   % no vertical gutter
+\newlength{\AveryInset}        \setlength{\AveryInset}{0.09in}     % inner padding so text never touches the die-cut edge
+\def\AveryPerSheet{30}
+\def\AveryCols{3}
+
+% ------------------------------------------------------------------
+% ALIGNMENT GUIDES (off by default; enable for a test print before using real labels)
+% ------------------------------------------------------------------
+\newif\ifAveryGuides
+\AveryGuidesfalse
+\newcommand{\ShowLabelGuides}{\AveryGuidestrue}
+
+% ------------------------------------------------------------------
+% LABEL POSITION COUNTER
+% ------------------------------------------------------------------
+% 0-indexed position within the whole print run (wraps to a new sheet every 30).
+\newcounter{LabelPos}
+\setcounter{LabelPos}{0}
+
+% Set the starting Avery position for the first \PrintLabel call (1-30). Supports partially-used
+% sheets, e.g. \LabelStartAt{8} begins at the 8th physical label position.
+\newcommand{\LabelStartAt}[1]{\setcounter{LabelPos}{#1}\addtocounter{LabelPos}{-1}}
+
+% ------------------------------------------------------------------
+% \PrintLabel{<content>}
+% ------------------------------------------------------------------
+% Places one label's content at the correct absolute grid cell and advances the position counter,
+% inserting a page break whenever wrapping to a new sheet (but never before the first label).
+\newcommand{\PrintLabel}[1]{%
+  \pgfmathtruncatemacro{\AveryPosInSheet}{mod(\value{LabelPos},\AveryPerSheet)}%
+  \pgfmathtruncatemacro{\AveryColIdx}{mod(\AveryPosInSheet,\AveryCols)}%
+  \pgfmathtruncatemacro{\AveryRowIdx}{int(\AveryPosInSheet/\AveryCols)}%
+  \ifnum\AveryPosInSheet=0
+    \ifnum\value{LabelPos}>0 \newpage \fi
+  \fi
+  \begin{textblock*}{\AveryLabelWidth}%
+    (\AveryLeftMargin+\AveryColIdx\AveryColPitch,\AveryTopMargin+\AveryRowIdx\AveryRowPitch)%
+    \ifAveryGuides\fboxsep0pt\fbox{\fi
+    \hspace*{\AveryInset}%
+    \begin{minipage}[t][\dimexpr\AveryLabelHeight-2\AveryInset\relax][t]{\dimexpr\AveryLabelWidth-2\AveryInset\relax}
+      \fontsize{7.4}{8.6}\selectfont
+      #1
+    \end{minipage}%
+    \ifAveryGuides\hspace*{\AveryInset}}\fi
+  \end{textblock*}%
+  \stepcounter{LabelPos}%
+}
+
+% ------------------------------------------------------------------
+% CONTENT HELPERS
+% ------------------------------------------------------------------
+% Lightweight typographic helpers used inside a \PrintLabel argument; the actual field selection,
+% blank-handling, and text-fitting decisions are made by render-avery-5160-sheet (matching the
+% resume template's split: workflow decides content, style package only renders it).
+\newcommand{\LabelTitle}[1]{\textbf{#1}}
+\newcommand{\LabelMeta}[1]{{\footnotesize\color{black!65}#1}}
+\newcommand{\LabelBody}[1]{{\fontsize{6.6}{7.8}\selectfont #1}}

@@ -17,6 +17,14 @@ Classify user input into an intent and select the corresponding workflow.
 | status | "Status", "What is pending?" | `workflows/core/status.md` |
 | start listening session | "Start SK11X025", "Listen to KW34", "Lookup Holden Federico - Dust" | `workflows/music/lookup-release-and-listen.md` |
 | capture listening note | "A1 energy 3, rating 4", "B2 favorite", "next", "done" | `workflows/music/capture-listening-note.md` |
+| build dj set | "Build me a techno set", "Build a 90-minute hypnotic set", "Give me a driving set around 140 BPM", "Build a set from records I've rated highest", "Find some peak-time options from my collection" | `workflows/music/build-dj-set.md` |
+| audition dj set | "Let's audition it", "Audition Hypnotic 01" | `workflows/music/audition-dj-set.md` |
+| capture set audition feedback | "This is more of a builder", "Move this toward the end", "This works perfectly after track 4", "Don't use these two together", "next", "done" (while `active-set-audition.yaml` exists) | `workflows/music/capture-set-audition-feedback.md` |
+| manage dj set | "Save that as 'Hypnotic 01'", "Open Hypnotic 01", "Confirm this set", "Mark Hypnotic 01 as played", "Archive set-20260822-001", "Remove track 6 from Hypnotic 01" | `workflows/music/manage-dj-set.md` |
+| enrich dj track assessments | "Assess RYCL016 A1 for DJ use", "Assess tracks with no AI assessment", "Batch-enrich 50 more tracks", "Refresh stale AI assessments", "Reassess A2, the style read seems wrong" | `workflows/music/enrich-dj-track-assessments.md` |
+| audit record labels | "Audit my record labels", "What records still need labels?", "What labels are ready to print?", "What do I need to listen to before I can finish labeling them?", "What labels are blocked only by factual metadata?" | `workflows/music/audit-record-labels.md` |
+| print record labels | "Give me everything that's ready to print", "Make a sheet starting at label 11", "Print labels for RYCL016", "Reprint the label for SK11X015-A1" | `workflows/music/print-record-labels.md` |
+| mark record labels | "Those are printed", "Mark RYCL016's label as applied", "SK11X015-A1 has its sticker now", "I wrote the BPM on A1" | `workflows/music/mark-record-labels.md` |
 
 ## Routing rules
 
@@ -26,3 +34,7 @@ Classify user input into an intent and select the corresponding workflow.
   Do not route directly to Notion unless the user explicitly asks for a pure Notion infrastructure or presentation change (e.g., add a database property, fix a relation, update a database ID, change a mapping).
 - If input matches multiple domains but only Knowledge is enabled, route to Knowledge.
 - Future domains (food, health, etc.) require enablement in `ethan-life/.ethan-os.yaml`.
+- While `ethan-life/domains/music/sessions/active-set-audition.yaml` exists, short feedback-style
+  messages (track references, role/energy/rating statements, "next", "done") route to
+  `capture set audition feedback` rather than `capture listening note`, unless a single-release
+  `current.yaml` session is also explicitly active and Ethan's message clearly refers to it.
