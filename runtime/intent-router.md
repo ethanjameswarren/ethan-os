@@ -25,6 +25,10 @@ Classify user input into an intent and select the corresponding workflow.
 | audit record labels | "Audit my record labels", "What records still need labels?", "What labels are ready to print?", "What do I need to listen to before I can finish labeling them?", "What labels are blocked only by factual metadata?" | `workflows/music/audit-record-labels.md` |
 | print record labels | "Give me everything that's ready to print", "Make a sheet starting at label 11", "Print labels for RYCL016", "Reprint the label for SK11X015-A1" | `workflows/music/print-record-labels.md` |
 | mark record labels | "Those are printed", "Mark RYCL016's label as applied", "SK11X015-A1 has its sticker now", "I wrote the BPM on A1" | `workflows/music/mark-record-labels.md` |
+| resolve spotify track | "Find the Spotify version of this track", "Map RYCL016-A1 to Spotify", "Map my collection to Spotify", "Resolve the tracks with no Spotify match yet" | `workflows/music/resolve-spotify-track.md` |
+| export dj set to spotify | "Put this set on Spotify", "Send Hypnotic 01 to Spotify", "Put the candidates for Hypnotic 01 on Spotify", "Make a Spotify playlist from these candidates" | `workflows/music/export-dj-set-to-spotify.md` |
+| sync dj set to spotify | "Sync Hypnotic 01 to Spotify", "Sync the Spotify playlist" | `workflows/music/sync-dj-set-to-spotify.md` |
+| review spotify matches | "Show Spotify matches that need review", "Approve the Spotify match for RYCL016-A1", "Reject that Spotify match", "Use this Spotify track instead" | `workflows/music/review-spotify-matches.md` |
 
 ## Routing rules
 

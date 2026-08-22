@@ -283,3 +283,144 @@ Ethan's own input, never inferred by the AI.
   a partial sheet.
 - Generating a `.tex`/PDF is not printing. Only Ethan's explicit confirmation
   (`mark-record-labels`) sets `label_printed`/`confirmed_printed`.
+
+## Spotify integration
+
+Spotify is a downstream listening surface: `ethan-life DJ data → Spotify track resolution →
+Spotify playlist`. **Spotify never becomes canonical** for set order, track ratings, DJ roles,
+energy, tags, or AI assessments — it only supplies external track identity (a Spotify URI) and a
+convenient place to listen.
+
+### Ownership
+
+- `ethan-os` owns OAuth, matching logic, and the export/sync/review workflows
+  (`scripts/spotify/`, `skills/music/match-spotify-track.md`,
+  `workflows/music/resolve-spotify-track.md`, `export-dj-set-to-spotify.md`,
+  `sync-dj-set-to-spotify.md`, `review-spotify-matches.md`).
+- `ethan-life` owns the persistent identity/relationship data:
+  `data/music/record-collection/spotify_track_mappings.csv` and
+  `data/music/dj-sets/spotify_playlists.csv`.
+- No Spotify data lives in `ethan-notion` — Spotify is a separate downstream surface from Notion,
+  not part of the Notion control plane.
+
+### Secrets
+
+Follow the same convention as the Notion integration (`NOTION_TOKEN` read from the environment,
+never committed): `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REFRESH_TOKEN` are
+read from the environment by every script in `scripts/spotify/`; none are ever written to a
+repository file, logged, or echoed back in full. `scripts/spotify/auth.py` is the one-time,
+locally-run setup script that obtains the refresh token (see
+`docs/domains/music/spotify-setup.md`) — after that one-time step, normal workflow use only reads
+the refresh token from the environment and lets the client library refresh short-lived access
+tokens automatically.
+
+### Scopes
+
+Request only `playlist-modify-private` and `playlist-read-private` — Ethan's exported playlists
+default to private (not published to his public profile). Do not request broader scopes (e.g.
+public-playlist modification, listening history, follows) unless a future capability genuinely
+needs them.
+
+### Track identity mapping (reuse before research, same pattern as AI assessments)
+
+`spotify_track_mappings.csv` persists the `Track ID` → Spotify identity result so a set export
+doesn't re-search every track every time. Order of operations for any export/sync:
+
+1. Load the set's ordered tracks (or the candidate pool).
+2. Load cached mappings from `spotify_track_mappings.csv`.
+3. Resolve only tracks with no mapping, a stale/invalid mapping, or an explicit refresh request
+   (see `skills/music/match-spotify-track.md`).
+4. Build the playlist from confidently matched tracks only.
+
+Never re-run a Spotify search for a track that already has a `matched` or `rejected` row unless
+Ethan explicitly asks for a refresh/re-search — `rejected` means "don't suggest this again," not
+"try again next time."
+
+### Matching evidence and confidence (deterministic, not statistical)
+
+Evidence, strongest first: artist, track title, release/album title, duration, label/catalog
+number (rarely searchable directly on Spotify, but useful to disambiguate compilation
+appearances). Normalize only harmless formatting differences (case, punctuation, "feat."/"ft.",
+remix-label formatting) when *comparing* candidates — never normalize so aggressively that
+genuinely distinct tracks/mixes look identical (e.g. do not collapse "Original Mix" and a named
+remix into the same normalized title).
+
+- **High confidence**: normalized artist and title match, plus supporting evidence (duration
+  within a few seconds, or album/release title corroborates) — may be auto-accepted into an
+  export.
+- **Medium confidence**: artist/title look right but release differs or duration is unknown/off
+  (e.g. it's a compilation appearance or reissue) — usable, but flagged in the export report as a
+  medium-confidence inclusion rather than silently treated the same as `high`.
+- **Low confidence / ambiguous**: multiple similarly-plausible candidates, or only a partial
+  match — never auto-included; status `ambiguous`/`needs_review`, surfaced via
+  `review-spotify-matches`.
+- **`not_found`**: no plausible Spotify result at all (expected and normal for vinyl-only /
+  underground releases — never treated as an error).
+- **`unavailable`**: a Spotify track exists but isn't playable in Ethan's market or has been
+  removed.
+
+A false match is worse than an unmatched track — never guess to avoid reporting "not found."
+
+### Playlist types
+
+- **DJ Set playlist** (`playlist_type: dj_set`): the canonical, ordered `set_tracks.csv` tracklist
+  (only `status: proposed`/`confirmed` rows, in `position` order). Represents an actual candidate
+  or confirmed set.
+- **Candidate/audition playlist** (`playlist_type: candidates`): a broader casual-listening pool
+  (e.g. 30-50 tracks) for evaluating options before/while building the real set — regenerated from
+  the same candidate-generation logic used by `build-dj-set-candidates` with a larger pool size,
+  not by writing every candidate into `set_tracks.csv`. It does not represent final DJ sequencing;
+  order within it is not meaningful.
+
+A set has at most one playlist of each type (`spotify_playlists.csv`, keyed on `set_id` +
+`playlist_type`). Missing/unavailable tracks never block playlist creation — report counts (e.g.
+"17/20 matched, 2 vinyl-only, 1 needs review") and proceed with what matched. The canonical set's
+positions are unaffected by which tracks Spotify could represent.
+
+### Export vs. sync (idempotent; canonical always wins)
+
+- **Export** (`export-dj-set-to-spotify`): create the playlist if none exists for this
+  `(set_id, playlist_type)`; if one already exists, behave like sync rather than creating a
+  duplicate.
+- **Sync** (`sync-dj-set-to-spotify`): push the current canonical state (added/removed/reordered
+  tracks) to the existing Spotify playlist via a full replace of its items, in canonical order,
+  from confidently matched tracks. Direction is always `ethan-life → Spotify`; a manual edit Ethan
+  makes directly in Spotify is never pulled back in as a canonical DJ decision (that would require
+  a separate, explicitly-requested reconciliation feature, out of scope here).
+- Repeated sync calls must not create duplicate playlists, duplicate tracks, or re-search
+  already-mapped tracks — `spotify_playlists.csv` and `spotify_track_mappings.csv` are exactly the
+  state that makes this idempotent.
+
+### Naming and descriptions
+
+- DJ set playlist: `EJ OS — <set name or set_id>` (e.g. `EJ OS — Hypnotic 01`). Description:
+  `Candidate DJ set generated from Ethan's vinyl collection by EJ OS.` (or "Confirmed DJ set..."
+  once the set's `status` is `confirmed`/`played`).
+- Candidate playlist: `EJ OS — <set name or set_id> — Candidates`. Description: `Audition pool for
+  <set name or set_id>. Canonical track data and ordering live in EJ OS.`
+- Keep descriptions short; never include Ethan's private ratings/notes verbatim in a Spotify
+  description or playlist name.
+
+### Boundary with the AI Track Assessment system
+
+Spotify is for identity resolution, playlist creation/sync, and convenient listening — nothing
+Spotify returns (genre tags, popularity, audio features, etc.) is ever ingested into
+`ai_track_assessments.csv` or treated as DJ-relevant evidence. A verified `spotify_track_id` is
+external identity metadata only; it is not a rating, a role, a style read, or evidence that
+Spotify's own genre classification is correct.
+
+### Audition workflow boundary
+
+Spotify playback itself is never interpreted as subjective feedback. Listening on Spotify is a
+casual/convenience path; capturing Energy, Rating, Tags, DJ Role, Comments, and transition
+observations remains exclusively the job of the existing listening/audition workflows
+(`capture-listening-note`, `capture-set-audition-feedback`), triggered the same way regardless of
+whether Ethan is listening on vinyl or via a Spotify playlist.
+
+### Failure handling
+
+Authentication expiry, Spotify API errors, rate limiting, no/ambiguous search results, and
+unavailable/deleted tracks or playlists are all expected, handled conditions — never let a Spotify
+failure corrupt or partially-write canonical `ethan-life` set/mapping data. On a expired/invalid
+refresh token, tell Ethan plainly that he needs to re-run the one-time authorization
+(`scripts/spotify/auth.py`), rather than attempting to silently work around it.
