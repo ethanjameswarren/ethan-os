@@ -27,8 +27,9 @@ Exception: If the user explicitly asks for a pure Notion infrastructure or prese
 2. Resolve the sibling `ethan-os` repository path.
 3. Check version compatibility.
 4. Load this entrypoint and core runtime documents.
-5. Apply the repository routing rule.
-   - For substantive Life OS requests, resolve the `ethan-os` domain/workflow implications and any required `ethan-life` state changes before touching `ethan-notion` or live Notion.
+5. Apply the repository routing rule and run the routing preflight checklist (`runtime/preflight.md`).
+   - Confirm `ethan-os` is loaded, the domain/workflow is resolved, the relevant schemas/instructions are identified, required `ethan-life` state changes are considered, and downstream integrations are identified before any implementation begins.
+   - Ensure downstream implementation does not start before upstream `ethan-os` and `ethan-life` state is resolved.
    - For pure Notion infrastructure/presentation requests, the routing rule permits starting directly in `ethan-notion`.
 6. Classify intent from user input.
 7. Determine domain (if any).
