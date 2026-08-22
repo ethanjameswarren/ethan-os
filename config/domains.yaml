@@ -44,6 +44,15 @@ domains:
     context: global
     description: Track recurring health habits, log metrics against them, and record medical notes.
 
+  music:
+    enabled: true
+    schema_prefix: music
+    life_prefix: domains/music
+    instructions: instructions/domains/music/instructions.md
+    object_prompts: instructions/domains/music/object-prompts
+    context: global
+    description: Identify music releases, capture listening observations, and maintain canonical collection data.
+
   # Future domains (not implemented in v0.1)
   # projects:
   #   enabled: false

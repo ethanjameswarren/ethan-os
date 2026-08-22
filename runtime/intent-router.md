@@ -15,6 +15,8 @@ Classify user input into an intent and select the corresponding workflow.
 | review | "What should I review?" | `workflows/core/review.md` |
 | revise | "I changed my mind about..." | `workflows/core/revise.md` |
 | status | "Status", "What is pending?" | `workflows/core/status.md` |
+| start listening session | "Start SK11X025", "Listen to KW34", "Lookup Holden Federico - Dust" | `workflows/music/lookup-release-and-listen.md` |
+| capture listening note | "A1 energy 3, rating 4", "B2 favorite", "next", "done" | `workflows/music/capture-listening-note.md` |
 
 ## Routing rules
 
