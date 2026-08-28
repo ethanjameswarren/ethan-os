@@ -42,6 +42,19 @@ Goal → Task (directly, for goals too small to warrant a project)
 - Use inline typed links (see `docs/architecture/relationships.md`).
 - Common relations: `part_of` (task/project → goal), `related_to`, `derived_from` (project ← goal breakdown), `revised_by`.
 
+## Schedule planning
+
+- The baseline schedule (`planning.baseline-schedule`) is the recurring normal-week structure.
+- Weekly plans (`planning.weekly-plan`) are derived from the baseline plus temporary overrides and one-off commitments for a specific week.
+- Overrides (`planning.schedule-override`) carry an explicit scope:
+  - `one_off` — a single occurrence;
+  - `temporary` — applies from `start_date` through `end_date`;
+  - `permanent` — should be merged into the baseline schedule.
+- Never silently convert a `one_off` or `temporary` override into a permanent baseline change.
+- Fixed blocks (work, appointments, sleep, travel) are preserved. Flexible blocks (exercise, reading, project work) can move when conflicts arise. Optional blocks drop first when time is overloaded.
+- Dependency reasoning is explicit: a changed departure may require an earlier morning routine, which may require an earlier wake time and bedtime.
+- Default to the smallest schedule change that solves the problem. Rebuild the week only when asked or when the plan becomes infeasible.
+
 ## Lifecycle
 
 - Goal: `active` → `achieved` | `abandoned` | `on_hold`.

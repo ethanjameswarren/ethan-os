@@ -1,0 +1,98 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Planning Baseline Schedule
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+  - recurring_blocks
+properties:
+  status:
+    type: string
+    enum:
+      - active
+      - archived
+  recurring_blocks:
+    type: array
+    description: Recurring blocks that make up the normal weekly baseline.
+    items:
+      type: object
+      required:
+        - day_of_week
+        - start_time
+        - end_time
+        - label
+        - category
+      properties:
+        day_of_week:
+          type: string
+          enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+        start_time:
+          type: string
+          pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+        end_time:
+          type: string
+          pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+        label:
+          type: string
+        category:
+          type: string
+          enum:
+            - fixed
+            - flexible
+            - recovery
+        notes:
+          type: string
+  constraints:
+    type: object
+    description: Hard constraints that weekly plans must respect.
+    properties:
+      earliest_wake:
+        type: string
+        pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+      latest_bed:
+        type: string
+        pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+      minimum_sleep_hours:
+        type: number
+        minimum: 0
+        maximum: 24
+      protected_evenings:
+        type: array
+        items:
+          type: string
+          enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+  preferences:
+    type: object
+    description: Default preferences used when building weekly plans.
+    properties:
+      preferred_workout_time:
+        type: string
+      cognitive_work_window:
+        type: string
+      batch_errands:
+        type: boolean
+      downtime_days:
+        type: array
+        items:
+          type: string

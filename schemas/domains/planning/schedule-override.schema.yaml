@@ -1,0 +1,91 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Planning Schedule Override
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+  - scope
+  - change
+properties:
+  status:
+    type: string
+    enum:
+      - active
+      - superseded
+      - dropped
+  scope:
+    type: string
+    enum:
+      - one_off
+      - temporary
+      - permanent
+    description: |
+      one_off = single occurrence only;
+      temporary = applies between start_date and end_date;
+      permanent = becomes part of the baseline schedule.
+  start_date:
+    type: string
+    format: date
+    description: Effective date for one_off or temporary overrides.
+  end_date:
+    type: string
+    format: date
+    description: Required for temporary overrides.
+  day_of_week:
+    type: string
+    enum:
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      - Sunday
+    description: Day of week for permanent overrides or overrides that repeat weekly.
+  target_block:
+    type: object
+    description: The existing baseline block this override targets, if any.
+    properties:
+      label:
+        type: string
+      day_of_week:
+        type: string
+      start_time:
+        type: string
+  change:
+    type: string
+    enum:
+      - add
+      - remove
+      - modify
+      - swap
+  block:
+    type: object
+    description: Block to add, modify to, or swap in.
+    properties:
+      label:
+        type: string
+      start_time:
+        type: string
+        pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+      end_time:
+        type: string
+        pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+      category:
+        type: string
+        enum:
+          - fixed
+          - flexible
+          - recovery
+      notes:
+        type: string
+  reason:
+    type: string
+    description: Why the override exists, used for diagnosis and review.

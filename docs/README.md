@@ -36,18 +36,24 @@ If you are new, start at the top and stop when you have enough detail. If you ar
 | capability | description | human workflow |
 |------------|-------------|----------------|
 | [Guided Reading](capabilities/guided-reading.md) | Read and talk; the OS tracks progress, captures ideas, schedules retention, and recommends next reads. | [workflow](workflows/guided-reading.md) |
-| Knowledge & Learning | Capture, connect, summarize, and review ideas from books, articles, conversations, and experience. | — |
-| Planning | Turn goals into projects and tasks; review what is happening next. | — |
-| Finance | Log transactions and track budgets. | — |
-| Health | Track habits, metrics, and medical notes. | — |
-| Career | Capture evidence, tailor resumes, prepare interviews. | — |
-| Music / DJ Workflows | Manage a collection, build sets, print labels, sync to Spotify. | — |
-
-The remaining capability docs are in progress. Domain overviews are still available in [`docs/domains/`](domains/).
+| [Knowledge & Learning](capabilities/knowledge.md) | Capture, connect, summarize, and review ideas from books, articles, conversations, and experience. | [workflow](workflows/knowledge.md) |
+| [Planning & Projects](capabilities/planning.md) | Turn goals into projects and tasks; review what is happening next. | [workflow](workflows/planning.md) |
+| [Finance](capabilities/finance.md) | Log transactions and track budgets. | [workflow](workflows/finance.md) |
+| [Health & Habits](capabilities/health.md) | Track habits, metrics, and medical notes. | [workflow](workflows/health.md) |
+| [Career](capabilities/career.md) | Capture evidence, tailor resumes, prepare interviews. | [workflow](workflows/career.md) |
+| [Music / DJ Workflows](capabilities/music.md) | Manage a collection, build sets, print labels, sync to Spotify. | [workflow](workflows/music.md) |
+| [Schedule Planning](capabilities/schedule-planning.md) | Maintain a baseline schedule, adapt it with overrides, and generate weekly plans. | [workflow](workflows/schedule-planning.md) |
 
 ### Workflows
 
-- [Guided Reading workflow](workflows/guided-reading.md)
+- [Capture a learning note](workflows/knowledge.md)
+- [Plan your week](workflows/planning.md)
+- [Monthly financial review](workflows/finance.md)
+- [Weekly health review](workflows/health.md)
+- [Tailor a resume](workflows/career.md)
+- [Build a DJ set](workflows/music.md)
+- [Schedule your week](workflows/schedule-planning.md)
+- [Guided Reading](workflows/guided-reading.md)
 
 ## For builders and contributors
 

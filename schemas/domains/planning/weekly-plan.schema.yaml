@@ -1,0 +1,101 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Planning Weekly Plan
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+  - week_starting
+  - baseline_id
+  - blocks
+properties:
+  status:
+    type: string
+    enum:
+      - draft
+      - accepted
+      - superseded
+  week_starting:
+    type: string
+    format: date
+  baseline_id:
+    type: string
+    description: ID of the planning.baseline-schedule this plan was derived from.
+  override_ids:
+    type: array
+    items:
+      type: string
+    description: IDs of schedule overrides applied when generating this plan.
+  generated_at:
+    type: string
+    format: date-time
+  blocks:
+    type: array
+    description: Concrete time blocks for the week.
+    items:
+      type: object
+      required:
+        - date
+        - start_time
+        - end_time
+        - label
+        - source
+        - category
+      properties:
+        date:
+          type: string
+          format: date
+        start_time:
+          type: string
+          pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+        end_time:
+          type: string
+          pattern: "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+        label:
+          type: string
+        source:
+          type: string
+          enum:
+            - baseline
+            - override
+            - task
+            - goal
+            - manual
+        category:
+          type: string
+          enum:
+            - fixed
+            - flexible
+            - optional
+        status:
+          type: string
+          enum:
+            - scheduled
+            - done
+            - moved
+            - cancelled
+        notes:
+          type: string
+  conflicts:
+    type: array
+    items:
+      type: object
+      required:
+        - description
+      properties:
+        description:
+          type: string
+        blocks:
+          type: array
+          items:
+            type: string
+        resolution:
+          type: string
+  notes:
+    type: string

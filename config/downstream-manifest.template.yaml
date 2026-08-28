@@ -8,7 +8,7 @@ upstream:
   identifier: ethan-os
   repository: https://github.com/ethanjameswarren/ethan-os.git
   license: Apache-2.0
-  installed_version: 0.1.0
+  installed_version: 0.1.0-beta
   installed_commit: <upstream commit hash at bootstrap>
   installed_at: <ISO date>
   # Updated each time update-from-upstream completes successfully.

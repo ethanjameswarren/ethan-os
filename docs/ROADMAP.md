@@ -8,8 +8,8 @@ Last reviewed: 2026-08-28
 
 | status | meaning |
 |--------|---------|
-| **Stable** | Ready for normal use. Core behavior is implemented, validated, and has been used successfully. |
-| **Beta** | Usable end-to-end, but real-world usage may still reveal UX or architecture changes. |
+| **Stable** | Ready for normal use and validated through repeated successful usage. |
+| **Beta** | Ready for normal use end-to-end, but still being validated through real-world usage and may receive UX or architecture refinements. |
 | **In Development** | Actively being implemented; not yet considered ready for normal use. |
 | **Planned** | Approved direction, but implementation has not started or is minimal. |
 | **Exploring** | Idea worth investigating, but architecture and scope are not committed. |
@@ -34,8 +34,8 @@ Ethan OS is a public behavior layer for personal AI systems. The core runtime, v
 | Spotify Integration | Beta | OAuth setup, playlist export/sync, track matching, collection-style sync | Scope review and privacy/scope documentation |
 | Notion Projection / Sync | Planned | Database mappings and sync architecture defined; live end-to-end sync not yet validated | Validate live sync behavior and decide projection scope |
 | Downstream Bootstrap & Updates | Beta | Bootstrap script, safe update assessment, conflict classification, validation, rollback, Apache-2.0 licensing/attribution support | Real-world fork/clone testing and refinement |
-| Human-Facing Documentation | In Development | P0 docs created: README, docs index, concepts, Guided Reading capability and workflow summaries, getting-started guides | Extend to remaining capabilities |
-| Schedule Planning | Planned | Weekly review exists; calendar-based scheduling not yet implemented | Design calendar-aware scheduling without making external services authoritative |
+| Human-Facing Documentation | Beta | README, docs index, core concepts, all major capability docs, representative workflow summaries per domain, and getting-started guides created | Additional polish and contributor documentation may still evolve |
+| Schedule Planning | Beta | Baseline schedule, weekly plan, overrides, dependency/conflict handling, schedule diagnosis, deterministic tests | Real-world usage and calendar integration refinement |
 
 ## Now
 
@@ -48,11 +48,12 @@ Work actively being stabilized or built.
 - Validate recommendation usefulness from real library and ratings.
 - Confirm source-access and spoiler policies behave as expected.
 
-### Human-facing documentation layer
+### Schedule Planning real-world testing
 
-- Complete P0 docs for the remaining capabilities.
-- Add human workflow summaries for at least one workflow per domain.
-- Keep technical docs accurate without forcing visitors into them.
+- Verify baseline, weekly plan, and override scopes behave naturally in conversation.
+- Confirm dependency reasoning feels right for commute, sleep, and morning-routine changes.
+- Test schedule diagnosis prompts without over-scheduling or silently deleting activities.
+- Refine minimal-change behavior based on actual usage.
 
 ### Core runtime hardening
 

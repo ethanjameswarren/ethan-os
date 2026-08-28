@@ -53,6 +53,15 @@ schemas:
   planning.task:
     version: 1
     file: domains/planning/task.schema.yaml
+  planning.baseline-schedule:
+    version: 1
+    file: domains/planning/baseline-schedule.schema.yaml
+  planning.schedule-override:
+    version: 1
+    file: domains/planning/schedule-override.schema.yaml
+  planning.weekly-plan:
+    version: 1
+    file: domains/planning/weekly-plan.schema.yaml
   finance.account:
     version: 1
     file: domains/finance/account.schema.yaml
