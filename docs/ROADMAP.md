@@ -35,7 +35,7 @@ Ethan OS is a public behavior layer for personal AI systems. The core runtime, v
 | Notion Projection / Sync | Planned | Database mappings and sync architecture defined; live end-to-end sync not yet validated | Validate live sync behavior and decide projection scope |
 | Downstream Bootstrap & Updates | Beta | Bootstrap script, safe update assessment, conflict classification, validation, rollback, Apache-2.0 licensing/attribution support | Real-world fork/clone testing and refinement |
 | Human-Facing Documentation | Beta | README, docs index, core concepts, all major capability docs, representative workflow summaries per domain, and getting-started guides created | Additional polish and contributor documentation may still evolve |
-| Schedule Planning | Beta | Baseline schedule, weekly plan, overrides, dependency/conflict handling, schedule diagnosis, deterministic tests | Real-world usage and calendar integration refinement |
+| Schedule Planning | Beta / Ready | End-to-end baseline, weekly planning, daily replanning, overrides, conflict detection, and schedule diagnosis implemented. Currently being validated through real-world use. | Real-world usage and calendar integration refinement |
 
 ## Now
 
