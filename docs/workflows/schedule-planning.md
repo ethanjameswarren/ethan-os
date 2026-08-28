@@ -63,8 +63,12 @@ Examples:
 | "for the next two weeks", "until...", "while I'm on call" | temporary |
 | "from now on", "every Wednesday", "make it the new normal" | permanent |
 
+## Sunday weekly planning
+
+For "Let's do my Sunday review" or "Plan next week", see `workflows/planning/weekly-review.md` and `skills/planning/sunday-weekly-planning.md`.
+
 ## Technical details
 
 - Workflow: `workflows/planning/schedule-weekly-plan.md`
-- Skills: `skills/planning/apply-schedule-change.md`, `skills/planning/generate-weekly-plan.md`, `skills/planning/diagnose-schedule.md`
+- Skills: `skills/planning/apply-schedule-change.md`, `skills/planning/generate-weekly-plan.md`, `skills/planning/diagnose-schedule.md`, `skills/planning/sunday-weekly-planning.md`
 - Schemas: `schemas/domains/planning/baseline-schedule.schema.yaml`, `weekly-plan.schema.yaml`, `schedule-override.schema.yaml`

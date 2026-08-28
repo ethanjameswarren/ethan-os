@@ -28,6 +28,7 @@ Classify user input into one of the v0.1 intents.
 - schedule-change: add, move, or modify a schedule item
 - plan-week: generate a concrete weekly plan
 - plan-day: generate a single-day plan
+- sunday-review: build next week's plan during Sunday weekly review
 - diagnose-schedule: identify why a schedule feels broken or where time could fit
 
 ## Instructions

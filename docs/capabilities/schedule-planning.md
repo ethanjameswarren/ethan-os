@@ -83,6 +83,23 @@ Google Calendar can provide real fixed commitments, but Ethan OS remains the own
 - Diagnose schedule problems with targeted fixes, not blanket overhauls.
 - External calendar events do not modify the baseline.
 
+## Sunday Weekly Planning
+
+On Sunday, Ethan OS starts with your normal week, loads your real calendar and current priorities, and builds a concrete weekly plan by changing only what needs to change.
+
+The flow is:
+
+```
+Baseline
++ calendar events
++ local overrides
++ current priorities
++ recurring responsibilities
+= next week's plan
+```
+
+It does not rebuild your life every Sunday. It preserves your baseline, protects free time and recovery, fits priorities into existing flexible/themed blocks, and asks only for genuinely missing information. The result is a draft weekly plan you can accept, adjust, or regenerate.
+
 ## Related workflows
 
 - [Schedule your week](../workflows/schedule-planning.md)

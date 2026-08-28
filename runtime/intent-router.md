@@ -48,6 +48,7 @@ Classify user input into an intent and select the corresponding workflow.
 | plan week | "Plan my week", "What does tomorrow look like", "Make my schedule for this week" | `workflows/planning/schedule-weekly-plan.md` |
 | plan day | "What's my plan today", "What does today look like" | `workflows/planning/schedule-weekly-plan.md` |
 | diagnose schedule | "I never have time to read", "My schedule sucks, fix it", "Where can I fit another workout" | `workflows/planning/schedule-weekly-plan.md` |
+| sunday review | "Let's do my Sunday review", "Plan next week", "What does next week look like", "Build next week's schedule" | `workflows/planning/weekly-review.md` |
 
 ## Routing rules
 
