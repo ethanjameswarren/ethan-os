@@ -1,6 +1,6 @@
 ethan_os:
   name: Ethan OS
-  version: 0.1.0-beta
+  version: 0.1.1-beta
   default_domain: knowledge
   capture_channel: prompt
   supported_schema_versions:

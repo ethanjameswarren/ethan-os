@@ -1,5 +1,27 @@
 # Ethan OS Releases
 
+## v0.1.1-beta
+
+### Highlights
+
+- **Beta Usage / Friction Tracking** — capture product friction and positive signals
+  in normal conversation, keep actual entries private in `ethan-life`, and turn
+  repeated patterns into structured evidence for fixes and evaluation cases.
+  - New `core.friction-log` schema
+  - New `skills/core/capture-friction.md` and `workflows/core/capture-friction.md`
+  - New `workflows/core/review-friction-log.md`
+  - New `scripts/core/friction_log.py` and `scripts/test-friction-capture.py`
+  - New `docs/capabilities/beta-feedback.md`
+- **Validation Matrix** — track real-world capability validation separately from
+  maturity labels, with per-outcome use counts and coverage breadth.
+  - New `ethan-life/domains/system/validation-matrix.yaml`
+  - New `ethan-life/domains/planning/goals/goal-validate-ethan-os.md`
+  - New `scripts/core/validation_matrix.py`
+
+### Project status
+
+See [ROADMAP.md](ROADMAP.md) for current capability statuses and next steps.
+
 ## v0.1.0-beta
 
 ### What Ethan OS is
