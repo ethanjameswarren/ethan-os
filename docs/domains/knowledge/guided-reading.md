@@ -1,4 +1,10 @@
-# Guided Reading
+# Guided Reading — Technical Reference
+
+> **For a human overview, see [`docs/capabilities/guided-reading.md`](../../capabilities/guided-reading.md).**
+>
+> **For the end-to-end workflow from a user's perspective, see [`docs/workflows/guided-reading.md`](../../workflows/guided-reading.md).**
+>
+> This document is the technical implementation reference. It describes data models, state formats, intents, schemas, and runtime behavior for the AI/runtime.
 
 ## Purpose
 

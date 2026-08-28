@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-Deterministic validation for Ethan OS 0.1.0.
+Deterministic validation for Ethan OS.
+
+Reads version from the repository VERSION file.
 
 Checks:
 - valid YAML frontmatter
@@ -26,6 +28,7 @@ except ImportError:  # pragma: no cover
 
 
 ROOT = Path(__file__).resolve().parent.parent
+VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 SCHEMA_REGISTRY = ROOT / "schemas" / "registry.yaml"
 
 DEMO_FIXTURES = ROOT / "config" / "demo-personality" / "fixtures"
@@ -124,7 +127,7 @@ def validate_object(path: Path, registry: dict, all_ids: dict, broken: list):
 
 
 def main():
-    print("Ethan OS 0.1.0 deterministic validation")
+    print(f"Ethan OS {VERSION} deterministic validation")
     print("=" * 40)
 
     if not HAS_YAML:

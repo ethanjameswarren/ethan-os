@@ -1,0 +1,38 @@
+# Downstream OS manifest.
+# This file lives in a downstream repository (e.g., john-os).
+# It records the upstream project this OS was bootstrapped from and the
+# last upstream commit successfully incorporated. The update workflow uses
+# this metadata to perform safe three-way comparisons.
+upstream:
+  project: Ethan OS
+  identifier: ethan-os
+  repository: https://github.com/ethanjameswarren/ethan-os.git
+  license: Apache-2.0
+  installed_version: 0.1.0
+  installed_commit: <upstream commit hash at bootstrap>
+  installed_at: <ISO date>
+  # Updated each time update-from-upstream completes successfully.
+  last_updated_commit: <upstream commit hash>
+  last_updated_at: <ISO date>
+
+downstream:
+  project: John OS
+  name: John OS
+  identifier: john-os
+  # Optional: contact, repository, or notes about the downstream OS.
+  notes: >
+    Personal OS derived from Ethan OS. Custom domains, workflows, and
+    policies live in this repository.
+
+update:
+  # safe_merge: apply non-conflicting upstream changes, preserve downstream
+  # customizations, and surface conflicts for human review.
+  strategy: safe_merge
+
+history:
+  - from_commit: <previous upstream commit>
+    to_commit: <new upstream commit>
+    date: <ISO date>
+    result: success
+    conflicts_resolved: []
+    skipped: []

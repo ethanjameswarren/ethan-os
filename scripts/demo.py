@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-End-to-end demo flow for Ethan OS 0.1.0.
+End-to-end demo flow for Ethan OS.
+
+Reads version from the repository VERSION file.
 
 Simulates:
   capture -> process learning notes -> extract ideas -> relationships
@@ -16,6 +18,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parent.parent
+VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 FIXTURES = ROOT / "config" / "demo-personality" / "fixtures"
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
@@ -40,7 +43,7 @@ def load_objects(folder: Path):
 
 
 def main():
-    print("Ethan OS 0.1.0 End-to-End Demo")
+    print(f"Ethan OS {VERSION} End-to-End Demo")
     print("=" * 50)
 
     # 1. Capture
