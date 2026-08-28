@@ -74,6 +74,10 @@ Example prompts:
 - Calendar IDs and selected calendars live in `ethan-life`, not `ethan-os`.
 - Public repository tests use fake fixtures, never real calendar data.
 
+## Performance and caching
+
+No caching is implemented by design in Beta. Every planning call fetches fresh calendar events. This avoids stale-calendar weirdness while the behavior is being validated. If latency becomes annoying later, a very short-lived cache can be added.
+
 ## Write-back status
 
 Writing generated plans to Google Calendar is planned for v1.1. For v1, the integration is read-only.
