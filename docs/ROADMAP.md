@@ -40,6 +40,26 @@ Ethan OS is a public behavior layer for personal AI systems. The core runtime, v
 | Desktop AI Client Access | Planned | Conceptually supported by the file-based architecture; no official non-IDE desktop-client bridge implemented or validated yet. | Design and validate an MCP/server bridge that keeps ethan-life private and client adapters vendor-agnostic. |
 | Guided Learning | Beta / Ready | Supports university courses, online/self-paced learning, certifications, and workplace training with active recall, structured sessions, selective retention, progress tracking, assessment prep, and Sunday planning integration. Deterministic tests pass; real-world usage is now being used to refine prompts, material ingestion, and retention behavior. | LinkedIn Learning live test, prompt and retention refinement, and later syllabus/material ingestion automation |
 
+## Cross-cutting / horizontal services
+
+These are the shared services that make the vertical capabilities feel like one coherent system.
+
+| Capability | Status | What works now | Next step |
+|------------|--------|----------------|-----------|
+| Context Engine | In Development | `core.context-request` and `core.context-bundle` schemas, `skills/core/context-assembly.md`, and `docs/architecture/context-assembly.md` in place; selective assembly is manual/sketch-based until retrieval is hardened. | Harden selective retrieval and integrate into existing workflows. |
+| Cross-Domain Reasoning | Planned | Typed relationships (`supports`, `contradicts`, `applies_to`, `part_of`, etc.) and `links` on most objects; vision and contracts documented. | Build retrieval path that uses relationships to surface cross-domain insights. |
+| Universal Personal Retrieval | Planned | Object loading by domain and ID works; cross-domain query by keyword is not yet a unified path. | Add a unified `ask`/`retrieve` workflow on top of existing object storage. |
+| Temporal State | Exploring | `updated_at` on core objects; schedule overrides already support `valid_for` ranges. | Decide minimal temporal metadata pattern before retrofitting every object. |
+| Decision Intelligence | Planned | No schema yet; decision recording is currently informal notes. | Add `knowledge.decision` schema and skill for meaningful decisions. |
+| Review Orchestrator | Planned | Each domain has its own review; Sunday Planning partially coordinates. | Add `workflows/core/review-orchestrator.md` that decides which reviews are due. |
+| Priority Alignment | Exploring | Goals, projects, and tasks are linked; schedule does not yet verify goal alignment. | Add mismatch detection in Sunday Planning and project review. |
+| Workflow Evaluation | In Development | Deterministic schema/structure tests exist; behavioral evaluation is not yet systematized. | Add `evaluations/` with static behavioral checks for key workflows. |
+| Workflow Orchestration | Exploring | Workflows call skills; workflow-to-workflow composition is not yet formal. | Design orchestration primitive for multi-workflow events. |
+| Proactive Assistance | Exploring | No background behavior; all prompts are user-initiated. | Define urgency/relevance thresholds and a manual proactive-surface skill. |
+| Privacy & Permissions | Planned | Privacy is enforced by architecture and `.gitignore`; client-scoped permissions are not implemented. | Design permission contract for desktop clients and integrations. |
+| Personal Data Import / Portability | Planned | Bootstrap script exists; domain-specific importers are not. | Add 1-2 high-leverage importers (resume/library/Spotify). |
+| Capability Packs / Profiles | Exploring | Domains are individually toggleable; no packaging layer exists. | Document how domains compose into profiles. |
+
 ## Now
 
 Work actively being stabilized or built.

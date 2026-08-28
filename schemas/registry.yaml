@@ -11,6 +11,12 @@ schemas:
   core.context:
     version: 1
     file: core/context.schema.yaml
+  core.context-request:
+    version: 1
+    file: core/context-request.schema.yaml
+  core.context-bundle:
+    version: 1
+    file: core/context-bundle.schema.yaml
   knowledge.source:
     version: 1
     file: domains/knowledge/source.schema.yaml

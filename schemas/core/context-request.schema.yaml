@@ -1,0 +1,45 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Context Request
+type: object
+required:
+  - intent
+  - domains
+properties:
+  intent:
+    type: string
+    description: The classified user intent.
+  domains:
+    type: array
+    items:
+      type: string
+    description: Domains the workflow may need to access.
+  entity_refs:
+    type: array
+    items:
+      type: string
+    description: Optional object IDs or titles the user explicitly referenced.
+  time_horizon:
+    type: string
+    enum:
+      - now
+      - today
+      - this_week
+      - this_month
+      - this_year
+      - all_time
+    description: How far back the context should extend.
+  desired_depth:
+    type: string
+    enum:
+      - minimal
+      - normal
+      - deep
+    default: normal
+    description: How much context to include.
+  avoid_domains:
+    type: array
+    items:
+      type: string
+    description: Domains to explicitly exclude for privacy or relevance.
+  provenance:
+    $ref: "provenance.schema.yaml"

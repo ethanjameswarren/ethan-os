@@ -1,0 +1,87 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Context Bundle
+type: object
+required:
+  - request
+  - assembled_at
+properties:
+  request:
+    $ref: "context-request.schema.yaml"
+  current_state:
+    type: array
+    items:
+      type: object
+      properties:
+        domain:
+          type: string
+        object_id:
+          type: string
+        object_schema:
+          type: string
+        summary:
+          type: string
+      required:
+        - domain
+        - object_id
+  relevant_history:
+    type: array
+    items:
+      type: object
+      properties:
+        object_id:
+          type: string
+        summary:
+          type: string
+        relevance_reason:
+          type: string
+      required:
+        - object_id
+  related_knowledge:
+    type: array
+    items:
+      type: object
+      properties:
+        idea_id:
+          type: string
+        title:
+          type: string
+        connection_reason:
+          type: string
+      required:
+        - idea_id
+  active_constraints:
+    type: array
+    items:
+      type: object
+      properties:
+        constraint_type:
+          type: string
+          enum:
+            - schedule
+            - deadline
+            - goal
+            - preference
+            - privacy
+        description:
+          type: string
+      required:
+        - constraint_type
+        - description
+  preferences:
+    type: array
+    items:
+      type: object
+      properties:
+        preference_type:
+          type: string
+        description:
+          type: string
+      required:
+        - preference_type
+        - description
+  provenance:
+    $ref: "provenance.schema.yaml"
+  assembled_at:
+    type: string
+    format: date-time
+    description: When the bundle was assembled.

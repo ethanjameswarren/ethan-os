@@ -44,6 +44,10 @@ The user can override, skip, pause, archive, or delete. They can say "not now," 
 
 External systems display or extend `ethan-life` data; they do not own it. If Notion or Spotify disagree with `ethan-life`, `ethan-life` wins.
 
+## Vertical capabilities, horizontal services
+
+Vertical capabilities provide specialized behavior for a domain: reading, planning, finance, health, career, music. Horizontal services allow those capabilities to work together: context assembly, cross-domain retrieval, review orchestration, temporal state, decision records, and bounded proactive assistance. New capabilities are built as vertical layers on top of shared horizontal services, not as parallel silos.
+
 ## Extend existing architecture rather than duplicate it
 
 New capabilities reuse existing objects, relationships, and workflows. A book is a source; a session insight is like a capture; a retention item references an idea. Avoiding parallel silos keeps the system coherent.
