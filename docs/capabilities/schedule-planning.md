@@ -62,10 +62,12 @@ A change in one block can cascade. The system warns you about dependencies befor
 
 ## What gets saved
 
-- **Baseline schedule** — recurring weekly blocks and constraints.
-- **Schedule override** — the change, its scope, dates, and reason.
-- **Weekly plan** — concrete blocks for a specific week, with sources and categories.
-- **Schedule diagnosis notes** — optional notes on tradeoffs and recommendations.
+Canonical state lives in `ethan-life/domains/planning/`:
+
+- **Baseline schedule** — `baseline-schedule.md`: recurring weekly blocks, constraints, and preferences.
+- **Schedule override** — `schedule-overrides/<override>.md`: the change, its scope, dates, and reason.
+- **Weekly plan** — `weekly-plans/<plan>.md`: concrete blocks for a specific week, with sources and categories.
+- **Schedule diagnosis notes** — optional notes on tradeoffs and recommendations, kept inside the relevant plan or override.
 
 ## Important behaviors
 

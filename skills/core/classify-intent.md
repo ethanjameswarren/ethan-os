@@ -11,7 +11,7 @@ Classify user input into one of the v0.1 intents.
 
 ## Output
 
-- intent: capture | process-learning-notes | ask | summarize | review | revise | status
+- intent: capture | process-learning-notes | ask | summarize | review | revise | status | schedule-change | plan-week | plan-day | diagnose-schedule
 - confidence: high | medium | low
 - domain hint (if applicable)
 - ambiguity note if intent is unclear
@@ -25,6 +25,10 @@ Classify user input into one of the v0.1 intents.
 - review: surface items worth revisiting
 - revise: update an existing object
 - status: show operational state
+- schedule-change: add, move, or modify a schedule item
+- plan-week: generate a concrete weekly plan
+- plan-day: generate a single-day plan
+- diagnose-schedule: identify why a schedule feels broken or where time could fit
 
 ## Instructions
 

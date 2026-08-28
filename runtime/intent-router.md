@@ -44,6 +44,11 @@ Classify user input into an intent and select the corresponding workflow.
 | review spotify matches | "Show Spotify matches that need review", "Approve the Spotify match for RYCL016-A1", "Reject that Spotify match", "Use this Spotify track instead" | `workflows/music/review-spotify-matches.md` |
 | sync collection style to spotify | "Make sure my Techno records are in this playlist", "Add my [style] vinyl tracks to my [style] Spotify playlist", "Sync my collection's Techno tracks into <playlist>" | `workflows/music/sync-collection-style-to-spotify.md` |
 
+| schedule change | "I have dinner Thursday at 7", "For the next two weeks I'm working late Tuesday", "From now on Wednesday night is reading" | `workflows/planning/schedule-weekly-plan.md` |
+| plan week | "Plan my week", "What does tomorrow look like", "Make my schedule for this week" | `workflows/planning/schedule-weekly-plan.md` |
+| plan day | "What's my plan today", "What does today look like" | `workflows/planning/schedule-weekly-plan.md` |
+| diagnose schedule | "I never have time to read", "My schedule sucks, fix it", "Where can I fit another workout" | `workflows/planning/schedule-weekly-plan.md` |
+
 ## Routing rules
 
 - If intent is ambiguous, ask for clarification.
