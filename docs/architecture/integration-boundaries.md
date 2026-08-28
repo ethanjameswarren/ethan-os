@@ -12,6 +12,7 @@ This document records future integration points. No adapters are implemented in 
 - Postgres: structured query backend
 - Vector databases / embeddings: semantic search backend
 - API server: programmatic interface
+- Desktop AI client bridge (e.g., MCP): non-IDE client access
 - Web/mobile application: user interface
 - Voice capture: low-friction input channel
 - External automation: Zapier, Make, etc.
