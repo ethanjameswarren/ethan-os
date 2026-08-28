@@ -36,6 +36,40 @@ A note about a book, a project plan, a health log, or a DJ set all flow through 
 - **Career** — capture evidence, analyze roles, build tailored resumes, prepare interviews.
 - **Music / DJ Workflows** — manage a collection, build DJ sets, print record labels, sync to Spotify.
 
+## See Ethan OS in action
+
+Five featured workflows that show how persistent personal context makes the system useful:
+
+### [Guided Reading](docs/workflows/guided-reading.md)
+
+Read naturally, discuss what matters, and retain the useful ideas.
+
+> "I finished pages 1–15."
+
+### [Tailored Resume](docs/workflows/tailored-resume.md)
+
+Turn a stored career evidence library into a role-specific resume without inventing experience.
+
+> "Tailor my resume for this Senior Data Engineer role."
+
+### [Monthly Financial Review](docs/workflows/monthly-financial-review.md)
+
+Understand where your money went, what changed, and what should change next.
+
+> "How did I do financially this month?"
+
+### [Daily Schedule](docs/workflows/daily-schedule.md)
+
+Start from your normal routine and automatically adapt today when life changes.
+
+> "I have dinner at 7 tonight; adjust my day."
+
+### [DJ Set Building](docs/workflows/music.md)
+
+Use structured music knowledge to build and refine a DJ set.
+
+> "Build me a 90-minute techno set."
+
 ## Example interaction
 
 > **You:** "I finished pages 1-15 of Thinking in Systems."  
@@ -104,7 +138,7 @@ You may use, modify, and distribute it subject to the license. Downstream system
 ## Where to go next
 
 - **New here?** Start with [What is Ethan OS?](docs/concepts/what-is-ethan-os.md).
-- **Want to see a capability?** Read about [Guided Reading](docs/capabilities/guided-reading.md).
-- **Want the lifecycle?** See the [Guided Reading workflow](docs/workflows/guided-reading.md).
+- **Want to see it in action?** Pick a featured workflow above.
+- **Want the high-level picture?** See the [roadmap](docs/ROADMAP.md).
 - **Curious how it works under the hood?** See the [technical architecture](docs/architecture/overview.md).
 - **Want to run it?** See the [entrypoint](entrypoint/ethan-os.md) and validation tests in `scripts/`.

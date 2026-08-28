@@ -18,6 +18,18 @@ Ethan OS is a reusable, public behavior layer for personal AI systems. It keeps 
 - Music / DJ Workflows: collection management, DJ set building, record labels, and Spotify export.
 - Downstream Bootstrap & Updates: create a personalized OS from Ethan OS and adopt upstream improvements safely while preserving local customizations, license, and attribution.
 
+### Things you can do today
+
+You can say things like:
+
+- **Guided Reading:** "I finished pages 1–15."
+- **Tailored Resume:** "Tailor my resume for this Senior Data Engineer role."
+- **Monthly Financial Review:** "Review my budget for August."
+- **Daily Schedule:** "Plan my day — I have dinner at 7."
+- **DJ Set Building:** "Build me a 90-minute techno set."
+
+Each of these uses your persistent personal context to produce a useful result without starting from scratch.
+
 ### Make it yours
 
 You can create your own downstream OS from this release. See [Create your own OS](getting-started/create-your-own-os.md).

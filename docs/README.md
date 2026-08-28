@@ -31,6 +31,16 @@ If you are new, start at the top and stop when you have enough detail. If you ar
 - [High-level architecture](concepts/architecture-overview.md)
 - [Project naming and attribution](project-naming.md)
 
+### Featured workflows
+
+These are the most concrete ways to see Ethan OS in action:
+
+- [Guided Reading](workflows/guided-reading.md)
+- [Tailored Resume](workflows/tailored-resume.md)
+- [Monthly Financial Review](workflows/monthly-financial-review.md)
+- [Daily Schedule](workflows/daily-schedule.md)
+- [DJ Set Building](workflows/music.md)
+
 ### Capabilities
 
 | capability | description | human workflow |
@@ -46,14 +56,15 @@ If you are new, start at the top and stop when you have enough detail. If you ar
 
 ### Workflows
 
+- [Guided Reading](workflows/guided-reading.md)
+- [Tailored Resume](workflows/tailored-resume.md)
+- [Monthly Financial Review](workflows/monthly-financial-review.md)
+- [Daily Schedule](workflows/daily-schedule.md)
+- [Build a DJ set](workflows/music.md)
 - [Capture a learning note](workflows/knowledge.md)
 - [Plan your week](workflows/planning.md)
-- [Monthly financial review](workflows/finance.md)
 - [Weekly health review](workflows/health.md)
-- [Tailor a resume](workflows/career.md)
-- [Build a DJ set](workflows/music.md)
 - [Schedule your week](workflows/schedule-planning.md)
-- [Guided Reading](workflows/guided-reading.md)
 
 ## For builders and contributors
 
