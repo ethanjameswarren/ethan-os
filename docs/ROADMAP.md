@@ -56,6 +56,7 @@ These are the shared services that make the vertical capabilities feel like one 
 | Review Orchestrator | Beta / Ready | `scripts/core/review_orchestrator.py`, `workflows/core/review-orchestrator.md`, `workflows/planning/review-goal.md`, and `workflows/core/review-decision.md` in place. Skips empty domains, surfaces decisions, goals, learning, and retention reviews, and delegates to domain workflows. | Harden cadence logic and add more domain-specific review delegations. |
 | Priority Alignment | Beta / Ready | `scripts/core/cross_domain_reasoning.py` detects `priority_mismatch` and `evidence_gap` for goals and projects. The Review Orchestrator and Goal Review workflows consume these findings. | Add schedule-aware validation and richer execution-to-goal feedback. |
 | Workflow Evaluation | In Development | `evaluations/context-engine/expectations.md` and `evaluations/cross-domain-reasoning/expectations.md` now define behavioral expectations. Tests validate retrieval, reasoning, and privacy boundaries. | Extend to other high-stakes workflows such as resume and schedule planning. |
+| Beta Usage / Friction Tracking | Beta / Ready | `core.friction-log` schema, `skills/core/capture-friction.md`, `workflows/core/capture-friction.md`, `workflows/core/review-friction-log.md`, `scripts/core/friction_log.py`, and deterministic tests are in place. Capture, private persistence, review/triage, and evaluation-candidate conversion work end-to-end. | Real-world usage refinement; do not expand into a full issue tracker. |
 | Workflow Orchestration | Exploring | Workflows call skills; workflow-to-workflow composition is not yet formal. | Design orchestration primitive for multi-workflow events. |
 | Proactive Assistance | Exploring | No background behavior; all prompts are user-initiated. | Define urgency/relevance thresholds and a manual proactive-surface skill. |
 | Privacy & Permissions | Planned | Privacy is enforced by architecture and `.gitignore`; client-scoped permissions are not implemented. | Design permission contract for desktop clients and integrations. |
@@ -132,7 +133,7 @@ Ideas that have come up but are not yet committed.
 Update this roadmap when:
 
 - a capability enters active development,
-- a capability becomes usable end-to-end,
+- a beta capability becomes usable end-to-end,
 - a beta capability graduates to stable,
 - a planned or exploring item is abandoned or deferred,
 - a significant new capability is approved,

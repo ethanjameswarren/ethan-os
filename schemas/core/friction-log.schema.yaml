@@ -1,0 +1,197 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Friction Log
+
+description: |
+  A lightweight, structured record of product-usage friction observed during
+  real-world Beta use of Ethan OS. Actual entries live in ethan-life; this
+  schema defines the canonical object shape.
+
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  status:
+    type: string
+    enum:
+      - open
+      - triaged
+      - planned
+      - fixed
+      - validated
+      - wont_fix
+      - cannot_reproduce
+    default: open
+    description: Simple lifecycle state of the feedback item.
+  summary:
+    type: string
+    description: Short, structured summary of the friction.
+  description:
+    type: string
+    description: Longer free-form description if needed.
+  feedback_type:
+    type: string
+    enum:
+      - asked_known_information
+      - irrelevant_context
+      - missing_context
+      - wrong_context
+      - missed_connection
+      - excessive_questions
+      - excessive_output
+      - under_explained
+      - over_explained
+      - saved_too_much
+      - failed_to_save
+      - wrong_persistence
+      - workflow_mismatch
+      - missed_orchestration
+      - bad_recommendation
+      - review_fatigue
+      - awkward_interaction
+      - incorrect_reasoning
+      - stale_state
+      - duplicate_state
+      - unclear_confirmation
+      - worked_well
+      - other
+    description: Taxonomy category. Use `other` for free-text fallbacks.
+  feedback_type_other:
+    type: string
+    description: Free-text type when feedback_type is `other`.
+  affected_capability:
+    type: string
+    description: Human-facing capability, e.g. "Guided Reading".
+  affected_workflow:
+    type: string
+    description: Workflow path, e.g. `workflows/knowledge/start-reading.md`.
+  affected_skill:
+    type: string
+    description: Skill path, e.g. `skills/core/context-assembly.md`.
+  user_expectation:
+    type: string
+    description: What the user reasonably expected to happen.
+  observed_behavior:
+    type: string
+    description: What the OS actually did.
+  severity:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+      - critical
+    description: Inferred or explicit severity.
+  frequency:
+    type: string
+    enum:
+      - once
+      - repeated
+      - recurring
+    default: once
+    description: Pattern of occurrence.
+  occurrence_count:
+    type: integer
+    default: 1
+    minimum: 1
+    description: Number of times this same open friction has been observed.
+  occurrence_dates:
+    type: array
+    items:
+      type: string
+      format: date
+    description: ISO dates of each observed occurrence.
+  occurrence_context_refs:
+    type: array
+    items:
+      type: string
+    description: Context bundle or object refs for each occurrence.
+  context_refs:
+    type: array
+    items:
+      type: string
+    description: Object, bundle, or reference IDs relevant to the report.
+  context_bundle_id:
+    type: string
+    description: ID of the core.context-bundle assembled when friction occurred.
+  context_summary:
+    type: string
+    description: Brief summary of the captured runtime context.
+  relevant_domain:
+    type: string
+    description: Domain (e.g. knowledge, planning, music) the friction occurred in.
+  related_object_ids:
+    type: array
+    items:
+      type: string
+    description: IDs of objects involved in the reported behavior.
+  root_cause_inferred:
+    type: string
+    enum:
+      - retrieval
+      - context_assembly
+      - reasoning
+      - workflow
+      - skill
+      - persistence
+      - routing
+      - confirmation
+      - orchestration
+      - documentation
+      - integration
+      - unknown
+    description: Tentative, inferred root-cause category. Marked as inferred, not fact.
+  root_cause_inference_note:
+    type: string
+    description: Why this root cause was tentatively assigned.
+  resolution_notes:
+    type: string
+    description: Notes on the attempted or implemented fix.
+  resolved_at:
+    type: string
+    format: date
+    description: When the item was moved to fixed, validated, wont_fix, or cannot_reproduce.
+  fix_reference:
+    type: string
+    description: ID or link to the change, commit, or design that addresses the issue.
+  validation_status:
+    type: string
+    enum:
+      - pending
+      - passed
+      - failed
+      - user_confirmed
+    description: Whether the fix has been validated.
+  test_evaluation_reference:
+    type: string
+    description: ID or path of the evaluation case created from this friction.
+  user_confirmed_resolution:
+    type: boolean
+    description: Whether the user confirmed the fix in real use.
+  user_confirmed_at:
+    type: string
+    format: date
+    description: When the user confirmed the fix.
+  is_positive:
+    type: boolean
+    default: false
+    description: True for positive signals (what worked well).
+  positive_outcome:
+    type: string
+    description: Brief description of the positive behavior.
+  source_phrase:
+    type: string
+    description: Original user phrase that triggered capture, sanitized or summarized.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

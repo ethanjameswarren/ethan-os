@@ -56,10 +56,14 @@ Classify user input into an intent and select the corresponding workflow.
 | continue learning | "Finished lecture 5", "Did the lab", "Watched the section on MCP" | `workflows/knowledge/guided-learning.md` |
 | review learning | "Quiz me on this week", "What have I learned so far?" | `workflows/knowledge/guided-learning.md` |
 | finish learning | "I finished the course", "I'm done with Statistics 301" | `workflows/knowledge/guided-learning.md` |
-| assess course fit | "Should I take this LinkedIn Learning course?", "Is this course worth it for me?" | `workflows/knowledge/guided-learning.md` |
+| || assess course fit | "Should I take this LinkedIn Learning course?", "Is this course worth it for me?" | `workflows/knowledge/guided-learning.md` |
+|| capture-friction | "That was annoying", "You already knew that", "Log this as friction", "That was actually really good" | `workflows/core/capture-friction.md` |
+|| review-friction | "Review my Ethan OS friction", "What has been annoying lately?", "What should we fix next?" | `workflows/core/review-friction-log.md` |
 
 ## Routing rules
 
+- Feedback-style statements about OS behavior ("That was annoying", "You already knew that", "That was actually good") route to `workflows/core/capture-friction.md`.
+- Review requests about friction or annoyances route to `workflows/core/review-friction-log.md`.
 - If intent is ambiguous, ask for clarification.
 - For substantive Life OS requests, follow the cross-repository execution order:
   `ethan-os` → `ethan-life` → `ethan-notion` → live Notion.

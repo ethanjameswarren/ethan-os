@@ -17,6 +17,9 @@ schemas:
   core.context-bundle:
     version: 1
     file: core/context-bundle.schema.yaml
+  core.friction-log:
+    version: 1
+    file: core/friction-log.schema.yaml
   knowledge.source:
     version: 1
     file: domains/knowledge/source.schema.yaml
