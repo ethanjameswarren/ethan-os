@@ -132,6 +132,12 @@ class UniversalRetriever:
                     self.by_link[obj_id].add(target)
                     self.by_link[target].add(obj_id)
 
+            # Index decision-related references.
+            for rel in ("related_goal_ids", "related_object_ids"):
+                for target in obj.get(rel, []) or []:
+                    self.by_link[obj_id].add(target)
+                    self.by_link[target].add(obj_id)
+
     def _tokens(self, text: str) -> list[str]:
         return [t.lower() for t in re.findall(r"[A-Za-z0-9_-]+", text)]
 

@@ -42,7 +42,12 @@ def _load_full_objects(bundle: dict, retriever: UniversalRetriever) -> dict[str,
 
 
 def _links_for(obj: dict) -> list[dict]:
-    return obj.get("links", []) or []
+    links = list(obj.get("links", []) or [])
+    for rel in ("related_goal_ids", "related_object_ids"):
+        for target in obj.get(rel, []) or []:
+            relation = "supports" if rel == "related_goal_ids" else "related_to"
+            links.append({"target": target, "relation": relation})
+    return links
 
 
 def _title(objects: dict, obj_id: str) -> str:

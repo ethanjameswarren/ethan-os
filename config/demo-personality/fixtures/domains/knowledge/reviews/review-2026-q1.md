@@ -3,10 +3,12 @@ id: rev-20260115-001
 schema: knowledge.review
 schema_version: 1
 title: Knowledge Review — Q1 2026
+status: active
 review_type: manual
 scope: domain
 target_ids:
   - idea-20260115-002
+next_review_at: 2026-08-28
 links:
   - target: idea-20260115-002
     relation: related_to

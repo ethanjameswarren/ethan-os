@@ -44,6 +44,9 @@ schemas:
   knowledge.learning-session:
     version: 1
     file: domains/knowledge/learning-session.schema.yaml
+  knowledge.decision:
+    version: 1
+    file: domains/knowledge/decision.schema.yaml
   career.evidence:
     version: 1
     file: domains/career/evidence.schema.yaml

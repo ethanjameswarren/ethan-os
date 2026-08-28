@@ -40,4 +40,7 @@ Classify user input into one of the v0.1 intents.
 
 - If confidence is low, ask for clarification rather than guess.
 - Learning-related inputs default to `process-learning-notes`, unless the user is clearly starting, continuing, reviewing, or finishing a course or program.
+- Decision-like inputs default to `capture-decision`: "I decided to...", "I chose...", "I'm going with...", "I am pausing...".
+- Goal-review inputs default to `review-goal`: "How am I doing on this goal?", "Review my AI-engineering goal".
+- Review requests default to `review-orchestrate`: "What should I review?", "What is due for review?", "Sunday review".
 - Questions starting with "what", "how", "why", "do I", "have I" default to `ask`.

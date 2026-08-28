@@ -1,0 +1,76 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Decision
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - decision_date
+  - created_at
+  - provenance
+properties:
+  status:
+    type: string
+    enum:
+      - active
+      - implemented
+      - superseded
+      - reversed
+      - completed
+      - abandoned
+  decision_date:
+    type: string
+    format: date
+  context:
+    type: string
+  options_considered:
+    type: array
+    items:
+      type: string
+  chosen_option:
+    type: string
+  reasoning:
+    type: string
+  assumptions:
+    type: array
+    items:
+      type: string
+  risks:
+    type: array
+    items:
+      type: string
+  expected_outcomes:
+    type: array
+    items:
+      type: string
+  related_goal_ids:
+    type: array
+    items:
+      type: string
+  related_object_ids:
+    type: array
+    items:
+      type: string
+  confidence:
+    type: string
+    enum:
+      - high
+      - medium
+      - low
+  review_date:
+    type: string
+    format: date
+  actual_outcome:
+    type: string
+  lessons_learned:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

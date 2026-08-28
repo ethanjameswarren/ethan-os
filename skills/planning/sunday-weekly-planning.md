@@ -34,16 +34,22 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
   - unusual overloads.
 - Ask at most one or two targeted questions if a pattern is unclear.
 
-### 2. Cross-domain reasoning
+### 2. Review orchestration
 
-- Run `skills/core/cross-domain-reasoning.md` over the `core.context-bundle` with modes:
+- Run `scripts/core/review_orchestrator.py` to decide which reviews are worth running this week.
+- Run each recommended review through its delegated workflow.
+- Capture any decisions made during review.
+
+### 3. Cross-domain reasoning
+
+- Run `skills/core/cross-domain-reasoning.md` over the `core.context-bundle` and review findings with modes:
   - `connection` — top goals and their supporting work
   - `tradeoff` — competing commitments
   - `priority_mismatch` — active priorities with little recent execution
   - `gap` — important items missing supporting actions
 - Use the findings to inform the draft plan, but do not let reasoning directly schedule changes.
 
-### 3. Load next week's fixed reality
+### 4. Load next week's fixed reality
 
 - Load the `planning.baseline-schedule` as the starting shape.
 - Load active overrides (`one_off` and `temporary`) that cover the upcoming week.

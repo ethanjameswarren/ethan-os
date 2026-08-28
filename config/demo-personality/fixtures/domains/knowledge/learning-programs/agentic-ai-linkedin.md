@@ -15,6 +15,7 @@ learning_goals:
 prior_familiarity: some_exposure
 target_outcome: practical implementation
 desired_depth: normal
+target_completion_date: 2026-09-05
 current_module_id: mod-agents-tools
 completed_module_ids:
   - mod-intro

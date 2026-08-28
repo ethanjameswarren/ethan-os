@@ -8,10 +8,13 @@ Periodically surface what needs attention across active Goals, Projects, and Tas
 
 1. Build a `core.context-request` with intent `sunday-review` and domains `[planning, knowledge, career, health, finance]`.
 2. Run `scripts/core/context_assembly.py` to produce a `core.context-bundle` of active goals, projects, tasks, learning programs, schedule constraints, and relevant reviews.
-3. Run `skills/planning/suggest-next-actions.md` to identify unblocked tasks, blocked items, stale projects, and goals without momentum.
-4. If the intent is "sunday-review" or the user asks to plan next week, run `skills/planning/sunday-weekly-planning.md` on the bundle to build a draft `planning.weekly-plan`.
-5. Otherwise, optionally create a summary artifact of the findings (plain text; no new schema required for v0.1).
-6. Return the prioritized findings or the candidate weekly plan to the user.
+3. Run `scripts/core/review_orchestrator.py` to determine which reviews are actually worth running this week.
+4. Run `skills/core/cross-domain-reasoning.md` to surface cross-domain patterns in the bundle.
+5. Run the delegated reviews returned by the orchestrator (e.g., `workflows/planning/review-goal.md`, `workflows/core/review-decision.md`).
+6. Run `skills/planning/suggest-next-actions.md` to identify unblocked tasks, blocked items, stale projects, and goals without momentum.
+7. If the intent is "sunday-review" or the user asks to plan next week, run `skills/planning/sunday-weekly-planning.md` on the bundle and the review findings to build a draft `planning.weekly-plan`.
+8. Otherwise, optionally create a summary artifact of the findings (plain text; no new schema required for v0.1).
+9. Return the prioritized findings or the candidate weekly plan to the user.
 
 ## Output
 
