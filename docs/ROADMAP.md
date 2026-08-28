@@ -38,7 +38,7 @@ Ethan OS is a public behavior layer for personal AI systems. The core runtime, v
 | Schedule Planning | Beta / Ready | End-to-end baseline, weekly planning, daily replanning, overrides, conflict detection, and schedule diagnosis implemented. Currently being validated through real-world use. | Real-world usage and calendar integration refinement |
 | Google Calendar Read Integration | In Development | OAuth, read client, event normalization, calendar selection config, and planning integration implemented; awaiting real-world credential test. | Real-world OAuth test and calendar write-back decision |
 | Desktop AI Client Access | Planned | Conceptually supported by the file-based architecture; no official non-IDE desktop-client bridge implemented or validated yet. | Design and validate an MCP/server bridge that keeps ethan-life private and client adapters vendor-agnostic. |
-| Guided Learning | In Development | Schemas, skills, workflow, and docs for university, online, certification, and workplace learning. Deterministic tests pending. | Real-world friction testing across course formats and retention integration. |
+| Guided Learning | Beta / Ready | Supports university courses, online/self-paced learning, certifications, and workplace training with active recall, structured sessions, selective retention, progress tracking, assessment prep, and Sunday planning integration. Deterministic tests pass; real-world usage is now being used to refine prompts, material ingestion, and retention behavior. | LinkedIn Learning live test, prompt and retention refinement, and later syllabus/material ingestion automation |
 
 ## Now
 
