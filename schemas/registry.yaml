@@ -26,6 +26,12 @@ schemas:
   knowledge.review:
     version: 1
     file: domains/knowledge/review.schema.yaml
+  knowledge.reading-session:
+    version: 1
+    file: domains/knowledge/reading-session.schema.yaml
+  knowledge.reading-profile:
+    version: 1
+    file: domains/knowledge/reading-profile.schema.yaml
   career.evidence:
     version: 1
     file: domains/career/evidence.schema.yaml

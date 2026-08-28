@@ -1,0 +1,143 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Reading Session
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - source_id
+  - created_at
+  - provenance
+properties:
+  source_id:
+    type: string
+    description: ID of the associated knowledge.source.
+  session_date:
+    type: string
+    format: date
+    description: Date of the reading session.
+  pages:
+    type: object
+    description: Page range covered in this session.
+    properties:
+      start:
+        type: integer
+      end:
+        type: integer
+    required:
+      - start
+      - end
+  spoiler_boundary_at:
+    type: integer
+    description: Highest page the user had completed at the time of this session.
+  reading_mode:
+    type: string
+    enum:
+      - nonfiction
+      - fiction
+      - music_history_culture
+      - other
+    description: Reading mode used for this session.
+  user_observations:
+    type: array
+    description: Preserved user observations from the discussion.
+    items:
+      type: object
+      properties:
+        text:
+          type: string
+        page:
+          type: integer
+      required:
+        - text
+  discussion_summary:
+    type: string
+    description: Synthesis of the conversation, clearly labeled as AI synthesis.
+  questions_asked:
+    type: array
+    description: Questions posed by the OS during this session.
+    items:
+      type: string
+  extracted_insights:
+    type: array
+    description: Session-level insights not yet promoted to durable ideas.
+    items:
+      type: object
+      properties:
+        insight_id:
+          type: string
+          description: Stable identifier for this insight within the session, used by retention tracking.
+        title:
+          type: string
+        note:
+          type: string
+        retention_priority:
+          type: string
+          enum:
+            - low
+            - normal
+            - high
+          description: Estimated value of this insight for long-term retention.
+        promoted_idea_id:
+          type: string
+          description: ID of a knowledge.idea if this insight was promoted.
+      required:
+        - insight_id
+        - title
+        - note
+  predictions:
+    type: array
+    description: User predictions, primarily for fiction.
+    items:
+      type: object
+      properties:
+        text:
+          type: string
+        resolved:
+          type: boolean
+      required:
+        - text
+  open_questions:
+    type: array
+    description: Open questions raised during the session.
+    items:
+      type: string
+  applications:
+    type: array
+    description: Actionable applications or experiments derived from the discussion.
+    items:
+      type: string
+  connections:
+    type: array
+    description: Links to prior knowledge surfaced during the session.
+    items:
+      type: object
+      properties:
+        target_id:
+          type: string
+        description:
+          type: string
+      required:
+        - target_id
+        - description
+  notable_passages:
+    type: array
+    description: Passages or page references noted by the user.
+    items:
+      type: object
+      properties:
+        page:
+          type: integer
+        text:
+          type: string
+      required:
+        - page
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

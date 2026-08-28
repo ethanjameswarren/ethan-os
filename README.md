@@ -19,6 +19,15 @@ Ethan OS is a modular personal AI operating system. It owns behavior: instructio
 
 - capture
 - process learning notes
+- start reading
+- continue reading
+- discuss reading
+- finish reading
+- reading status
+- review reading
+- update reading profile
+- manage book library
+- book recommendation
 - ask / retrieve
 - summarize
 - review

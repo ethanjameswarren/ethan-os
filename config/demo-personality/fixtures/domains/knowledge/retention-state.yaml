@@ -1,0 +1,105 @@
+# Demo retention state for Guided Reading tests.
+# Mirrors the canonical ethan-life/domains/knowledge/retention-state.yaml format.
+
+version: 1
+retention_items:
+  - item_id: ret-20260827-001
+    source_type: session_insight
+    source_id: rs-20260827-001
+    insight_id: tis-stock-flow-labor
+    source_book_id: src-20260827-001
+    title: System state vs. underlying flows
+    first_learned_at: 2026-08-27
+    last_reviewed_at: 2026-08-27
+    next_review_due_at: 2026-08-28
+    interval_index: 2
+    successful_recalls: 2
+    failed_recalls: 0
+    current_confidence: high
+    retention_priority: high
+    last_recall_result: strong
+    status: active
+
+  - item_id: ret-20260827-002
+    source_type: session_insight
+    source_id: rs-20260827-001
+    insight_id: tis-causal-observability
+    source_book_id: src-20260827-001
+    title: Observability of causal drivers
+    first_learned_at: 2026-08-27
+    last_reviewed_at: 2026-08-27
+    next_review_due_at: 2026-08-28
+    interval_index: 1
+    successful_recalls: 1
+    failed_recalls: 0
+    current_confidence: medium
+    retention_priority: normal
+    last_recall_result: partial
+    status: active
+
+  - item_id: ret-20260827-003
+    source_type: session_insight
+    source_id: rs-20260827-001
+    insight_id: tis-identity-votes
+    source_book_id: src-20260827-001
+    title: Habits as identity votes
+    first_learned_at: 2026-08-27
+    last_reviewed_at: 2026-08-27
+    next_review_due_at: 2026-08-27
+    interval_index: 0
+    successful_recalls: 0
+    failed_recalls: 1
+    current_confidence: low
+    retention_priority: normal
+    last_recall_result: failed
+    status: active
+
+  - item_id: ret-20260827-004
+    source_type: session_insight
+    source_id: rs-20260827-002
+    insight_id: dune-bene-gesserit-distrust
+    source_book_id: src-20260827-002
+    title: Distrust of Bene Gesserit
+    first_learned_at: 2026-08-27
+    last_reviewed_at: null
+    next_review_due_at: 2026-08-28
+    interval_index: 0
+    successful_recalls: 0
+    failed_recalls: 0
+    current_confidence: medium
+    retention_priority: normal
+    last_recall_result: null
+    status: active
+
+  - item_id: ret-20260827-005
+    source_type: idea
+    source_id: idea-20260115-001
+    source_book_id: src-20260115-001
+    title: You fall to the level of your systems
+    first_learned_at: 2026-01-15
+    last_reviewed_at: 2026-08-27
+    next_review_due_at: 2026-08-28
+    interval_index: 3
+    successful_recalls: 3
+    failed_recalls: 0
+    current_confidence: high
+    retention_priority: high
+    last_recall_result: strong
+    status: active
+
+  - item_id: ret-20260827-006
+    source_type: session_insight
+    source_id: rs-20260827-001
+    insight_id: tis-1-percent-cliche
+    source_book_id: src-20260827-001
+    title: 1% improvements may be cliché
+    first_learned_at: 2026-08-27
+    last_reviewed_at: null
+    next_review_due_at: null
+    interval_index: 0
+    successful_recalls: 0
+    failed_recalls: 0
+    current_confidence: low
+    retention_priority: low
+    last_recall_result: null
+    status: archived

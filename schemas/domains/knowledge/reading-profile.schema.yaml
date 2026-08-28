@@ -1,0 +1,106 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Reading Profile
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - source_id
+  - created_at
+  - provenance
+properties:
+  source_id:
+    type: string
+    description: ID of the associated knowledge.source.
+  familiarity_level:
+    type: string
+    enum:
+      - unfamiliar
+      - some_exposure
+      - familiar
+      - very_familiar
+  exposure_notes:
+    type: array
+    description: Free-text notes about prior exposure to the source or related material.
+    items:
+      type: string
+  read_context:
+    type: string
+    enum:
+      - first_read
+      - reread
+      - partial_read
+      - reference_read
+      - other
+  discussion_goals:
+    type: array
+    description: Topics or lenses the user wants to focus on while reading.
+    items:
+      type: string
+  spoiler_policy:
+    type: string
+    enum:
+      - strict_current_page
+      - known_material_ok
+      - full_spoilers_ok
+    description: User-defined spoiler boundary policy. Overrides familiarity inferences.
+  prior_questions:
+    type: array
+    description: Optional questions or opinions the user already holds.
+    items:
+      type: string
+  discussion_depth:
+    type: string
+    enum:
+      - light
+      - normal
+      - deep
+    default: normal
+  source_access:
+    type: string
+    enum:
+      - metadata_only
+      - model_knowledge
+      - full_text_available
+    description: Level of source material available for grounded reading discussions.
+  content_locator:
+    type: string
+    description: Path, URL, or identifier for the accessible digital source. Must not contain secrets.
+  content_format:
+    type: string
+    enum:
+      - pdf
+      - epub
+      - txt
+      - markdown
+      - other
+  ingestion_status:
+    type: string
+    enum:
+      - not_started
+      - pending
+      - complete
+      - failed
+  last_indexed_at:
+    type: string
+    format: date
+    description: Date the source content was last indexed or inspected.
+  page_alignment:
+    type: string
+    enum:
+      - exact
+      - approximate
+      - unknown
+    description: Confidence that available digital page numbers match the user's edition.
+  source_provenance:
+    type: string
+    description: Human-readable note on where the accessible source came from and any access restrictions.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

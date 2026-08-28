@@ -38,9 +38,78 @@ properties:
     enum:
       - unread
       - reading
+      - paused
       - finished
+      - abandoned
       - reference
+    description: Reading status of the source. For books this represents the reading lifecycle.
   rating:
     type: string
+  edition:
+    type: string
+    description: Optional edition information for books.
+  isbn:
+    type: string
+    description: Optional ISBN for books.
+  publication_year:
+    type: integer
+    description: Optional publication year for books.
+  total_pages:
+    type: integer
+    description: Optional total page count for books.
+  ownership_status:
+    type: string
+    enum:
+      - owned_physical
+      - owned_digital
+      - borrowed
+      - wishlist
+      - not_owned
+      - unknown
+    description: Ownership/access status for books, distinct from reading status.
+  acquired_at:
+    type: string
+    format: date
+    description: Optional date the book was acquired.
+  acquisition_source:
+    type: string
+    description: Optional note on where the book was obtained (purchase, gift, library, etc.).
+  format:
+    type: string
+    enum:
+      - hardcover
+      - paperback
+      - ebook
+      - audiobook
+      - pdf
+      - epub
+      - other
+    description: Optional format for books.
+  reading_mode:
+    type: string
+    enum:
+      - nonfiction
+      - fiction
+      - music_history_culture
+      - other
+    description: Adaptive reading mode for guided reading.
+  started_at:
+    type: string
+    format: date
+    description: Date reading began.
+  finished_at:
+    type: string
+    format: date
+    description: Date reading was completed.
+  tags:
+    type: array
+    items:
+      type: string
+    description: Optional themes, domains, or genres for library organization and recommendations.
+  user_interest_notes:
+    type: array
+    items:
+      type: string
+    description: Optional free-text notes about why the user is interested in this book.
   provenance:
     $ref: "../../core/provenance.schema.yaml"

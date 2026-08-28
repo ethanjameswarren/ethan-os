@@ -1,0 +1,42 @@
+# Demo active reading state for Guided Reading tests.
+# Mirrors the canonical ethan-life/domains/knowledge/reading-state.yaml format.
+
+version: 1
+active_books:
+  - source_id: src-20260827-001
+    status: active
+    current_page: 15
+    last_completed_range:
+      start: 1
+      end: 15
+    spoiler_boundary: 15
+    last_reading_at: 2026-08-27
+    last_session_id: rs-20260827-001
+  - source_id: src-20260827-002
+    status: active
+    current_page: 35
+    last_completed_range:
+      start: 1
+      end: 35
+    spoiler_boundary: 35
+    last_reading_at: 2026-08-27
+    last_session_id: rs-20260827-002
+  - source_id: src-20260827-003
+    status: active
+    current_page: 20
+    last_completed_range:
+      start: 1
+      end: 20
+    spoiler_boundary: 20
+    last_reading_at: 2026-08-27
+    last_session_id: rs-20260827-003
+
+reading_queue:
+  - source_id: src-20260827-005
+    queue_position: 1
+    status: next_up
+    reason: Very familiar with the story; good follow-up to current nonfiction.
+  - source_id: src-20260827-006
+    queue_position: 2
+    status: queued
+    reason: Owned unread; strong systems/logistics theme.

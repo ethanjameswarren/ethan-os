@@ -6,6 +6,9 @@ title: Atomic Habits
 source_type: book
 author: James Clear
 status: finished
+ownership_status: owned_physical
+format: paperback
+rating: 4/5
 created_at: 2026-01-15
 updated_at: 2026-01-15
 provenance:

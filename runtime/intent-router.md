@@ -9,7 +9,20 @@ Classify user input into an intent and select the corresponding workflow.
 | intent | trigger examples | workflow |
 |--------|------------------|----------|
 | capture | "I had a thought...", "Save this..." | `workflows/core/capture-and-route.md` |
-| process learning notes | "Finished chapter 4...", "Here are my notes on..." | `workflows/knowledge/process-learning-notes.md` |
+| process learning notes | "Here are my notes on...", "Save these learning notes" | `workflows/knowledge/process-learning-notes.md` |
+| start reading | "I'm starting Dune", "I'm reading Thinking in Systems", "Start a reading session for Good Strategy Bad Strategy" | `workflows/knowledge/start-reading.md` |
+| continue reading | "Finished pages 1-15", "Read through page 42", "Did another chapter", "I got to page 80", "Just finished 16-32", "Did 16-32" | `workflows/knowledge/continue-reading.md` |
+| discuss reading | "The Bene Gesserit seem sketchy", "This reminds me of work", "I don't buy his argument here", "What do you think about this idea?" | `workflows/knowledge/discuss-reading.md` |
+| finish reading | "I finished Dune", "Done with the book", "Finished Thinking in Systems" | `workflows/knowledge/finish-reading.md` |
+| reading status | "What am I reading?", "Where am I in Dune?", "What have I thought about Thinking in Systems so far?", "What books have I finished?" | `workflows/knowledge/reading-status.md` |
+| review reading | "What ideas are due for review?", "Quiz me on Thinking in Systems.", "What have I retained from Dune?" | `workflows/knowledge/review-reading.md` |
+| update reading profile | "I've actually read this before", "You can spoil Dune", "Don't spoil anything beyond the movies", "I want to focus more on the ecology", "Let's keep the questions lighter" | `workflows/knowledge/update-reading-profile.md` |
+| manage book library | "I bought The Box.", "I own Dune already.", "Add Fooled by Randomness to my wishlist.", "I have this on Kindle.", "Mark Thinking in Systems as paused." | `workflows/knowledge/manage-book-library.md` |
+| bootstrap library | "Here are the books I own...", "These are books I've already read...", "Add these to my wishlist..." | `workflows/knowledge/manage-book-library.md` |
+| book recommendation | "What should I read next?", "What should I buy next?", "Give me something completely different.", "What should I read after Dune?", "Show my reading library." | `workflows/knowledge/book-recommendation.md` |
+| build reading queue | "Build me my next 5-book queue.", "Put Dune next.", "Move Good Strategy after Dune.", "What's my reading queue?" | `workflows/knowledge/build-reading-queue.md` |
+| reading stats | "Show my reading stats.", "What have I finished this year?", "How many books do I own that I haven't read?" | `workflows/knowledge/reading-status.md` |
+| cross-reading retrieval | "What have I learned about incentives?", "What did I think about Dune's politics?", "What themes keep coming up across books?" | `workflows/knowledge/reading-status.md` |
 | ask / retrieve | "What do I know about...?", "What have I learned about...?" | `workflows/core/ask.md` |
 | summarize | "Summarize Atomic Habits" | `workflows/knowledge/process-learning-notes.md` (or `workflows/core/ask.md`) |
 | review | "What should I review?" | `workflows/core/review.md` |
@@ -43,3 +56,7 @@ Classify user input into an intent and select the corresponding workflow.
   messages (track references, role/energy/rating statements, "next", "done") route to
   `capture set audition feedback` rather than `capture listening note`, unless a single-release
   `current.yaml` session is also explicitly active and Ethan's message clearly refers to it.
+- For reading messages, use `ethan-life/domains/knowledge/reading-state.yaml` to resolve active books.
+  - Exactly one active book + a page-range or reading observation → route to `continue reading` or `discuss reading`.
+  - Multiple active books + ambiguous reference → ask which book.
+  - No active books + reading language → route to `start reading` or ask for the title.
