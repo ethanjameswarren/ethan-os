@@ -1,0 +1,87 @@
+{
+  "kind": "calendar#events",
+  "items": [
+    {
+      "id": "event-work-meeting-001",
+      "summary": "Work meeting",
+      "status": "confirmed",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T08:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T09:00:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": []
+    },
+    {
+      "id": "event-team-standup-001",
+      "summary": "Team standup",
+      "status": "confirmed",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T09:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T09:30:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": []
+    },
+    {
+      "id": "event-dentist-001",
+      "summary": "Dentist",
+      "status": "confirmed",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T19:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T19:45:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": []
+    },
+    {
+      "id": "event-birthday-001",
+      "summary": "Friend's birthday",
+      "status": "confirmed",
+      "transparency": "transparent",
+      "start": { "date": "2026-01-08" },
+      "end": { "date": "2026-01-09" },
+      "organizer": { "self": false },
+      "attendees": []
+    },
+    {
+      "id": "event-cancelled-sync-001",
+      "summary": "Cancelled sync",
+      "status": "cancelled",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T14:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T15:00:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": []
+    },
+    {
+      "id": "event-tentative-1on1-001",
+      "summary": "Tentative 1:1",
+      "status": "tentative",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T11:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T11:30:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": []
+    },
+    {
+      "id": "event-declined-meeting-001",
+      "summary": "Declined meeting",
+      "status": "confirmed",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T16:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T17:00:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": [
+        { "email": "user@example.com", "self": true, "responseStatus": "declined" }
+      ]
+    },
+    {
+      "id": "event-moved-meeting-001",
+      "summary": "Moved meeting",
+      "status": "confirmed",
+      "transparency": "opaque",
+      "start": { "dateTime": "2026-01-08T14:00:00-05:00" },
+      "end": { "dateTime": "2026-01-08T15:00:00-05:00" },
+      "organizer": { "self": false },
+      "attendees": []
+    }
+  ]
+}

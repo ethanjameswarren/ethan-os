@@ -36,6 +36,7 @@ Ethan OS is a public behavior layer for personal AI systems. The core runtime, v
 | Downstream Bootstrap & Updates | Beta | Bootstrap script, safe update assessment, conflict classification, validation, rollback, Apache-2.0 licensing/attribution support | Real-world fork/clone testing and refinement |
 | Human-Facing Documentation | Beta | README, docs index, core concepts, all major capability docs, representative workflow summaries per domain, and getting-started guides created | Additional polish and contributor documentation may still evolve |
 | Schedule Planning | Beta / Ready | End-to-end baseline, weekly planning, daily replanning, overrides, conflict detection, and schedule diagnosis implemented. Currently being validated through real-world use. | Real-world usage and calendar integration refinement |
+| Google Calendar Read Integration | In Development | OAuth, read client, event normalization, calendar selection config, and planning integration implemented; awaiting real-world credential test. | Real-world OAuth test and calendar write-back decision |
 
 ## Now
 

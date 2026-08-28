@@ -6,7 +6,6 @@ This document records future integration points. No adapters are implemented in 
 
 - Obsidian: read/write compatible Markdown vault
 - Notion: sync structured objects
-- Google Calendar: scheduling for Planning domain
 - Gmail: capture source and action extraction
 - Financial data providers: Finance domain
 - Fitness integrations: Health domain

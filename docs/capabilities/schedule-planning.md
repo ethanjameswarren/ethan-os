@@ -69,6 +69,10 @@ Canonical state lives in `ethan-life/domains/planning/`:
 - **Weekly plan** — `weekly-plans/<plan>.md`: concrete blocks for a specific week, with sources and categories.
 - **Schedule diagnosis notes** — optional notes on tradeoffs and recommendations, kept inside the relevant plan or override.
 
+## Google Calendar
+
+Google Calendar can provide real fixed commitments, but Ethan OS remains the owner of your baseline schedule, preferences, and generated plans. Calendar events are treated as date-specific external commitments, not as baseline routines. See [Google Calendar integration](../integrations/google-calendar.md).
+
 ## Important behaviors
 
 - Never silently convert a one-off into a permanent routine.
@@ -77,6 +81,7 @@ Canonical state lives in `ethan-life/domains/planning/`:
 - Never add optional blocks if they crowd fixed or flexible recovery time.
 - Surface dependency implications before applying changes.
 - Diagnose schedule problems with targeted fixes, not blanket overhauls.
+- External calendar events do not modify the baseline.
 
 ## Related workflows
 

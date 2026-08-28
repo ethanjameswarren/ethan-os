@@ -18,11 +18,13 @@ Examples:
 2. Loads your baseline schedule.
 3. Loads any overrides that apply to the relevant week.
 4. Loads active goals and tasks.
-5. Generates a draft weekly plan:
+5. Loads Google Calendar events if the integration is enabled.
+6. Treats busy calendar events as fixed commitments.
+7. Generates a draft weekly plan:
    - fixed blocks first,
    - flexible blocks second,
    - optional blocks last.
-6. Resolves conflicts by moving flexible items or dropping optional ones.
+8. Resolves conflicts by moving flexible items or dropping optional ones.
 7. Warns about dependency cascades (e.g., earlier departure affects wake and bedtime).
 8. Presents the plan or diagnosis.
 9. Applies changes only after confirmation and at the correct scope.

@@ -17,3 +17,5 @@ venv/
 Thumbs.db
 
 # Do NOT add real personal data to this public repository.
+.env
+*.env

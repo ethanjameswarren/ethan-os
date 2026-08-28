@@ -28,6 +28,7 @@ Examples:
 ```
 Baseline
 + today's fixed commitments
++ Google Calendar events (if connected)
 + temporary changes
 + current priorities
 = today's plan

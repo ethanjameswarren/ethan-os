@@ -67,6 +67,7 @@ properties:
             - task
             - goal
             - manual
+            - calendar
         category:
           type: string
           enum:
