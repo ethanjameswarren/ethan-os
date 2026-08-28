@@ -27,7 +27,7 @@ If you are new, start at the top and stop when you have enough detail. If you ar
 ### Concepts
 
 - [What is Ethan OS?](concepts/what-is-ethan-os.md)
-- [Where Ethan OS is going](concepts/where-ethan-os-is-going.md)
+- [Vision](VISION.md) — what Ethan OS is trying to become
 - [Core principles](concepts/principles.md)
 - [High-level architecture](concepts/architecture-overview.md)
 - [Project naming and attribution](project-naming.md)

@@ -2,6 +2,8 @@
 
 A concise human-facing view of where Ethan OS is today and where it is headed.
 
+For the long-term design philosophy and destination, see [VISION.md](../VISION.md).
+
 Last reviewed: 2026-08-28
 
 ## Maturity model
