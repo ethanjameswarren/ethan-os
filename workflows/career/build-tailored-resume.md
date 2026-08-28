@@ -41,7 +41,17 @@ Run `scripts/core/context_assembly.py` to produce a `core.context-bundle` contai
 
 Then search `ethan-life/domains/career/evidence/` if the bundle needs expansion.
 
-### 3. Match evidence to requirements
+### 3. Cross-domain reasoning
+
+Run `skills/core/cross-domain-reasoning.md` with modes:
+
+- `connection` — which projects support the job target
+- `transfer_opportunity` — which learning could be framed as skill evidence
+- `evidence_gap` — where a claimed capability lacks supporting evidence
+
+Use the findings to guide which evidence to select and which gaps to surface honestly.
+
+### 4. Match evidence to requirements
 
 For each important job requirement, classify Ethan's evidence as:
 

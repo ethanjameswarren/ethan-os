@@ -25,7 +25,7 @@ def _contains(items, obj_id):
 def test_explicit_reference():
     print("A. Explicit reference retrieval")
     r = build_retriever(demo_only=True)
-    results = r.retrieve(query="", entity_refs=["lp-agentic-ai-linkedin"], top_k=5)
+    results = r.retrieve(query="", entity_refs=["lp-agentic-ai-linkedin"], top_k=5)["results"]
     assert any(res["object_id"] == "lp-agentic-ai-linkedin" for res in results)
     print("  PASS")
 
@@ -33,7 +33,7 @@ def test_explicit_reference():
 def test_cross_domain_retrieval():
     print("B. Cross-domain retrieval")
     r = build_retriever(demo_only=True)
-    results = r.retrieve(query="agent evaluation", domains=["knowledge", "planning", "career"], top_k=10)
+    results = r.retrieve(query="agent evaluation", domains=["knowledge", "planning", "career"], top_k=10)["results"]
     ids = {res["object_id"] for res in results}
     assert "project-agent-eval-prototype" in ids
     assert "idea-agent-evaluation" in ids
@@ -44,7 +44,7 @@ def test_cross_domain_retrieval():
 def test_domain_filtering():
     print("C. Domain filtering")
     r = build_retriever(demo_only=True)
-    results = r.retrieve(query="agent", avoid_domains=["career"], top_k=20)
+    results = r.retrieve(query="agent", avoid_domains=["career"], top_k=20)["results"]
     assert all(res["domain"] != "career" for res in results)
     print("  PASS")
 
@@ -52,7 +52,7 @@ def test_domain_filtering():
 def test_current_state_preference():
     print("D. Current-state preference")
     r = build_retriever(demo_only=True)
-    results = r.retrieve(query="agent evaluation", top_k=5, statuses=["active", "in_progress", "reading", "learning"])
+    results = r.retrieve(query="agent evaluation", top_k=5, statuses=["active", "in_progress", "reading", "learning"])["results"]
     ids = {res["object_id"] for res in results}
     # The active learning program or active project should rank.
     assert any(res["status"] in ("active", "in_progress", "reading", "learning") for res in results)
@@ -62,7 +62,7 @@ def test_current_state_preference():
 def test_relationship_traversal():
     print("E. Relationship traversal")
     r = build_retriever(demo_only=True)
-    results = r.retrieve(query="AI engineering", top_k=10, depth="deep")
+    results = r.retrieve(query="AI engineering", top_k=10, depth="deep")["results"]
     ids = {res["object_id"] for res in results}
     # Direct + one-hop should bring in linked project/learning/career.
     assert "goal-ai-engineering" in ids
@@ -117,7 +117,7 @@ def test_deep_context():
 def test_no_result_behavior():
     print("H. No-result behavior")
     r = build_retriever(demo_only=True)
-    results = r.retrieve(query="quantum biology pottery", top_k=5)
+    results = r.retrieve(query="quantum biology pottery", top_k=5)["results"]
     assert len(results) == 0
     print("  PASS")
 

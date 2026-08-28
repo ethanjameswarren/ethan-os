@@ -51,7 +51,7 @@ def assemble(request: dict, retriever: UniversalRetriever | None = None, demo_on
     if desired_depth == "light":
         statuses = ["active", "reading", "learning", "in_progress", "accepted", "current"]
 
-    results = retriever.retrieve(
+    retrieval = retriever.retrieve(
         query=query,
         intent=intent,
         domains=domains,
@@ -62,6 +62,8 @@ def assemble(request: dict, retriever: UniversalRetriever | None = None, demo_on
         time_horizon=time_horizon,
         statuses=statuses,
     )
+    results = retrieval["results"]
+    unresolved_refs = retrieval["unresolved_refs"]
 
     # Build a map of object details.
     object_map = {}
@@ -128,6 +130,7 @@ def assemble(request: dict, retriever: UniversalRetriever | None = None, demo_on
         "related_knowledge": related_knowledge,
         "active_constraints": active_constraints,
         "preferences": preferences,
+        "unresolved_refs": unresolved_refs,
         "provenance": {
             "source": "skills/core/context-assembly",
             "retrieved_from": ["ethan-life/domains", "ethan-os/config/demo-personality/fixtures/domains"],

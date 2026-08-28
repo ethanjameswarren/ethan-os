@@ -243,8 +243,8 @@ class UniversalRetriever:
         top_k: int = 15,
         depth: str = "direct",
         time_horizon: str = "now",
-    ) -> list[dict]:
-        """Return ranked retrieval results."""
+    ) -> dict:
+        """Return ranked retrieval results and unresolved references."""
         query_text = f"{query} {intent}".strip()
         query_tokens = set(self._tokens(query_text))
 
@@ -309,7 +309,21 @@ class UniversalRetriever:
                 },
             })
 
-        return results
+        # Identify unresolved explicit references.
+        resolved_refs = set()
+        for ref in refs:
+            if ref in self.objects:
+                resolved_refs.add(ref)
+            for obj in self.objects.values():
+                if (obj.get("title") or "").lower() == (ref or "").lower():
+                    resolved_refs.add(ref)
+                    break
+        unresolved_refs = [ref for ref in (entity_refs or []) if ref and ref not in resolved_refs]
+
+        return {
+            "results": results,
+            "unresolved_refs": unresolved_refs,
+        }
 
     def _explain(self, obj: dict, score: float, query_tokens: set[str], refs: set[str]) -> str:
         reasons = []

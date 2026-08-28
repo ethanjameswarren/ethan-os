@@ -9,8 +9,9 @@ Answer a natural-language question from stored knowledge.
 1. Parse the question and classify intent.
 2. Build a `core.context-request` for the question.
 3. Run `scripts/core/context_assembly.py` to retrieve a `core.context-bundle` across relevant domains.
-4. Use `skills/knowledge/answer-question.md` to reason over the bundle and compose a concise answer with citations.
-5. Return answer, cited object IDs, and confidence.
+4. Run `skills/core/cross-domain-reasoning.md` to identify connections, gaps, and transfer opportunities in the bundle.
+5. Use `skills/knowledge/answer-question.md` to reason over the bundle and the cross-domain findings to compose a concise answer with citations.
+6. Return answer, cited object IDs, and confidence.
 
 ## Output
 

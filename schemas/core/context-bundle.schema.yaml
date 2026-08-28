@@ -79,6 +79,11 @@ properties:
       required:
         - preference_type
         - description
+  unresolved_refs:
+    type: array
+    items:
+      type: string
+    description: Explicit entity references that could not be resolved.
   provenance:
     $ref: "provenance.schema.yaml"
   assembled_at:

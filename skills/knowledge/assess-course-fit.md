@@ -35,11 +35,17 @@ Decide whether a course or program is worth taking based on the user's goals, pr
 5. Identify opportunity cost:
    - Does the user have time in the schedule?
    - Does it displace a higher-priority course or project?
-6. Produce a recommendation:
+6. Run `skills/core/cross-domain-reasoning.md` over the bundle to identify:
+   - explicit connections to goals or projects
+   - overlaps with current learning
+   - transfer opportunities
+   - evidence gaps
+   - schedule tradeoffs
+7. Produce a recommendation:
    - **Take it** — clear gap, aligned with goal, schedule allows.
    - **Defer it** — useful but lower priority or schedule is full.
    - **Skip it** — already covered, not aligned, or better alternative exists.
-7. Provide reasons traceable to the context bundle.
+8. Provide reasons traceable to the context bundle and the cross-domain findings.
 
 ## Output
 
