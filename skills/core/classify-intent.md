@@ -20,6 +20,10 @@ Classify user input into one of the v0.1 intents.
 
 - capture: raw thought or note
 - process-learning-notes: learning input to be structured
+- start-learning: begin a new course or program
+- continue-learning: progress a session in an active learning program
+- review-learning: quiz or review a learning program
+- finish-learning: finish a course or program
 - ask: question against stored knowledge
 - summarize: generate/refresh a summary
 - review: surface items worth revisiting
@@ -34,5 +38,5 @@ Classify user input into one of the v0.1 intents.
 ## Instructions
 
 - If confidence is low, ask for clarification rather than guess.
-- Learning-related inputs default to `process-learning-notes`.
+- Learning-related inputs default to `process-learning-notes`, unless the user is clearly starting, continuing, reviewing, or finishing a course or program.
 - Questions starting with "what", "how", "why", "do I", "have I" default to `ask`.

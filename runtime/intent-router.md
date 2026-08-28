@@ -49,6 +49,10 @@ Classify user input into an intent and select the corresponding workflow.
 | plan day | "What's my plan today", "What does today look like" | `workflows/planning/schedule-weekly-plan.md` |
 | diagnose schedule | "I never have time to read", "My schedule sucks, fix it", "Where can I fit another workout" | `workflows/planning/schedule-weekly-plan.md` |
 | sunday review | "Let's do my Sunday review", "Plan next week", "What does next week look like", "Build next week's schedule" | `workflows/planning/weekly-review.md` |
+| start learning | "I'm starting Statistics 301", "I'm taking a LinkedIn Learning course on AI agents" | `workflows/knowledge/guided-learning.md` |
+| continue learning | "Finished lecture 5", "Did the lab", "Watched the section on MCP" | `workflows/knowledge/guided-learning.md` |
+| review learning | "Quiz me on this week", "What have I learned so far?" | `workflows/knowledge/guided-learning.md` |
+| finish learning | "I finished the course", "I'm done with Statistics 301" | `workflows/knowledge/guided-learning.md` |
 
 ## Routing rules
 

@@ -1,0 +1,178 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Learning Program
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - course_type
+  - created_at
+  - provenance
+properties:
+  course_type:
+    type: string
+    enum:
+      - university_course
+      - online_course
+      - certification
+      - workplace_training
+      - self_study
+      - other
+    description: Type of learning program; drives adaptive behavior.
+  source_id:
+    type: string
+    description: Optional ID of an associated knowledge.source (e.g., the course page, textbook).
+  provider:
+    type: string
+    description: Institution, platform, or organization offering the program.
+  instructor:
+    type: string
+    description: Instructor, professor, or host if applicable.
+  subject:
+    type: string
+    description: Subject or domain of the program.
+  start_date:
+    type: string
+    format: date
+    description: When the user began the program.
+  target_completion_date:
+    type: string
+    format: date
+    description: Target completion or exam date if the user has one.
+  status:
+    type: string
+    enum:
+      - unread
+      - learning
+      - paused
+      - finished
+      - abandoned
+      - reference
+    default: unread
+    description: Lifecycle status of the program from the user's perspective.
+  learning_goals:
+    type: array
+    items:
+      type: string
+    description: What the user wants to get from the program.
+  prior_familiarity:
+    type: string
+    enum:
+      - unfamiliar
+      - some_exposure
+      - familiar
+      - very_familiar
+    description: User's prior familiarity with the material.
+  target_outcome:
+    type: string
+    description: e.g., pass course, certification exam, practical implementation, conceptual depth.
+  desired_depth:
+    type: string
+    enum:
+      - light
+      - normal
+      - deep
+    default: normal
+    description: How intensively the user wants to engage.
+  known_weak_areas:
+    type: array
+    items:
+      type: string
+    description: Topics the user already knows they are weak on.
+  has_deadline:
+    type: boolean
+    description: Whether the target completion is a hard deadline or just a goal.
+  modules:
+    type: array
+    description: Top-level units of the program. Not required; structure can be supplied by the user.
+    items:
+      type: object
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        topics:
+          type: array
+          items:
+            type: string
+        materials:
+          type: array
+          items:
+            type: string
+        assessments:
+          type: array
+          items:
+            type: string
+        estimated_minutes:
+          type: integer
+          minimum: 0
+  current_module_id:
+    type: string
+    description: ID of the module the user is currently in, if any.
+  completed_module_ids:
+    type: array
+    items:
+      type: string
+    description: Modules the user has completed.
+  assessments:
+    type: array
+    description: Exams, quizzes, projects, or certification targets.
+    items:
+      type: object
+      required:
+        - title
+        - type
+      properties:
+        title:
+          type: string
+        type:
+          type: string
+          enum:
+            - quiz
+            - midterm
+            - final
+            - certification_exam
+            - practical_exam
+            - project
+            - presentation
+            - course_completion
+            - other
+        due_date:
+          type: string
+          format: date
+        weight:
+          type: string
+        status:
+          type: string
+          enum:
+            - planned
+            - preparing
+            - completed
+        notes:
+          type: string
+  recurring_responsibilities:
+    type: array
+    description: Repeating items associated with the program, e.g., "weekly problem set".
+    items:
+      type: object
+      properties:
+        label:
+          type: string
+        cadence_days:
+          type: integer
+        next_due:
+          type: string
+          format: date
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

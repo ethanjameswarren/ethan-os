@@ -32,6 +32,12 @@ schemas:
   knowledge.reading-profile:
     version: 1
     file: domains/knowledge/reading-profile.schema.yaml
+  knowledge.learning-program:
+    version: 1
+    file: domains/knowledge/learning-program.schema.yaml
+  knowledge.learning-session:
+    version: 1
+    file: domains/knowledge/learning-session.schema.yaml
   career.evidence:
     version: 1
     file: domains/career/evidence.schema.yaml

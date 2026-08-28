@@ -1,0 +1,165 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Knowledge Learning Session
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - program_id
+  - created_at
+  - provenance
+properties:
+  program_id:
+    type: string
+    description: ID of the associated knowledge.learning-program.
+  source_id:
+    type: string
+    description: Optional ID of a knowledge.source used in this session (textbook, video, paper).
+  session_type:
+    type: string
+    enum:
+      - lecture
+      - video
+      - reading
+      - lab
+      - exercise
+      - homework
+      - assignment
+      - project
+      - study
+      - review
+      - quiz
+      - office_hours
+      - exam_prep
+      - other
+    description: Type of learning activity this session captured.
+  session_date:
+    type: string
+    format: date
+    description: Date the session took place.
+  module_id:
+    type: string
+    description: Program module the session belongs to, if any.
+  topic:
+    type: string
+    description: Topic or title of the material covered.
+  user_observations:
+    type: array
+    description: Preserved user observations from the discussion.
+    items:
+      type: object
+      properties:
+        text:
+          type: string
+        reference:
+          type: string
+      required:
+        - text
+  active_recall:
+    type: array
+    items:
+      type: string
+    description: User's initial retrieval response(s) before discussion.
+  discussion_summary:
+    type: string
+    description: AI synthesis of the conversation, clearly labeled as AI synthesis.
+  questions_asked:
+    type: array
+    items:
+      type: string
+    description: Adaptive questions posed by the OS during the session.
+  extracted_insights:
+    type: array
+    description: Session-level durable takeaways not yet promoted to knowledge.idea.
+    items:
+      type: object
+      required:
+        - insight_id
+        - title
+      properties:
+        insight_id:
+          type: string
+        title:
+          type: string
+        note:
+          type: string
+        retention_priority:
+          type: string
+          enum:
+            - low
+            - normal
+            - high
+          default: normal
+        promoted_idea_id:
+          type: string
+  mistakes:
+    type: array
+    description: Meaningful errors or misconceptions captured during the session.
+    items:
+      type: object
+      required:
+        - description
+      properties:
+        description:
+          type: string
+        concept:
+          type: string
+        correction:
+          type: string
+        recurring:
+          type: boolean
+  open_questions:
+    type: array
+    items:
+      type: string
+    description: Open questions raised during the session.
+  applications:
+    type: array
+    items:
+      type: string
+    description: Real-world applications, projects, or transfer attempts.
+  connections:
+    type: array
+    items:
+      type: object
+      properties:
+        target_id:
+          type: string
+        target_type:
+          type: string
+          enum:
+            - idea
+            - source
+            - project
+            - task
+            - learning_program
+        description:
+          type: string
+      required:
+        - target_id
+        - description
+  material_references:
+    type: array
+    items:
+      type: object
+      properties:
+        title:
+          type: string
+        locator:
+          type: string
+        source_type:
+          type: string
+  retention_candidates:
+    type: array
+    items:
+      type: string
+    description: Insight IDs the user marked for retention.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

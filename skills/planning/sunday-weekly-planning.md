@@ -49,6 +49,7 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
 ### 3. Identify next week's priorities
 
 - Run `skills/planning/suggest-next-actions.md` to surface active goals, projects, and unblocked tasks.
+- Inspect active `knowledge.learning-program` objects and their current module/assessment status.
 - Inspect active reading state and retention reviews if relevant.
 - Ask: "What are the 1–3 things you most want to make progress on next week?" only if priorities cannot be confidently inferred.
 - Limit weekly focus. Do not try to advance every active project.
