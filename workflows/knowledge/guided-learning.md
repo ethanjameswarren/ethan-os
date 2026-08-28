@@ -12,6 +12,7 @@ Support structured learning across formats — university courses, online course
 | continue learning | "Finished lecture 5" | `skills/knowledge/capture-learning-session.md` |
 | review learning | "Quiz me on this week" | `skills/knowledge/review-learning-program.md` |
 | finish learning | "I finished the course" | `skills/knowledge/finish-learning-program.md` |
+| assess course fit | "Should I take this LinkedIn Learning course?" | `skills/knowledge/assess-course-fit.md` |
 
 ## Steps
 

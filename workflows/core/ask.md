@@ -6,11 +6,11 @@ Answer a natural-language question from stored knowledge.
 
 ## Steps
 
-1. Parse question.
-2. Load global context and knowledge domain context.
-3. Use `skills/knowledge/answer-question.md` to find relevant sources, captures, ideas, summaries.
-4. Compose concise answer with citations.
-5. Return answer, citations, and confidence.
+1. Parse the question and classify intent.
+2. Build a `core.context-request` for the question.
+3. Run `scripts/core/context_assembly.py` to retrieve a `core.context-bundle` across relevant domains.
+4. Use `skills/knowledge/answer-question.md` to reason over the bundle and compose a concise answer with citations.
+5. Return answer, cited object IDs, and confidence.
 
 ## Output
 

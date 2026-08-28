@@ -24,6 +24,7 @@ Classify user input into one of the v0.1 intents.
 - continue-learning: progress a session in an active learning program
 - review-learning: quiz or review a learning program
 - finish-learning: finish a course or program
+- assess-course-fit: decide whether a course or program is worth taking
 - ask: question against stored knowledge
 - summarize: generate/refresh a summary
 - review: surface items worth revisiting

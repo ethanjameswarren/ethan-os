@@ -6,11 +6,12 @@ Periodically surface what needs attention across active Goals, Projects, and Tas
 
 ## Steps
 
-1. Load all Goal, Project, and Task objects from `ethan-life/domains/planning/`.
-2. Run `skills/planning/suggest-next-actions.md` to identify unblocked tasks, blocked items, stale projects, and goals without momentum.
-3. If the intent is "sunday-review" or the user asks to plan next week, run `skills/planning/sunday-weekly-planning.md` to build a draft `planning.weekly-plan`.
-4. Otherwise, optionally create a summary artifact of the findings (plain text; no new schema required for v0.1).
-5. Return the prioritized findings or the candidate weekly plan to the user.
+1. Build a `core.context-request` with intent `sunday-review` and domains `[planning, knowledge, career, health, finance]`.
+2. Run `scripts/core/context_assembly.py` to produce a `core.context-bundle` of active goals, projects, tasks, learning programs, schedule constraints, and relevant reviews.
+3. Run `skills/planning/suggest-next-actions.md` to identify unblocked tasks, blocked items, stale projects, and goals without momentum.
+4. If the intent is "sunday-review" or the user asks to plan next week, run `skills/planning/sunday-weekly-planning.md` on the bundle to build a draft `planning.weekly-plan`.
+5. Otherwise, optionally create a summary artifact of the findings (plain text; no new schema required for v0.1).
+6. Return the prioritized findings or the candidate weekly plan to the user.
 
 ## Output
 

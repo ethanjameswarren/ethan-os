@@ -28,21 +28,18 @@ Run `skills/career/analyze-job-description.md`.
 
 Create or load a Job Target object (`career.job-target`) in `ethan-life/domains/career/targets/`.
 
-### 2. Retrieve relevant career evidence
+### 2. Retrieve relevant context
 
-Search `ethan-life/domains/career/evidence/` across:
+Build a `core.context-request` with intent `tailored-resume`, domains `[career, planning, knowledge]`, and `avoid_domains: [health, finance, music]`.
 
-- roles
-- projects
-- accomplishments
-- technologies
-- leadership evidence
-- impact
-- architecture experience
-- domain experience
-- skills
+Run `scripts/core/context_assembly.py` to produce a `core.context-bundle` containing:
 
-Retrieve based on semantic relevance to the Job Target, not just keyword matching.
+- the active `career.job-target`
+- relevant `career.evidence` (roles, projects, accomplishments, technologies, leadership, impact)
+- relevant `planning.project` and `planning.task` that support the target
+- relevant `knowledge.idea` and `knowledge.learning-program` that substantiate skills
+
+Then search `ethan-life/domains/career/evidence/` if the bundle needs expansion.
 
 ### 3. Match evidence to requirements
 

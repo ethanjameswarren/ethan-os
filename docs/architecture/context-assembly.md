@@ -29,6 +29,14 @@ Selectively load the personal state needed for a workflow, based on the user's i
 - **Cross-Domain Reasoning** uses context bundles to find and surface connections across domains.
 - **Review Orchestrator** uses context assembly to decide which reviews are relevant.
 
+## Implementation
+
+The runtime uses `scripts/core/universal_retrieval.py` for candidate discovery and `scripts/core/context_assembly.py` for bundle construction. `scripts/test-context-engine.py` validates the end-to-end behavior against demo fixtures.
+
+## Relationship to Universal Personal Retrieval
+
+Universal Personal Retrieval answers "what potentially relevant personal objects exist?" Context Assembly answers "which of those should this workflow actually receive?" They are separate: retrieval is broad; assembly is selective.
+
 ## Status
 
-The contract is in place. Smart retrieval, semantic search, and automated permission enforcement are not yet implemented.
+Implemented and tested. Semantic search and automated permission enforcement are not yet implemented.

@@ -13,11 +13,8 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
 
 ## Input
 
-- Active `planning.baseline-schedule` from `ethan-life/domains/planning/baseline-schedule.md`.
-- Active `planning.schedule-override` objects covering the upcoming week.
-- `ethan-life/domains/planning/calendar-integration.yaml` if enabled.
-- Active `planning.goal`, `planning.project`, and `planning.task` objects.
-- Reading state from the knowledge domain if Guided Reading is active.
+- A `core.context-bundle` assembled by `scripts/core/context_assembly.py` for intent `sunday-review`.
+- The bundle includes the active `planning.baseline-schedule`, `planning.schedule-override` objects, `planning.goal`, `planning.project`, `planning.task`, active `knowledge.learning-program` and `knowledge.reading-state`, and relevant calendar integration state.
 - Any user-stated preferences, special events, or desired changes.
 
 ## Output

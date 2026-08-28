@@ -26,6 +26,25 @@ A `core.context-bundle` object containing:
 - `preferences` — relevant user preferences.
 - `provenance` — source of every loaded item.
 
+## Implementation
+
+The runtime can call `scripts/core/context_assembly.py` to assemble a bundle from a `core.context-request`.
+
+```python
+from context_assembly import assemble
+
+bundle = assemble({
+    "intent": "course-decision",
+    "query": "Should I take this LinkedIn Learning agentic AI course?",
+    "domains": ["planning", "knowledge", "career"],
+    "avoid_domains": ["health", "finance", "music"],
+    "desired_depth": "normal",
+    "time_horizon": "now",
+})
+```
+
+The assembly engine uses `scripts/core/universal_retrieval.py` to discover candidate objects, then filters, ranks, and organizes them.
+
 ## Rules
 
 - Load from `ethan-life` only. `ethan-os` never contains personal data.
