@@ -20,7 +20,16 @@ Indeed favors a dense, scannable employment profile and resume summary rather th
 
 Invoke `skills/career/select-career-evidence.md` and `skills/career/validate-career-claims.md` as needed during generation.
 
-## Outputs
+## Indeed output contract
+
+The primary output MUST be copy/paste-ready. Generate content in the order a recruiter or applicant encounters it on Indeed:
+
+1. Professional Summary / Profile
+2. Experience
+3. Education
+4. Skills
+
+Do not lead with analysis, recommendations, or evidence mappings. Put generation metadata at the bottom or in a separate file.
 
 ### Professional Summary / Profile
 
@@ -32,19 +41,25 @@ Requirements:
 - Avoid first-person narrative unless platform style favors it.
 - Lead with the most important identity and value proposition.
 
-Apply `skills/career/compress-to-platform-limit.md` to enforce the 500-character target.
+Apply `skills/career/compress-to-platform-limit.md` and report the character count.
 
 ### Experience
 
-For each relevant role:
+For each relevant role, output:
 
-- Concise role summary (1–2 sentences)
-- 3–5 high-value bullets
-- Prioritize measurable responsibility and results
-- Include terminology commonly used in job descriptions
-- Embed relevant technologies naturally
+1. Company
+2. Job title
+3. Dates
+4. Concise role summary (1–2 sentences)
+5. 3–5 high-value bullets
+
+Prioritize measurable responsibility and results. Include terminology commonly used in job descriptions. Embed relevant technologies naturally.
 
 Use reverse-chronological order.
+
+### Education
+
+Include institution, degree, field of study, and year if available.
 
 ### Skills
 
@@ -53,6 +68,7 @@ Produce a platform-ready skills list using:
 - Technical skills
 - Methodologies
 - Business/domain skills
+- Capabilities
 
 Rank by:
 
@@ -76,28 +92,72 @@ If generating an Indeed-compatible resume summary, produce 2–4 sentences focus
 - Avoid generic soft-skill claims without evidence.
 - Do not invent company-specific or role-specific motivations.
 
-## Output
+## Output format
 
-Return structured Indeed content:
+Return a single Markdown file formatted for direct use. The body must be copy/paste-ready Indeed content in the order Indeed presents it.
 
-```yaml
-summary: "..."
-experience:
-  - role_id: ...
-    role: "..."
-    employer: "..."
-    timeframe: "..."
-    summary: "..."
-    bullets:
-      - "..."
-skills:
-  technical: [...]
-  methodologies: [...]
-  domains: [...]
-  capabilities: [...]
+Use YAML frontmatter with schema `career.presentation_profile` so the file is machine-readable, but the body should read like a finished profile.
+
+Example body structure:
+
+```markdown
+# Indeed Profile
+
+## Professional Summary
+
+<copy/paste-ready summary>
+
+Character count: X / 500
+
+---
+
+## Experience
+
+### Lowe's Companies, Inc.
+**Data Consultant — Store Operations AI / Computer Vision**
+Jul 2026 – Present
+
+<1–2 sentence role summary>
+
+- <achievement / responsibility>
+- <achievement / responsibility>
+- <achievement / responsibility>
+- <achievement / responsibility>
+
+---
+
+## Education
+
+California Polytechnic State University — B.S. Economics, 2018
+
+---
+
+## Skills
+
+Technical:
+Python, SQL, BigQuery, Airflow, Power BI, R, ...
+
+Methodologies:
+A/B Testing, Difference-in-Differences, Cohort Analysis, ...
+
+Domains:
+Retail Operations, Workforce Planning, Manufacturing Analytics, ...
+
+---
+
+# Generation Metadata
+
+Selected capabilities:
+- ...
+
+Selected artifacts:
+- ...
+
+Character counts and validation:
+- ...
 ```
 
-Store as `career.presentation_profile.indeed` in `ethan-life/domains/career/presentation/indeed/profile.yaml`.
+Store the file as `ethan-life/domains/career/presentation/indeed/profile.md`.
 
 ## Confirmation policy
 

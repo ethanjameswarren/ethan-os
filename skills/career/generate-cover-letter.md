@@ -68,15 +68,41 @@ Concise closing connecting prior evidence to what the candidate could contribute
 - Use job-description terminology only where the underlying evidence supports it.
 - Keep the letter focused on 2–4 pieces of evidence rather than listing every relevant project.
 
-## Output
+## Output format
 
-Return:
+The primary output is the finished cover letter text, formatted for direct use. It appears first in the file, not after analysis.
 
-- Full cover letter text
+After the letter, include a `# Generation Metadata` section with:
+
 - Target role/company
 - Word count
 - Evidence IDs used
 - Any claims requiring user confirmation or gaps relative to the job description
+
+Example structure:
+
+```markdown
+Dear Hiring Manager,
+
+<finished cover letter paragraphs>
+
+Sincerely,
+Ethan Warren
+
+---
+
+# Generation Metadata
+
+Target role: ...
+Target company: ...
+Word count: ...
+Evidence IDs used:
+- ...
+Claims requiring confirmation:
+- ...
+Gaps relative to job description:
+- ...
+```
 
 Store as a cover-letter-specific object in `ethan-life/domains/career/presentation/cover-letter/<company>-<role>-<date>.md` or a similarly stable naming scheme.
 

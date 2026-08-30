@@ -89,6 +89,27 @@ Tell the user:
 
 Platform-specific wording is derived from evidence, not copied from another platform. LinkedIn gets narrative and progression; Indeed gets recruiter-scanning density; resumes get tight job-target alignment; cover letters get selective storytelling.
 
+## Default output principle
+
+Career Presentation outputs are intended for direct use on external platforms.
+
+The default artifact MUST therefore be copy/paste-ready.
+
+Do not primarily output:
+
+- recommendations,
+- outlines,
+- evidence mappings,
+- writing guidance,
+- alternative content architecture,
+- explanations of what the user could write.
+
+Instead, produce the final text that belongs in each platform field.
+
+Analysis and generation metadata are secondary outputs, stored separately or appended under a clear `# Generation Metadata` section. They should not interrupt the copy/paste-ready content.
+
+Minor user edits should be optional rather than required.
+
 ## Confirmation policy
 
 - Auto-execute: generating draft profile content from clear evidence and platform rules.

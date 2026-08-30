@@ -20,7 +20,17 @@ LinkedIn is a professional discovery and narrative platform, not a duplicate of 
 
 Invoke `skills/career/select-career-evidence.md` and `skills/career/validate-career-claims.md` as needed during generation.
 
-## Outputs
+## LinkedIn output contract
+
+Generate content in the exact conceptual order the user encounters it on LinkedIn:
+
+1. Headline
+2. About
+3. Experience
+4. Projects
+5. Skills
+
+The primary output MUST be copy/paste-ready. Do not lead with analysis, recommendations, or alternative architectures. Put generation metadata at the bottom or in a separate file.
 
 ### Headline
 
@@ -30,13 +40,7 @@ Produce:
 - Alternate technical version
 - Alternate leadership version
 
-Requirements:
-
-- Obey current LinkedIn headline character limit (~220 characters).
-- Prioritize searchable professional concepts.
-- Do not keyword-stuff.
-- Communicate current professional identity rather than only job title.
-- Reflect evidence-backed capabilities and seniority.
+Show the primary version first. Each headline must obey the current LinkedIn character limit (~220 characters). Report the character count.
 
 ### About
 
@@ -52,40 +56,39 @@ Structure:
 
 Do not turn the About section into a bullet-for-bullet resume. Keep it conversational and discovery-oriented.
 
-Apply `skills/career/compress-to-platform-limit.md` for the About section length (~2,600 characters maximum; prefer shorter and scannable).
+Apply `skills/career/compress-to-platform-limit.md`. Report the character count (~2,600 characters maximum; prefer shorter and scannable).
 
-### Experience
+### Experience format
 
-For each relevant role:
+Each Experience entry must contain:
 
-- 1–3 sentence role-level summary
-- 3–6 selected accomplishment bullets
-- Relevant technologies embedded naturally
-- Evidence selected according to the user's desired positioning
+1. Employer
+2. Job title
+3. Dates, when known
+4. A concise 1–3 sentence role summary
+5. 3–6 accomplishment / responsibility bullets
 
-Respect LinkedIn platform limits (~2,000 characters per experience description).
+The role summary explains the overall scope of the position. Bullets provide specific evidence of ownership, technical work, scale, methodology, outcomes, and leadership.
+
+Do not write generic job-description language when stronger Career Evidence exists.
+
+Do not force all information into bullets.
 
 Do not repeat the same accomplishment across About, Experience, and Projects without a reason.
 
+Respect LinkedIn platform limits (~2,000 characters per experience description). Report the character count per entry.
+
 ### Projects
 
-Select work artifacts that stand alone as meaningful technical or analytical projects.
+Select work artifacts that stand alone as meaningful technical or analytical projects. A project should demonstrate a distinct capability, have meaningful technical/business context, or strengthen the user's target professional identity.
 
-A project should:
-
-- Demonstrate a distinct capability
-- Have meaningful technical/business context
-- Strengthen the user's target professional identity
-
-Do not create a project entry for every piece of work.
-
-For each project:
+For each project, output:
 
 - Project title
-- Associated role/employer
-- Concise description (1–3 sentences or bullets)
-- Technologies used
-- Link to public artifact, if available and appropriate
+- 2–4 sentence description ready to paste into LinkedIn's project description field
+- Associated skills / technologies as a compact list
+
+Do not create a project entry for every piece of work.
 
 ### Skills
 
@@ -98,11 +101,11 @@ Distinguish:
 - Methodologies
 - Domains
 
-Never recommend unsupported skills. Do not list every technology mentioned in evidence; prioritize those that reinforce the headline/About narrative.
+Output a numbered list of recommendations ready to add to LinkedIn. Never recommend unsupported skills. Do not list every technology mentioned in evidence; prioritize those that reinforce the headline/About narrative.
 
 ### Optional: Featured section recommendations
 
-If applicable, recommend items to feature (e.g., GitHub repos, public articles, project summaries, certifications) with brief rationale.
+If applicable, recommend items to feature (e.g., GitHub repos, public articles, project summaries, certifications) as a brief list at the bottom.
 
 ## Rules
 
@@ -112,38 +115,88 @@ If applicable, recommend items to feature (e.g., GitHub repos, public articles, 
 - Do not invent metrics, titles, or responsibilities.
 - Surface evidence gaps rather than filling them with generic language.
 
-## Output
+## Output format
 
-Return structured LinkedIn content:
+Return a single Markdown file formatted for direct use. The body must be copy/paste-ready LinkedIn content in the order LinkedIn presents it.
 
-```yaml
-headline:
-  primary: "..."
-  technical: "..."
-  leadership: "..."
-about: "..."
-experience:
-  - role_id: ...
-    role: "..."
-    employer: "..."
-    timeframe: "..."
-    summary: "..."
-    bullets:
-      - "..."
-projects:
-  - title: "..."
-    employer: "..."
-    description: "..."
-    technologies: [...]
-skills:
-  capabilities: [...]
-  technologies: [...]
-  methodologies: [...]
-  domains: [...]
-featured_recommendations: [...]
+Use YAML frontmatter with schema `career.presentation_profile` so the file is machine-readable, but the body should read like a finished profile, not a config object.
+
+Example body structure:
+
+```markdown
+# LinkedIn Profile
+
+## Headline
+
+Senior Data & AI Systems Leader | Enterprise Forecasting, Experimentation, and Agentic AI Platforms
+
+Character count: 103 / 220
+
+---
+
+## About
+
+<copy/paste-ready About section>
+
+Character count: 1,670 / 2,600
+
+---
+
+## Experience
+
+### Lowe's Companies, Inc.
+**Data Consultant — Store Operations AI / Computer Vision**
+Jul 2026 – Present · Charlotte, NC
+
+<1–3 sentence role summary>
+
+- <achievement / responsibility>
+- <achievement / responsibility>
+- <achievement / responsibility>
+- <achievement / responsibility>
+
+Character count: X / 2,000
+
+---
+
+## Projects
+
+### Store Operations AI Operating System
+
+<2–4 sentence copy/paste project description>
+
+Skills:
+AI Agents · MCP · Context Engineering · Python · SQL · AI Governance
+
+---
+
+## Skills
+
+Recommended skills to add or prioritize:
+
+1. <skill>
+2. <skill>
+3. <skill>
+...
+
+---
+
+# Generation Metadata
+
+Selected capabilities:
+- ...
+
+Selected artifacts:
+- ...
+
+Excluded artifacts:
+- ...
+
+Character counts and validation:
+- ...
 ```
 
-Store as `career.presentation_profile.linkedin` in `ethan-life/domains/career/presentation/linkedin/profile.yaml`.
+Store the file as `ethan-life/domains/career/presentation/linkedin/profile.md`.
 
 ## Confirmation policy
 
