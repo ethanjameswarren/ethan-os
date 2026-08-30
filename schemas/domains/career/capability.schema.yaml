@@ -1,0 +1,58 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Capability
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  description:
+    type: string
+  status:
+    type: string
+    enum:
+      - draft
+      - verified
+  evidence_level:
+    type: integer
+    minimum: 0
+    maximum: 5
+  demonstrated_methods:
+    type: array
+    items:
+      type: string
+  domains:
+    type: array
+    items:
+      type: string
+  applications:
+    type: array
+    items:
+      type: string
+  related_technologies:
+    type: array
+    items:
+      type: string
+  evidence:
+    type: array
+    items:
+      type: string
+    description: IDs of career.work_artifact objects that demonstrate this capability.
+  outcomes:
+    type: array
+    items:
+      type: string
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

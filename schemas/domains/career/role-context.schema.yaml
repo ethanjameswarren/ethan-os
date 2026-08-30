@@ -1,0 +1,53 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Role Context
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  employer:
+    type: string
+  role:
+    type: string
+  timeframe:
+    type: string
+  status:
+    type: string
+    enum:
+      - draft
+      - verified
+  summary:
+    type: string
+  operating_environment:
+    type: string
+  core_responsibilities:
+    type: array
+    items:
+      type: string
+  typical_work_patterns:
+    type: array
+    items:
+      type: string
+  career_signals:
+    type: array
+    items:
+      type: string
+  positioning_guidance:
+    type: string
+  scope_indicators:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

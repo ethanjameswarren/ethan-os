@@ -1,0 +1,74 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Work Artifact
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  employer:
+    type: string
+  role:
+    type: string
+  project:
+    type: string
+  timeframe:
+    type: string
+  status:
+    type: string
+    enum:
+      - draft
+      - verified
+      - generalized
+  facts:
+    type: array
+    items:
+      type: string
+  inferences:
+    type: array
+    items:
+      type: string
+  unknowns:
+    type: array
+    items:
+      type: string
+  evidence_summary:
+    type: string
+  skills:
+    type: array
+    items:
+      type: string
+  technologies:
+    type: array
+    items:
+      type: string
+  outcomes:
+    type: array
+    items:
+      type: string
+  interview_stories:
+    type: array
+    items:
+      type: string
+  resume_candidates:
+    type: array
+    items:
+      type: string
+  evidence_strength:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

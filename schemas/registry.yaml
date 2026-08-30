@@ -53,6 +53,15 @@ schemas:
   career.evidence:
     version: 1
     file: domains/career/evidence.schema.yaml
+  career.work_artifact:
+    version: 1
+    file: domains/career/work-artifact.schema.yaml
+  career.role_context:
+    version: 1
+    file: domains/career/role-context.schema.yaml
+  career.capability:
+    version: 1
+    file: domains/career/capability.schema.yaml
   career.job-target:
     version: 1
     file: domains/career/job-target.schema.yaml
