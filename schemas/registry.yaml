@@ -62,6 +62,9 @@ schemas:
   career.capability:
     version: 1
     file: domains/career/capability.schema.yaml
+  career.presentation_profile:
+    version: 1
+    file: domains/career/presentation-profile.schema.yaml
   career.job-target:
     version: 1
     file: domains/career/job-target.schema.yaml
