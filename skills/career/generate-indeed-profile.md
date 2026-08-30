@@ -8,6 +8,7 @@ Indeed favors a dense, scannable employment profile and resume summary rather th
 
 ## Inputs
 
+- Active `career.goal` object
 - Career narrative and positioning
 - `career.role_context` objects
 - `career.work_artifact` objects
@@ -18,7 +19,22 @@ Indeed favors a dense, scannable employment profile and resume summary rather th
 
 ## Process
 
-Invoke `skills/career/select-career-evidence.md` and `skills/career/validate-career-claims.md` as needed during generation.
+### 1. Load and align to the active career goal
+
+Invoke `skills/career/align-to-career-goal.md` with the proposed Indeed output.
+
+Use the goal to determine:
+
+- Primary professional identity
+- Capabilities and evidence dimensions to emphasize
+- Framings to avoid
+- Long-term career narrative
+
+Do not generate an Indeed profile that ignores the active career goal. If the user requests a different positioning, evaluate it against the goal and note any misalignment.
+
+### 2. Select, validate, and generate
+
+Invoke `skills/career/select-career-evidence.md` and `skills/career/validate-career-claims.md` as needed during generation, applying the goal-aligned positioning.
 
 ## Indeed output contract
 

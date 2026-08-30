@@ -8,6 +8,7 @@ This is the shared selection engine for LinkedIn, Indeed, resumes, and cover let
 
 ## Inputs
 
+- Active `career.goal` object
 - Target platform (`linkedin`, `indeed`, `resume`, `cover-letter`)
 - Desired positioning or target role summary
 - Career evidence graph:
@@ -21,13 +22,14 @@ This is the shared selection engine for LinkedIn, Indeed, resumes, and cover let
 
 Rank candidate evidence by:
 
-1. **Relevance to positioning** — does this artifact directly demonstrate the target identity?
-2. **Evidence strength** — how strong and direct is the evidence? (`0`–`5`)
-3. **Business impact** — measurable outcomes, decisions enabled, scale
-4. **Technical depth** — architectural ownership, complexity, cross-system work
-5. **Recency** — more recent for current identity, but older evidence can support foundational depth
-6. **Differentiation** — what makes this candidate stand out for the target?
-7. **Complementarity** — does this add a new dimension rather than repeat an existing one?
+1. **Alignment to active career goal** — does this artifact move the user toward the desired strategic direction?
+2. **Relevance to positioning** — does this artifact directly demonstrate the target identity?
+3. **Evidence strength** — how strong and direct is the evidence? (`0`–`5`)
+4. **Business impact** — measurable outcomes, decisions enabled, scale
+5. **Technical depth** — architectural ownership, complexity, cross-system work
+6. **Recency** — more recent for current identity, but older evidence can support foundational depth
+7. **Differentiation** — what makes this candidate stand out for the target?
+8. **Complementarity** — does this add a new dimension rather than repeat an existing one?
 
 ## Platform-specific priorities
 

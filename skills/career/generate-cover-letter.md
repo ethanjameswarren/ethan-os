@@ -6,6 +6,7 @@ Generate a targeted cover letter by matching a specific job opportunity against 
 
 ## Inputs
 
+- Active `career.goal` object
 - Job description text or analyzed `career.job-target`
 - Target company
 - Target role
@@ -16,27 +17,33 @@ Generate a targeted cover letter by matching a specific job opportunity against 
 
 ## Process
 
-1. **Extract the role's needs**
+### 0. Align to the active career goal
+
+Invoke `skills/career/align-to-career-goal.md` with the target role and proposed cover letter.
+
+Use the goal to determine whether the role advances the user's strategic direction and how to frame evidence accordingly. If the role does not align with the goal, note this and ask whether to proceed with a different framing.
+
+### 1. **Extract the role's needs**
 
    Identify the 3–5 most important needs from the job description: required capabilities, technical areas, leadership expectations, and business problems.
 
-2. **Select evidence**
+### 2. **Select evidence**
 
-   Invoke `skills/career/select-career-evidence.md` for `cover-letter` platform. Retrieve 2–4 complementary work artifacts and capabilities that directly address the role's needs.
+   Invoke `skills/career/select-career-evidence.md` for `cover-letter` platform. Retrieve 2–4 complementary work artifacts and capabilities that directly address the role's needs and align with the active career goal.
 
-3. **Validate claims**
+### 3. **Validate claims**
 
    Invoke `skills/career/validate-career-claims.md` to ensure selected evidence genuinely supports every intended claim.
 
-4. **Build narrative**
+### 4. **Build narrative**
 
-   Construct a concise narrative explaining why the evidence matters to this role. Each paragraph should connect a demonstrated capability to a specific need.
+   Construct a concise narrative explaining why the evidence matters to this role. Each paragraph should connect a demonstrated capability to a specific need. Frame the narrative toward the strategic direction in the active career goal when possible.
 
-5. **Add motivation**
+### 5. **Add motivation**
 
    Include a concise statement of interest in the specific opportunity only when supported by available context. Do not invent company-specific enthusiasm or pretend knowledge of internal initiatives.
 
-6. **Compress and validate**
+### 6. **Compress and validate**
 
    Invoke `skills/career/compress-to-platform-limit.md` to target 250–400 words unless the application specifies otherwise.
 

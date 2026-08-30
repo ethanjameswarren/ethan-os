@@ -8,6 +8,7 @@ LinkedIn is a professional discovery and narrative platform, not a duplicate of 
 
 ## Inputs
 
+- Active `career.goal` object
 - Career narrative and positioning
 - `career.role_context` objects
 - `career.work_artifact` objects
@@ -18,7 +19,22 @@ LinkedIn is a professional discovery and narrative platform, not a duplicate of 
 
 ## Process
 
-Invoke `skills/career/select-career-evidence.md` and `skills/career/validate-career-claims.md` as needed during generation.
+### 1. Load and align to the active career goal
+
+Invoke `skills/career/align-to-career-goal.md` with the proposed LinkedIn output.
+
+Use the goal to determine:
+
+- Primary professional identity
+- Capabilities and evidence dimensions to emphasize
+- Framings to avoid
+- Long-term career narrative
+
+Do not generate a LinkedIn profile that ignores the active career goal. If the user requests a different positioning, evaluate it against the goal and note any misalignment.
+
+### 2. Select, validate, and generate
+
+Invoke `skills/career/select-career-evidence.md` and `skills/career/validate-career-claims.md` as needed during generation, applying the goal-aligned positioning.
 
 ## LinkedIn output contract
 
@@ -44,17 +60,25 @@ Show the primary version first. Each headline must obey the current LinkedIn cha
 
 ### About
 
-Create a coherent first-person professional narrative.
+Create a concise professional thesis statement — an abstract for the rest of the profile, not a chronological retelling or list of accomplishments.
 
-Structure:
+The About section should read like the thesis statement of an essay: it establishes the core claim, the domains of work, and the underlying philosophy. The Experience section and Projects section carry the specific evidence.
 
-1. Current professional identity
-2. Types of problems solved
-3. Areas of technical depth
-4. Evidence of scope / impact
-5. Direction of career progression
+Target structure:
 
-Do not turn the About section into a bullet-for-bullet resume. Keep it conversational and discovery-oriented.
+1. **Professional identity** — what you are and what you build
+2. **Span of work** — the disciplines you operate across (e.g., data engineering, analytics, data science, AI)
+3. **Domains / industries** — where this work happens
+4. **Underlying philosophy or approach** — what distinguishes your work
+
+Guidelines:
+
+- Do not list specific projects, metrics, or role-by-role history in the About.
+- Do not use the About as a summary of every major accomplishment.
+- Avoid turning it into a bullet-for-bullet resume or cover letter.
+- Keep it conversational, confident, and discovery-oriented.
+- Prefer 3–5 short paragraphs over one dense block.
+- Default to a general identity unless the user explicitly requests a target-role tilt.
 
 Apply `skills/career/compress-to-platform-limit.md`. Report the character count (~2,600 characters maximum; prefer shorter and scannable).
 
@@ -110,6 +134,7 @@ If applicable, recommend items to feature (e.g., GitHub repos, public articles, 
 ## Rules
 
 - All claims trace to Career Evidence.
+- The About section is a thesis statement, not a summary of evidence. Do not embed specific projects, metrics, or role-by-role history there.
 - Avoid duplicating exact resume phrasing unless the resume phrasing is also the clearest LinkedIn phrasing.
 - Use LinkedIn-appropriate tone: confident, narrative, and discoverable.
 - Do not invent metrics, titles, or responsibilities.
@@ -136,9 +161,13 @@ Character count: 103 / 220
 
 ## About
 
-<copy/paste-ready About section>
+Data Consultant focused on building AI-enabled data platforms that bridge data engineering, analytics, data science, and enterprise operations.
 
-Character count: 1,670 / 2,600
+I design systems that transform complex operational data into reliable, decision-ready products — spanning forecasting platforms, experimentation infrastructure, reusable analytics applications, and agentic AI workflows. My work sits across retail, manufacturing, and financial operations, where the common thread is turning ambiguous business problems into scalable technical architecture.
+
+I care most about the connective tissue between business needs and implementation: clean data models, repeatable processes, and platforms that teams can maintain and extend long after the initial build.
+
+Character count: 620 / 2,600
 
 ---
 

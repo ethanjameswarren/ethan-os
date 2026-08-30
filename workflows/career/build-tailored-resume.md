@@ -9,6 +9,7 @@ The workflow selects and frames existing evidence. It does not rewrite Ethan's h
 ## Required inputs
 
 - job description text or capture ID of an analyzed job description
+- active `career.goal` object from `ethan-life/domains/career/goals/`
 - access to `ethan-life/domains/career/evidence/`
 - access to `ethan-life/domains/career/targets/` (optional, for previously analyzed roles)
 - access to `ethan-life/global/design-philosophy.md` (loaded for artifact generation)
@@ -22,13 +23,21 @@ The workflow selects and frames existing evidence. It does not rewrite Ethan's h
 
 ## Steps
 
-### 1. Analyze the target role
+### 1. Load the active career goal
+
+Read the active `career.goal` object from `ethan-life/domains/career/goals/`.
+
+If no active goal exists, ask the user to confirm or create one before tailoring the resume. The career goal guides which evidence to emphasize and how to frame experience toward the user's desired strategic direction.
+
+### 2. Analyze the target role
 
 Run `skills/career/analyze-job-description.md`.
 
 Create or load a Job Target object (`career.job-target`) in `ethan-life/domains/career/targets/`.
 
-### 2. Retrieve relevant context
+Evaluate the job target against the active career goal. If the role does not meaningfully advance the goal, note this to the user and ask whether to proceed, pivot the framing, or capture the role as a non-target learning opportunity.
+
+### 3. Retrieve relevant context
 
 Build a `core.context-request` with intent `tailored-resume`, domains `[career, planning, knowledge]`, and `avoid_domains: [health, finance, music]`.
 
@@ -41,7 +50,7 @@ Run `scripts/core/context_assembly.py` to produce a `core.context-bundle` contai
 
 Then search `ethan-life/domains/career/evidence/` if the bundle needs expansion.
 
-### 3. Cross-domain reasoning
+### 4. Cross-domain reasoning
 
 Run `skills/core/cross-domain-reasoning.md` with modes:
 
@@ -51,7 +60,7 @@ Run `skills/core/cross-domain-reasoning.md` with modes:
 
 Use the findings to guide which evidence to select and which gaps to surface honestly.
 
-### 4. Match evidence to requirements
+### 5. Match evidence to requirements
 
 For each important job requirement, classify Ethan's evidence as:
 
@@ -65,7 +74,7 @@ Provide provenance back to the underlying Career Evidence objects.
 
 Never manufacture a match.
 
-### 4. Rank available evidence
+### 6. Rank available evidence
 
 Score candidate experiences based on:
 
@@ -80,7 +89,7 @@ Score candidate experiences based on:
 
 Avoid selecting multiple bullets that demonstrate essentially the same capability.
 
-### 5. Determine resume strategy
+### 7. Determine resume strategy
 
 Before writing, determine the narrative the resume should communicate. Examples:
 
@@ -94,7 +103,7 @@ Choose the narrative supported by both the target role and Ethan's actual eviden
 
 Do not fabricate a persona the evidence does not support.
 
-### 6. Select experience
+### 8. Select experience
 
 Select:
 
@@ -108,7 +117,7 @@ Less relevant information may be shortened or omitted.
 
 Do not alter employer, title, dates, education, or other factual records unless the canonical Career Evidence itself is corrected (use `revise` workflow).
 
-### 7. Craft resume bullets
+### 9. Craft resume bullets
 
 Generate concise accomplishment-oriented bullets.
 
@@ -129,7 +138,7 @@ Avoid:
 - unsupported seniority
 - repetitive bullets
 
-### 8. Perform evidence validation
+### 10. Perform evidence validation
 
 Every substantive resume claim must be traceable to Career Evidence.
 
@@ -137,7 +146,7 @@ Flag any generated sentence containing a claim not adequately supported by the e
 
 Remove or revise unsupported claims before final generation.
 
-### 9. Produce match analysis
+### 11. Produce match analysis
 
 Internally retain:
 
@@ -150,7 +159,7 @@ Internally retain:
 
 Do not distort the resume to hide genuine gaps.
 
-### 10. Apply Personal Design Philosophy
+### 12. Apply Personal Design Philosophy
 
 Before finalizing content, consult `ethan-life/global/design-philosophy.md`.
 
@@ -170,7 +179,7 @@ Apply these constraints without violating:
 - canonical career data
 - standard resume conventions
 
-### 11. Generate canonical resume content
+### 13. Generate canonical resume content
 
 Generate the selected content:
 
@@ -185,7 +194,7 @@ Keep the resume appropriately concise for the target level.
 
 Store as a Career Resume Content object with schema `career.resume`.
 
-### 12. Render using LaTeX
+### 14. Render using LaTeX
 
 Populate `ethan-os/templates/resume.tex` with the canonical resume content.
 
@@ -211,7 +220,7 @@ Use `\resumeentry{role}{employer}{dates}{location}` for roles, projects, and edu
 
 The LaTeX template reflects the Personal Design Philosophy loaded earlier (restrained typography, clear hierarchy, efficient whitespace, minimal decoration). See `ethan-os/templates/README.md` for template architecture and ATS-related compromises.
 
-### 13. Validate final output
+### 15. Validate final output
 
 Check:
 

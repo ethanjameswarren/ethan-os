@@ -1,0 +1,65 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Goal
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  status:
+    type: string
+    enum:
+      - active
+      - archived
+      - draft
+  objective:
+    type: string
+    description: High-level career direction the goal represents.
+  target_positioning:
+    type: array
+    items:
+      type: string
+    description: Themes or professional identities to emphasize.
+  desired_role_characteristics:
+    type: array
+    items:
+      type: string
+    description: Qualities the target roles should provide.
+  roles_to_explore:
+    type: array
+    items:
+      type: string
+    description: Example role titles or families, without requiring exact matches.
+  positioning_strategy:
+    type: object
+    properties:
+      emphasize:
+        type: array
+        items:
+          type: string
+        description: Evidence dimensions and capabilities to foreground.
+      de_emphasize:
+        type: array
+        items:
+          type: string
+        description: Framings to avoid in career materials.
+      career_narrative:
+        type: string
+        description: Long-term progression narrative.
+  decision_criteria:
+    type: array
+    items:
+      type: string
+    description: Questions to evaluate opportunities, projects, or learning against.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
