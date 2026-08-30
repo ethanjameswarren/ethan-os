@@ -33,7 +33,9 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 REDIRECT_URI = "http://127.0.0.1:8888/callback"
-SCOPES = "https://www.googleapis.com/auth/calendar.readonly"
+READONLY_SCOPE = "https://www.googleapis.com/auth/calendar.readonly"
+EVENTS_SCOPE = "https://www.googleapis.com/auth/calendar.events"
+SCOPES = f"{READONLY_SCOPE} {EVENTS_SCOPE}"
 
 
 class CallbackHandler(BaseHTTPRequestHandler):

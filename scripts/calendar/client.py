@@ -10,7 +10,9 @@ Secrets (read from the environment only; never written to disk or logged):
   GOOGLE_CLIENT_SECRET
   GOOGLE_REFRESH_TOKEN  (obtained once via scripts/calendar/auth.py)
 
-Scopes requested by auth.py: https://www.googleapis.com/auth/calendar.readonly
+Scopes requested by auth.py:
+  https://www.googleapis.com/auth/calendar.readonly
+  https://www.googleapis.com/auth/calendar.events
 """
 
 import json
@@ -206,6 +208,23 @@ def normalize_event(calendar_id, raw):
             "fetched_at_utc": datetime.now(timezone.utc).isoformat(),
         },
     }
+
+
+def create_event(calendar_id, summary, start, end, description=None, access_token=None):
+    """Create an event on the specified Google Calendar."""
+    if access_token is None:
+        access_token = get_access_token()
+
+    body = {
+        "summary": summary,
+        "start": {"dateTime": _rfc3339(start)},
+        "end": {"dateTime": _rfc3339(end)},
+    }
+    if description:
+        body["description"] = description
+
+    encoded_id = urllib.parse.quote(calendar_id, safe="@")
+    return request(access_token, "POST", f"/calendars/{encoded_id}/events", json_body=body)
 
 
 def classify_for_planning(events):
