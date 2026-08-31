@@ -113,3 +113,15 @@ schemas:
   health.medical-note:
     version: 1
     file: domains/health/medical-note.schema.yaml
+  health.equipment:
+    version: 1
+    file: domains/health/equipment.schema.yaml
+  health.exercise:
+    version: 1
+    file: domains/health/exercise.schema.yaml
+  health.training-location:
+    version: 1
+    file: domains/health/training-location.schema.yaml
+  health.workout:
+    version: 1
+    file: domains/health/workout.schema.yaml

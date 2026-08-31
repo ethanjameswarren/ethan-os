@@ -1,0 +1,136 @@
+# Canonical equipment taxonomy for the Ethan OS health/exercise model.
+# Each `type` is referenced by `required_equipment` in `exercise-library.yaml`.
+
+equipment_types:
+  - id: barbell
+    category: strength
+    name: Barbell
+    description: A standard Olympic bar with no fixed load; requires plates.
+
+  - id: weight_plates
+    category: strength
+    name: Weight plates
+    description: Loadable Olympic plates.
+
+  - id: rack
+    category: strength
+    name: Squat / bench rack
+    description: A free-weight rack with safety catches.
+
+  - id: bench
+    category: strength
+    name: Bench
+    description: Flat or adjustable bench.
+    subtypes:
+      - flat
+      - adjustable
+      - decline
+
+  - id: dumbbells
+    category: strength
+    name: Dumbbells
+    description: Fixed or adjustable dumbbells.
+
+  - id: smith_machine
+    category: strength
+    name: Smith machine
+    description: Barbell on fixed vertical/angled guides with safety hooks.
+
+  - id: cable_station
+    category: strength
+    name: Cable station / functional trainer
+    description: Height-adjustable pulley system with weight stacks.
+
+  - id: leg_extension
+    category: strength
+    name: Leg extension machine
+    description: Selectorized quadriceps isolation.
+
+  - id: leg_curl
+    category: strength
+    name: Leg curl machine
+    description: Selectorized hamstrings isolation.
+
+  - id: leg_press
+    category: strength
+    name: Leg press machine
+    description: Selectorized or plate-loaded seated leg press.
+
+  - id: calf_raise
+    category: strength
+    name: Calf raise machine
+    description: Selectorized calf raise.
+
+  - id: pull_up_bar
+    category: strength
+    name: Pull-up bar
+    description: Fixed bar for pull-ups, chin-ups, and hanging work.
+
+  - id: dip_station
+    category: strength
+    name: Dip station
+    description: Fixed handles for dips.
+
+  - id: kettlebell
+    category: strength
+    name: Kettlebell
+    description: Cast-iron ball with handle.
+
+  - id: medicine_ball
+    category: strength
+    name: Medicine ball
+    description: Weighted ball for throws, carries, and core work.
+
+  - id: slam_ball
+    category: strength
+    name: Slam / wall ball
+    description: Weighted ball for slamming or throwing against walls.
+
+  - id: sandbag
+    category: strength
+    name: Sandbag
+    description: Loadable bag for loaded carries and odd-object work.
+
+  - id: resistance_band
+    category: strength
+    name: Resistance band
+    description: Elastic bands for assistance or resistance.
+
+  - id: suspension_trainer
+    category: strength
+    name: Suspension trainer
+    description: Strap-based bodyweight suspension system.
+
+  - id: foam_roller
+    category: recovery
+    name: Foam roller
+    description: Myofascial release tool.
+
+  - id: treadmill
+    category: cardio
+    name: Treadmill
+
+  - id: elliptical
+    category: cardio
+    name: Elliptical
+
+  - id: upright_bike
+    category: cardio
+    name: Upright / spin bike
+
+  - id: recumbent_bike
+    category: cardio
+    name: Recumbent bike
+
+  - id: stairmaster
+    category: cardio
+    name: StairMaster / revolving stepmill
+
+  - id: rower
+    category: cardio
+    name: Rowing machine
+
+  - id: bodyweight
+    category: bodyweight
+    name: Bodyweight
+    description: No equipment required; floor space and body only.

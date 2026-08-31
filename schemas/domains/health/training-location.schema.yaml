@@ -1,0 +1,66 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Health Training Location
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - location_type
+  - status
+properties:
+  name:
+    type: string
+  location_type:
+    type: string
+    description: "apartment_gym, commercial_gym, home, work_gym, hotel_gym, travel, outdoor."
+    enum:
+      - apartment_gym
+      - commercial_gym
+      - home
+      - work_gym
+      - hotel_gym
+      - travel
+      - outdoor
+  status:
+    type: string
+    enum:
+      - active
+      - inactive
+      - planned
+  availability:
+    type: string
+    description: Free-text access notes.
+  hours:
+    type: string
+  equipment:
+    type: array
+    items:
+      type: object
+      description: Equipment records that conform to health.equipment shape.
+    description: Canonical equipment inventory at this location.
+  audit_date:
+    type: string
+    format: date
+  audit_source:
+    type: string
+    description: How the audit was performed, e.g. photo_inventory, walkthrough, website, recall.
+  confidence:
+    type: string
+    enum:
+      - high
+      - medium
+      - low
+      - unknown
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

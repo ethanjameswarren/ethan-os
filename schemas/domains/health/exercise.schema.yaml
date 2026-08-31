@@ -1,0 +1,99 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Health Exercise
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - movement_pattern
+  - primary_muscles
+properties:
+  movement_pattern:
+    type: string
+    description: Canonical movement pattern, e.g. horizontal_push, vertical_pull, hinge, knee_dominant.
+  primary_muscles:
+    type: array
+    items:
+      type: string
+    description: Primary muscle groups trained.
+  secondary_muscles:
+    type: array
+    items:
+      type: string
+  training_objectives:
+    type: array
+    items:
+      type: string
+      enum:
+        - strength
+        - hypertrophy
+        - conditioning
+        - mobility
+        - recovery
+  required_equipment:
+    type: array
+    items:
+      type: string
+    description: Canonical equipment types required to perform the exercise.
+  optional_equipment:
+    type: array
+    items:
+      type: string
+    description: Equipment that improves the exercise but is not required.
+  substitutes:
+    type: array
+    items:
+      type: object
+      properties:
+        exercise_id:
+          type: string
+        rank:
+          type: integer
+        reason:
+          type: string
+    description: Ordered preferred substitutes when the exercise is unavailable.
+  unilateral:
+    type: boolean
+  stability:
+    type: string
+    enum:
+      - fixed
+      - supported
+      - free
+  loading_potential:
+    type: string
+    enum:
+      - low
+      - moderate
+      - high
+  isolation:
+    type: boolean
+    description: True for single-joint or highly targeted movements.
+  hypertrophy_suitability:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+  strength_suitability:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+  cardio:
+    type: boolean
+    default: false
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

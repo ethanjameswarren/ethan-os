@@ -1,0 +1,69 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Health Workout
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - training_location_id
+  - status
+properties:
+  training_location_id:
+    type: string
+    description: ID of the health.training_location this workout targets.
+  status:
+    type: string
+    enum:
+      - planned
+      - completed
+      - skipped
+      - revised
+  scheduled_date:
+    type: string
+    format: date
+  duration_min:
+    type: integer
+  goal:
+    type: string
+    description: Primary objective, e.g. strength, hypertrophy, conditioning, active_recovery.
+  target_muscles:
+    type: array
+    items:
+      type: string
+  excluded_equipment:
+    type: array
+    items:
+      type: string
+    description: Equipment temporarily unavailable for this session.
+  blocks:
+    type: array
+    items:
+      type: object
+      properties:
+        exercise_id:
+          type: string
+        sets:
+          type: integer
+        reps:
+          type: string
+        rest:
+          type: string
+        load:
+          type: string
+        note:
+          type: string
+      required:
+        - exercise_id
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

@@ -1,0 +1,1335 @@
+# Canonical exercise library for Ethan OS health/exercise model.
+# Exercises reference canonical `equipment_type` IDs from `equipment-taxonomy.yaml`.
+
+exercises:
+  # Chest — horizontal push
+  barbell_bench_press:
+    title: Barbell Bench Press
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [triceps, shoulders]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates, rack, bench]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: smith_machine_bench_press
+        rank: 1
+        reason: Stable bar path, retains high loading, less shoulder stabilization.
+      - exercise_id: dumbbell_bench_press
+        rank: 2
+        reason: Greater range of motion and shoulder freedom, slightly lower absolute load.
+      - exercise_id: cable_chest_press
+        rank: 3
+        reason: Constant tension, lower absolute load.
+      - exercise_id: push_up
+        rank: 4
+        reason: Bodyweight, easy to scale with volume.
+
+  incline_barbell_bench_press:
+    title: Incline Barbell Bench Press
+    movement_pattern: horizontal_push
+    primary_muscles: [chest, shoulders]
+    secondary_muscles: [triceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates, rack, bench]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: incline_dumbbell_bench_press
+        rank: 1
+        reason: Same incline angle, more shoulder freedom.
+      - exercise_id: smith_machine_bench_press
+        rank: 2
+        reason: Flat press still targets chest/shoulders.
+
+  dumbbell_bench_press:
+    title: Dumbbell Bench Press
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [triceps, shoulders]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells, bench]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: barbell_bench_press
+        rank: 1
+      - exercise_id: smith_machine_bench_press
+        rank: 2
+      - exercise_id: cable_chest_press
+        rank: 3
+      - exercise_id: push_up
+        rank: 4
+
+  incline_dumbbell_bench_press:
+    title: Incline Dumbbell Bench Press
+    movement_pattern: horizontal_push
+    primary_muscles: [chest, shoulders]
+    secondary_muscles: [triceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells, bench]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: incline_barbell_bench_press
+        rank: 1
+      - exercise_id: dumbbell_bench_press
+        rank: 2
+      - exercise_id: cable_chest_press
+        rank: 3
+
+  smith_machine_bench_press:
+    title: Smith Machine Bench Press
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [triceps, shoulders]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine, bench]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: barbell_bench_press
+        rank: 1
+      - exercise_id: dumbbell_bench_press
+        rank: 2
+      - exercise_id: cable_chest_press
+        rank: 3
+      - exercise_id: push_up
+        rank: 4
+
+  cable_chest_press:
+    title: Standing Cable Chest Press
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [triceps, shoulders]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: smith_machine_bench_press
+        rank: 1
+      - exercise_id: dumbbell_bench_press
+        rank: 2
+      - exercise_id: push_up
+        rank: 3
+
+  cable_fly:
+    title: Cable Fly
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [shoulders]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: low_to_high_cable_fly
+        rank: 1
+      - exercise_id: high_to_low_cable_fly
+        rank: 2
+      - exercise_id: cable_chest_press
+        rank: 3
+
+  low_to_high_cable_fly:
+    title: Low-to-High Cable Fly
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [shoulders]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_fly
+        rank: 1
+      - exercise_id: cable_chest_press
+        rank: 2
+
+  high_to_low_cable_fly:
+    title: High-to-Low Cable Fly
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [shoulders]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_fly
+        rank: 1
+      - exercise_id: cable_chest_press
+        rank: 2
+
+  push_up:
+    title: Push-up
+    movement_pattern: horizontal_push
+    primary_muscles: [chest]
+    secondary_muscles: [triceps, shoulders]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [bodyweight]
+    optional_equipment: [suspension_trainer]
+    unilateral: false
+    stability: free
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: medium
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: dumbbell_bench_press
+        rank: 1
+      - exercise_id: smith_machine_bench_press
+        rank: 2
+      - exercise_id: cable_chest_press
+        rank: 3
+
+  # Back — horizontal pull
+  barbell_bent_over_row:
+    title: Barbell Bent-Over Row
+    movement_pattern: horizontal_pull
+    primary_muscles: [rhomboids, lats]
+    secondary_muscles: [biceps, forearms]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: dumbbell_bent_over_row
+        rank: 1
+      - exercise_id: cable_seated_row
+        rank: 2
+      - exercise_id: single_arm_dumbbell_row
+        rank: 3
+
+  dumbbell_bent_over_row:
+    title: Dumbbell Bent-Over Row
+    movement_pattern: horizontal_pull
+    primary_muscles: [rhomboids, lats]
+    secondary_muscles: [biceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: single_arm_dumbbell_row
+        rank: 1
+      - exercise_id: cable_seated_row
+        rank: 2
+
+  single_arm_dumbbell_row:
+    title: Single-Arm Dumbbell Row
+    movement_pattern: horizontal_pull
+    primary_muscles: [lats, rhomboids]
+    secondary_muscles: [biceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells, bench]
+    unilateral: true
+    stability: supported
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: cable_seated_row
+        rank: 1
+      - exercise_id: dumbbell_bent_over_row
+        rank: 2
+
+  cable_seated_row:
+    title: Seated Cable Row
+    movement_pattern: horizontal_pull
+    primary_muscles: [rhomboids, lats]
+    secondary_muscles: [biceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: single_arm_dumbbell_row
+        rank: 1
+      - exercise_id: barbell_bent_over_row
+        rank: 2
+
+  # Back — vertical pull
+  lat_pulldown:
+    title: Lat Pulldown
+    movement_pattern: vertical_pull
+    primary_muscles: [lats]
+    secondary_muscles: [biceps, rhomboids]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: pull_up
+        rank: 1
+      - exercise_id: chin_up
+        rank: 2
+      - exercise_id: straight_arm_pulldown
+        rank: 3
+
+  pull_up:
+    title: Pull-up
+    movement_pattern: vertical_pull
+    primary_muscles: [lats]
+    secondary_muscles: [biceps, rhomboids]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [pull_up_bar]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: lat_pulldown
+        rank: 1
+      - exercise_id: chin_up
+        rank: 2
+      - exercise_id: cable_biceps_curl
+        rank: 3
+
+  chin_up:
+    title: Chin-up
+    movement_pattern: vertical_pull
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [rhomboids]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [pull_up_bar]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: pull_up
+        rank: 1
+      - exercise_id: lat_pulldown
+        rank: 2
+
+  neutral_grip_pull_up:
+    title: Neutral-Grip Pull-up
+    movement_pattern: vertical_pull
+    primary_muscles: [lats]
+    secondary_muscles: [biceps, rhomboids]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [pull_up_bar]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: pull_up
+        rank: 1
+      - exercise_id: lat_pulldown
+        rank: 2
+
+  straight_arm_pulldown:
+    title: Straight-Arm Pulldown
+    movement_pattern: vertical_pull
+    primary_muscles: [lats]
+    secondary_muscles: []
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: lat_pulldown
+        rank: 1
+      - exercise_id: pull_up
+        rank: 2
+
+  face_pull:
+    title: Face Pull
+    movement_pattern: horizontal_pull
+    primary_muscles: [shoulders, rhomboids]
+    secondary_muscles: []
+    training_objectives: [hypertrophy, mobility]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: medium
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_rear_delt_fly
+        rank: 1
+      - exercise_id: dumbbell_lateral_raise
+        rank: 2
+
+  # Shoulders
+  barbell_overhead_press:
+    title: Barbell Overhead Press
+    movement_pattern: vertical_push
+    primary_muscles: [shoulders]
+    secondary_muscles: [triceps, core]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: dumbbell_overhead_press
+        rank: 1
+      - exercise_id: smith_overhead_press
+        rank: 2
+      - exercise_id: cable_shoulder_press
+        rank: 3
+
+  dumbbell_overhead_press:
+    title: Dumbbell Overhead Press
+    movement_pattern: vertical_push
+    primary_muscles: [shoulders]
+    secondary_muscles: [triceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: barbell_overhead_press
+        rank: 1
+      - exercise_id: smith_overhead_press
+        rank: 2
+      - exercise_id: cable_shoulder_press
+        rank: 3
+
+  smith_overhead_press:
+    title: Smith Machine Overhead Press
+    movement_pattern: vertical_push
+    primary_muscles: [shoulders]
+    secondary_muscles: [triceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: dumbbell_overhead_press
+        rank: 1
+      - exercise_id: barbell_overhead_press
+        rank: 2
+      - exercise_id: cable_shoulder_press
+        rank: 3
+
+  cable_shoulder_press:
+    title: Cable Shoulder Press
+    movement_pattern: vertical_push
+    primary_muscles: [shoulders]
+    secondary_muscles: [triceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_overhead_press
+        rank: 1
+      - exercise_id: smith_overhead_press
+        rank: 2
+
+  cable_lateral_raise:
+    title: Cable Lateral Raise
+    movement_pattern: shoulder_abduction
+    primary_muscles: [shoulders]
+    secondary_muscles: []
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_lateral_raise
+        rank: 1
+      - exercise_id: cable_face_pull
+        rank: 2
+
+  dumbbell_lateral_raise:
+    title: Dumbbell Lateral Raise
+    movement_pattern: shoulder_abduction
+    primary_muscles: [shoulders]
+    secondary_muscles: []
+    training_objectives: [hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_lateral_raise
+        rank: 1
+      - exercise_id: cable_rear_delt_fly
+        rank: 2
+
+  cable_front_raise:
+    title: Cable Front Raise
+    movement_pattern: shoulder_flexion
+    primary_muscles: [shoulders]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: medium
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_lateral_raise
+        rank: 1
+
+  cable_rear_delt_fly:
+    title: Cable Rear-Delt Fly
+    movement_pattern: horizontal_pull
+    primary_muscles: [shoulders]
+    secondary_muscles: [rhomboids]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: face_pull
+        rank: 1
+      - exercise_id: dumbbell_lateral_raise
+        rank: 2
+
+  cable_face_pull:
+    title: Cable Face Pull
+    movement_pattern: horizontal_pull
+    primary_muscles: [shoulders, rhomboids]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: medium
+    strength_suitability: low
+    substitutes:
+      - exercise_id: face_pull
+        rank: 1
+      - exercise_id: cable_rear_delt_fly
+        rank: 2
+
+  # Arms
+  barbell_biceps_curl:
+    title: Barbell Biceps Curl
+    movement_pattern: elbow_flexion
+    primary_muscles: [biceps]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: dumbbell_biceps_curl
+        rank: 1
+      - exercise_id: cable_biceps_curl
+        rank: 2
+      - exercise_id: hammer_curl
+        rank: 3
+
+  dumbbell_biceps_curl:
+    title: Dumbbell Biceps Curl
+    movement_pattern: elbow_flexion
+    primary_muscles: [biceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_biceps_curl
+        rank: 1
+      - exercise_id: hammer_curl
+        rank: 2
+      - exercise_id: barbell_biceps_curl
+        rank: 3
+
+  cable_biceps_curl:
+    title: Cable Biceps Curl
+    movement_pattern: elbow_flexion
+    primary_muscles: [biceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_biceps_curl
+        rank: 1
+      - exercise_id: hammer_curl
+        rank: 2
+
+  hammer_curl:
+    title: Hammer Curl
+    movement_pattern: elbow_flexion
+    primary_muscles: [biceps, forearms]
+    training_objectives: [hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_biceps_curl
+        rank: 1
+      - exercise_id: cable_biceps_curl
+        rank: 2
+
+  triceps_pushdown:
+    title: Triceps Pushdown
+    movement_pattern: elbow_extension
+    primary_muscles: [triceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: overhead_cable_triceps
+        rank: 1
+      - exercise_id: dumbbell_overhead_triceps
+        rank: 2
+      - exercise_id: close_grip_bench_press
+        rank: 3
+
+  overhead_cable_triceps:
+    title: Overhead Cable Triceps Extension
+    movement_pattern: elbow_extension
+    primary_muscles: [triceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: triceps_pushdown
+        rank: 1
+      - exercise_id: dumbbell_overhead_triceps
+        rank: 2
+
+  dumbbell_overhead_triceps:
+    title: Dumbbell Overhead Triceps Extension
+    movement_pattern: elbow_extension
+    primary_muscles: [triceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: overhead_cable_triceps
+        rank: 1
+      - exercise_id: triceps_pushdown
+        rank: 2
+
+  close_grip_bench_press:
+    title: Close-Grip Bench Press
+    movement_pattern: horizontal_push
+    primary_muscles: [triceps, chest]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates, bench, rack]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: smith_machine_bench_press
+        rank: 1
+      - exercise_id: triceps_pushdown
+        rank: 2
+
+  # Legs — knee dominant
+  barbell_back_squat:
+    title: Barbell Back Squat
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings, core]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates, rack]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: smith_back_squat
+        rank: 1
+        reason: Fixed bar path, retains high loading, less stability demand.
+      - exercise_id: leg_press
+        rank: 2
+        reason: Highest fixed-machine load, little core demand.
+      - exercise_id: goblet_squat
+        rank: 3
+        reason: Dumbbell front-loaded squat, good depth and core demand.
+      - exercise_id: cable_squat
+        rank: 4
+
+  barbell_front_squat:
+    title: Barbell Front Squat
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps]
+    secondary_muscles: [glutes, core, upper_back]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates, rack]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: smith_front_squat
+        rank: 1
+      - exercise_id: goblet_squat
+        rank: 2
+      - exercise_id: leg_press
+        rank: 3
+
+  smith_back_squat:
+    title: Smith Machine Back Squat
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: barbell_back_squat
+        rank: 1
+      - exercise_id: leg_press
+        rank: 2
+      - exercise_id: goblet_squat
+        rank: 3
+
+  smith_front_squat:
+    title: Smith Machine Front Squat
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps]
+    secondary_muscles: [glutes, core]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: barbell_front_squat
+        rank: 1
+      - exercise_id: goblet_squat
+        rank: 2
+      - exercise_id: leg_press
+        rank: 3
+
+  leg_press:
+    title: Leg Press
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [leg_press]
+    unilateral: false
+    stability: fixed
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: smith_back_squat
+        rank: 1
+      - exercise_id: barbell_back_squat
+        rank: 2
+      - exercise_id: goblet_squat
+        rank: 3
+
+  leg_extension:
+    title: Leg Extension
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps]
+    training_objectives: [hypertrophy]
+    required_equipment: [leg_extension]
+    unilateral: false
+    stability: fixed
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: goblet_squat
+        rank: 1
+      - exercise_id: smith_back_squat
+        rank: 2
+
+  goblet_squat:
+    title: Goblet Squat
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings, core]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: barbell_back_squat
+        rank: 1
+      - exercise_id: smith_back_squat
+        rank: 2
+      - exercise_id: leg_press
+        rank: 3
+
+  cable_squat:
+    title: Cable Squat
+    movement_pattern: knee_dominant
+    primary_muscles: [quadriceps, glutes]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: medium
+    strength_suitability: low
+    substitutes:
+      - exercise_id: goblet_squat
+        rank: 1
+      - exercise_id: smith_back_squat
+        rank: 2
+      - exercise_id: leg_press
+        rank: 3
+
+  # Legs — hinge / glute
+  barbell_romanian_deadlift:
+    title: Barbell Romanian Deadlift
+    movement_pattern: hinge
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back, forearms]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: dumbbell_romanian_deadlift
+        rank: 1
+      - exercise_id: smith_romanian_deadlift
+        rank: 2
+      - exercise_id: cable_romanian_deadlift
+        rank: 3
+
+  dumbbell_romanian_deadlift:
+    title: Dumbbell Romanian Deadlift
+    movement_pattern: hinge
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: barbell_romanian_deadlift
+        rank: 1
+      - exercise_id: cable_romanian_deadlift
+        rank: 2
+      - exercise_id: smith_romanian_deadlift
+        rank: 3
+
+  smith_romanian_deadlift:
+    title: Smith Machine Romanian Deadlift
+    movement_pattern: hinge
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: barbell_romanian_deadlift
+        rank: 1
+      - exercise_id: dumbbell_romanian_deadlift
+        rank: 2
+      - exercise_id: cable_romanian_deadlift
+        rank: 3
+
+  cable_romanian_deadlift:
+    title: Cable Romanian Deadlift
+    movement_pattern: hinge
+    primary_muscles: [hamstrings, glutes]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_romanian_deadlift
+        rank: 1
+      - exercise_id: smith_romanian_deadlift
+        rank: 2
+
+  cable_pull_through:
+    title: Cable Pull-Through
+    movement_pattern: hinge
+    primary_muscles: [glutes, hamstrings]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_romanian_deadlift
+        rank: 1
+      - exercise_id: smith_romanian_deadlift
+        rank: 2
+
+  hip_thrust:
+    title: Barbell Hip Thrust
+    movement_pattern: hip_dominant
+    primary_muscles: [glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates, bench]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: smith_hip_thrust
+        rank: 1
+      - exercise_id: cable_pull_through
+        rank: 2
+
+  smith_hip_thrust:
+    title: Smith Machine Hip Thrust
+    movement_pattern: hip_dominant
+    primary_muscles: [glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine, bench]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: hip_thrust
+        rank: 1
+      - exercise_id: cable_pull_through
+        rank: 2
+
+  glute_kickback:
+    title: Cable Glute Kickback
+    movement_pattern: hip_extension
+    primary_muscles: [glutes]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: true
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_pull_through
+        rank: 1
+      - exercise_id: smith_hip_thrust
+        rank: 2
+
+  # Legs — lunge
+  walking_lunge:
+    title: Walking Lunge
+    movement_pattern: lunge
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [bodyweight]
+    optional_equipment: [dumbbells]
+    unilateral: true
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: bulgarian_split_squat
+        rank: 1
+      - exercise_id: smith_split_squat
+        rank: 2
+
+  bulgarian_split_squat:
+    title: Bulgarian Split Squat
+    movement_pattern: lunge
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [dumbbells, bench]
+    unilateral: true
+    stability: free
+    loading_potential: moderate
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: smith_split_squat
+        rank: 1
+      - exercise_id: walking_lunge
+        rank: 2
+
+  smith_split_squat:
+    title: Smith Machine Split Squat
+    movement_pattern: lunge
+    primary_muscles: [quadriceps, glutes]
+    secondary_muscles: [hamstrings]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [smith_machine]
+    unilateral: true
+    stability: supported
+    loading_potential: high
+    isolation: false
+    hypertrophy_suitability: high
+    strength_suitability: high
+    substitutes:
+      - exercise_id: bulgarian_split_squat
+        rank: 1
+      - exercise_id: walking_lunge
+        rank: 2
+
+  # Legs — isolation
+  leg_curl:
+    title: Seated Leg Curl
+    movement_pattern: knee_flexion
+    primary_muscles: [hamstrings]
+    training_objectives: [hypertrophy]
+    required_equipment: [leg_curl]
+    unilateral: false
+    stability: fixed
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: dumbbell_romanian_deadlift
+        rank: 1
+      - exercise_id: cable_romanian_deadlift
+        rank: 2
+
+  calf_raise:
+    title: Machine Calf Raise
+    movement_pattern: calf
+    primary_muscles: [calves]
+    training_objectives: [hypertrophy]
+    required_equipment: [calf_raise]
+    unilateral: false
+    stability: fixed
+    loading_potential: high
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: barbell_calf_raise
+        rank: 1
+
+  barbell_calf_raise:
+    title: Barbell Calf Raise
+    movement_pattern: calf
+    primary_muscles: [calves]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [barbell, weight_plates]
+    unilateral: false
+    stability: free
+    loading_potential: high
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: calf_raise
+        rank: 1
+
+  # Core
+  cable_crunch:
+    title: Cable Crunch
+    movement_pattern: core_flexion
+    primary_muscles: [core]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: high
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: plank
+        rank: 1
+
+  pallof_press:
+    title: Pallof Press
+    movement_pattern: core_anti_rotation
+    primary_muscles: [core]
+    training_objectives: [strength, hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: medium
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: cable_wood_chop
+        rank: 1
+      - exercise_id: plank
+        rank: 2
+
+  cable_wood_chop:
+    title: Cable Wood Chop
+    movement_pattern: core_rotation
+    primary_muscles: [core]
+    training_objectives: [hypertrophy]
+    required_equipment: [cable_station]
+    unilateral: false
+    stability: supported
+    loading_potential: moderate
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: pallof_press
+        rank: 1
+
+  plank:
+    title: Plank
+    movement_pattern: core_anti_extension
+    primary_muscles: [core]
+    training_objectives: [strength]
+    required_equipment: [bodyweight]
+    unilateral: false
+    stability: fixed
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: low
+    strength_suitability: medium
+    substitutes:
+      - exercise_id: cable_crunch
+        rank: 1
+
+  hanging_leg_raise:
+    title: Hanging Leg Raise
+    movement_pattern: core_flexion
+    primary_muscles: [core, hip_flexors]
+    training_objectives: [hypertrophy]
+    required_equipment: [pull_up_bar]
+    unilateral: false
+    stability: free
+    loading_potential: low
+    isolation: true
+    hypertrophy_suitability: high
+    strength_suitability: low
+    substitutes:
+      - exercise_id: cable_crunch
+        rank: 1
+
+  # Cardio
+  treadmill_run:
+    title: Treadmill Run
+    movement_pattern: cardio
+    primary_muscles: [quadriceps, hamstrings, glutes, calves]
+    training_objectives: [conditioning]
+    required_equipment: [treadmill]
+    cardio: true
+    unilateral: false
+    stability: fixed
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: low
+    strength_suitability: low
+
+  elliptical:
+    title: Elliptical
+    movement_pattern: cardio
+    primary_muscles: [quadriceps, hamstrings, glutes, calves]
+    training_objectives: [conditioning]
+    required_equipment: [elliptical]
+    cardio: true
+    unilateral: false
+    stability: fixed
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: low
+    strength_suitability: low
+
+  stationary_bike:
+    title: Stationary Bike
+    movement_pattern: cardio
+    primary_muscles: [quadriceps, hamstrings, glutes]
+    training_objectives: [conditioning]
+    required_equipment: [upright_bike]
+    optional_equipment: [recumbent_bike]
+    cardio: true
+    unilateral: false
+    stability: fixed
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: low
+    strength_suitability: low
+
+  rower:
+    title: Rowing Machine
+    movement_pattern: cardio
+    primary_muscles: [lats, rhomboids, quadriceps, hamstrings]
+    training_objectives: [conditioning]
+    required_equipment: [rower]
+    cardio: true
+    unilateral: false
+    stability: fixed
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: low
+    strength_suitability: low
+
+  stairmaster:
+    title: StairMaster
+    movement_pattern: cardio
+    primary_muscles: [quadriceps, glutes, calves]
+    training_objectives: [conditioning]
+    required_equipment: [stairmaster]
+    cardio: true
+    unilateral: false
+    stability: fixed
+    loading_potential: low
+    isolation: false
+    hypertrophy_suitability: low
+    strength_suitability: low

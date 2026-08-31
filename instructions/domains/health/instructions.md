@@ -2,13 +2,16 @@
 
 ## Scope
 
-Track recurring health habits, log metrics against them, and record medical notes.
+Track recurring health habits, log metrics against them, record medical notes, and plan training based on available equipment and training locations.
 
 ## Object flow
 
 ```
 Habit → Log Entry (linked to habit, recomputes current_streak)
 Medical Note (standalone; may link to a Habit, e.g. medication adherence)
+
+Training Location → Equipment inventory + Exercise capability mapping
+Workout → training_location + exercises selected from location-capable candidates
 ```
 
 ## Habit handling
@@ -32,6 +35,36 @@ Medical Note (standalone; may link to a Habit, e.g. medication adherence)
 - Medical Notes carry a higher confidentiality bar than other Health objects; see below.
 - Track `follow_up` explicitly so upcoming appointments or actions are not lost.
 
+## Training location and equipment handling
+
+- Use `skills/health/audit-gym-equipment.md` to add or update a `health.training-location` object from a photo audit, walkthrough, or other source.
+- Use `skills/health/add-training-location.md` to create a new location (e.g. commercial gym, hotel gym, home) before an audit.
+- Store Training Locations in `ethan-life/domains/health/training-locations/`.
+- Each Training Location carries a canonical `equipment` inventory with `canonical_type` from `ethan-os/config/health/equipment-taxonomy.yaml`.
+- Mark `confidence` and `audit_date` for every equipment entry. Use `unknown` rather than guessing weights, quantities, or model numbers.
+- Temporary equipment unavailability is captured per-session, not by editing the location object.
+
+## Exercise capability mapping
+
+- `ethan-os/config/health/exercise-library.yaml` is the canonical exercise catalog.
+- Each exercise declares `required_equipment` as a list of canonical equipment types.
+- Workout planning is location-aware: candidate exercises are filtered to those whose required equipment is present and not temporarily excluded.
+- `skills/health/show-available-exercises.md` and `skills/health/find-exercise-substitution.md` use this mapping.
+- `skills/health/generate-workout-at-location.md` builds a workout from a target location.
+
+## Workout planning
+
+- Workouts are `health.workout` objects linked to a `health.training-location`.
+- Workout generation follows:
+  ```
+  goal / program → movement or muscle target → candidate exercises
+  → equipment requirements → location inventory → feasible exercises
+  → rank/select exercises → workout blocks
+  ```
+- If an exercise is unavailable, use the substitution hierarchy first; fall back to matching `movement_pattern` and `primary_muscles`.
+- Preserve stability, loading potential, isolation, and hypertrophy/strength suitability when ranking substitutes.
+- `excluded_equipment` supports temporary constraints such as "Smith machine is occupied" without mutating the permanent inventory.
+
 ## Review
 
 - Use `skills/health/suggest-habit-insights.md` to identify broken streaks, habits with no recent logs, and medical follow-ups coming due.
@@ -44,9 +77,11 @@ Medical Note (standalone; may link to a Habit, e.g. medication adherence)
 ## Relationships
 
 - Use inline typed links (see `docs/architecture/relationships.md`).
-- Common relations: `part_of` (log entry → habit, habit → goal), `related_to` (medical note → habit), `revised_by`.
+- Common relations: `part_of` (log entry → habit, habit → goal), `related_to` (medical note → habit, workout → location), `revised_by`.
 
 ## Lifecycle
 
 - Habit: `active` → `paused` → `dropped`, or back to `active`.
 - Medical Note: `active` → `monitoring` → `resolved`.
+- Training Location: `active` → `inactive` → `active`.
+- Workout: `planned` → `completed` / `skipped` / `revised`.

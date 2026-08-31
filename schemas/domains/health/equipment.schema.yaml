@@ -1,0 +1,86 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Health Equipment
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - category
+  - equipment_type
+  - confidence
+properties:
+  category:
+    type: string
+    description: "Top-level category: strength, cardio, recovery, bodyweight, accessory."
+    enum:
+      - strength
+      - cardio
+      - recovery
+      - bodyweight
+      - accessory
+  equipment_type:
+    type: string
+    description: Canonical equipment type from the equipment taxonomy.
+  brand:
+    type: string
+  model:
+    type: string
+  product_family:
+    type: string
+  quantity:
+    type: integer
+    description: Number of usable units. Use null for unknown.
+  weight_range:
+    type: object
+    description: Min/max weights or a list of available weights.
+    properties:
+      unit:
+        type: string
+      min:
+        type: number
+      max:
+        type: number
+      values:
+        type: array
+        items:
+          type: number
+  capacity:
+    type: string
+    description: Load capacity or dimensions when known.
+  attachments:
+    type: array
+    items:
+      type: string
+    description: Attachments or features bundled with the equipment.
+  features:
+    type: array
+    items:
+      type: string
+  confidence:
+    type: string
+    enum:
+      - high
+      - medium
+      - low
+      - unknown
+  availability:
+    type: string
+    enum:
+      - available
+      - occupied
+      - out_of_order
+      - unknown
+    default: available
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
