@@ -35,6 +35,8 @@ A list of `findings`. Each finding contains:
 - `priority_mismatch` — active priority with little active execution.
 - `dependency` — one object depends on another being completed first.
 - `stale_assumption` — a meaningful active object without clear context.
+- `strategic_drift` — an active priority or time allocation pattern that systematically moves away from the active strategic objective. Only produced when a strategic objective is active (see `instructions/policies/configurable/strategic-objective-alignment.md`).
+- `strategic_gap` — a milestone-horizon expectation from the strategic objective's roadmap with no supporting active execution. Only produced when a strategic objective is active.
 
 ## Rules
 

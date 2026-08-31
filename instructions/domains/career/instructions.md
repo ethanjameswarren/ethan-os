@@ -48,6 +48,17 @@ Across all Career objects, do not retain proprietary source code, SQL, credentia
 - Use inline typed links (see `docs/architecture/relationships.md`).
 - Common relations: `sourced_from` (evidence ← capture/source), `applies_to` (evidence/story → job requirement), `derived_from` (resume/interview-prep ← evidence), `related_to`, `revised_by`.
 
+## Strategic objective integration
+
+When the Five-Year $2M Career + Ownership Plan (`career-goal-five-year-2m-plan`) is active:
+
+- All career evidence capture, job target analysis, resume building, and interview prep should be evaluated against the strategic objective's `decision_criteria` and `positioning_strategy`.
+- Evidence that demonstrates architecture ownership, cross-functional leadership, executive communication, AI/data platform impact, or commercial acumen should be prioritized for capture and refinement.
+- Job targets should be checked against the Year 2+ role families defined in the career goal.
+- Resume and profile outputs should reflect the `target_positioning` and `career_narrative` from the career goal.
+- The milestone roadmap (`milestone-roadmap-five-year-2m-plan`) defines horizon-specific expectations for evidence, capabilities, and positioning. Use the current horizon to guide which evidence gaps to close first.
+- The scorecard (`scorecard-five-year-2m-plan`) tracks leading indicators. Flag stale scorecard metrics during career-domain reviews.
+
 ## Lifecycle
 
 - Career Evidence: `draft` → `verified` → `generalized`.

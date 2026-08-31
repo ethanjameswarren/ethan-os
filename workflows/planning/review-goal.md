@@ -20,7 +20,12 @@ Review how a goal is progressing and whether its strategies are producing useful
    - `gap` — what is missing
    - `tradeoff` — what conflicts with it
    - `priority_mismatch` — whether execution has stalled
-5. Summarize:
+5. If the goal is the active strategic objective (a `long_term` planning goal with a linked career goal and milestone roadmap):
+   a. Load the milestone roadmap (`ethan-life/domains/career/milestone-roadmap-*.md`) and identify the current horizon.
+   b. For each of the eight dimensions (career position, capabilities, demonstrated evidence, assets/IP owned, professional network, public credibility, business/revenue experimentation, income trajectory), assess whether current state is **Ahead / On Track / At Risk / Off Track** relative to the horizon's expectations.
+   c. Load the scorecard (`ethan-life/domains/career/scorecard-*.md`) and check for stale metrics (not updated within the review cadence).
+   d. Include the structured trajectory assessment in the summary.
+6. Summarize:
    - goal and why it matters
    - active strategies
    - execution evidence
@@ -28,8 +33,9 @@ Review how a goal is progressing and whether its strategies are producing useful
    - gaps
    - conflicts
    - relevant decisions
+   - trajectory assessment (if strategic objective)
    - possible adjustments
-6. Return the summary to the user.
+7. Return the summary to the user.
 
 ## Output
 
@@ -37,6 +43,7 @@ Review how a goal is progressing and whether its strategies are producing useful
 - supporting objects
 - gaps/conflicts
 - neutral observations
+- trajectory assessment with per-dimension status (for strategic objectives)
 - suggested adjustments, not applied automatically
 
 ## Activity vs outcome

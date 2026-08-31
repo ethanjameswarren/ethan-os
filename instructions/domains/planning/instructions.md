@@ -55,6 +55,20 @@ Goal → Task (directly, for goals too small to warrant a project)
 - Dependency reasoning is explicit: a changed departure may require an earlier morning routine, which may require an earlier wake time and bedtime.
 - Default to the smallest schedule change that solves the problem. Rebuild the week only when asked or when the plan becomes infeasible.
 
+## Strategic objective alignment
+
+When a `long_term` planning goal with a linked career goal and milestone roadmap is active, it functions as the **strategic objective**. See `instructions/policies/configurable/strategic-objective-alignment.md` for the full policy.
+
+Key planning behaviors:
+
+- **Weekly planning**: The current milestone horizon's expectations inform weekly priority selection. Weeks with zero strategic-objective-aligned discretionary blocks trigger a drift warning.
+- **Project selection**: New projects are evaluated against the strategic objective's `decision_criteria`. Classification (directly advances / indirectly supports / neutral / competes with) is surfaced to the user but does not block creation.
+- **Next actions**: Items linked to the strategic objective or its active milestone horizon are weighted above unlinked items when ranking suggestions.
+- **Goal review**: Reviews of the strategic objective include a structured trajectory assessment across the eight milestone dimensions.
+- **Drift detection**: Cross-domain reasoning surfaces `strategic_drift` (systematic time allocation away from the objective) and `strategic_gap` (milestone expectations with no supporting execution).
+
+These behaviors surface tradeoffs and gaps. They do not silently reprioritize, close, or defer projects.
+
 ## Lifecycle
 
 - Goal: `active` → `achieved` | `abandoned` | `on_hold`.

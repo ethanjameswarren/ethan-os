@@ -32,6 +32,7 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
   - blocks repeatedly skipped,
   - goals/tasks with no progress,
   - unusual overloads.
+- If a strategic objective is active (see `instructions/policies/configurable/strategic-objective-alignment.md`), check whether the prior week included any discretionary time allocated to strategic-objective-aligned work. If two or more consecutive weeks had zero strategic-objective blocks, surface a **drift warning**.
 - Ask at most one or two targeted questions if a pattern is unclear.
 
 ### 2. Review orchestration
@@ -61,10 +62,12 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
 ### 3. Identify next week's priorities
 
 - Run `skills/planning/suggest-next-actions.md` to surface active goals, projects, and unblocked tasks.
+- If a strategic objective is active, load the current milestone horizon from `ethan-life/domains/career/milestone-roadmap-*.md`. Use the horizon's expectations to inform which goals and projects should be weighted highest. Surface any horizon expectation that has no supporting execution as a candidate priority.
 - Inspect active `knowledge.learning-program` objects and their current module/assessment status.
 - Inspect active reading state and retention reviews if relevant.
 - Ask: "What are the 1–3 things you most want to make progress on next week?" only if priorities cannot be confidently inferred.
 - Limit weekly focus. Do not try to advance every active project.
+- Do not force every week to be strategic-objective-focused. Recovery weeks, maintenance weeks, and personal-priority weeks are valid. Surface the tradeoff explicitly rather than silently overriding it.
 
 ### 4. Maintenance / admin
 
