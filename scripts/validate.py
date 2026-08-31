@@ -14,6 +14,7 @@ Checks:
 - supported schema versions
 """
 
+import argparse
 import os
 import re
 import sys
@@ -32,7 +33,16 @@ VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 SCHEMA_REGISTRY = ROOT / "schemas" / "registry.yaml"
 
 DEMO_FIXTURES = ROOT / "config" / "demo-personality" / "fixtures"
-ETHAN_LIFE = ROOT.parent / "ethan-life"
+
+
+def _default_life_root() -> Path:
+    """Default companion repository location when no --life-root is supplied."""
+    return ROOT.parent / "ethan-life"
+
+
+# Global life root; can be overridden via --life-root or when imported by an adapter.
+ETHAN_LIFE = _default_life_root()
+
 
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
@@ -115,18 +125,47 @@ def validate_object(path: Path, registry: dict, all_ids: dict, broken: list):
             broken.append(f"{rel}: links is not a list")
         else:
             for link in links:
+                if not isinstance(link, dict):
+                    broken.append(f"{rel}: link is not a mapping")
+                    continue
                 target = link.get("target")
                 relation = link.get("relation")
                 if not target:
                     broken.append(f"{rel}: link missing target")
-                if target and target not in all_ids:
-                    # target may appear later; defer check to second pass
-                    pass
                 if not relation:
                     broken.append(f"{rel}: link missing relation")
 
 
+def validate_relationship_targets(files, all_ids, broken):
+    for path in files:
+        rel = path.relative_to(ROOT if str(path).startswith(str(ROOT)) else ETHAN_LIFE).as_posix()
+        fm = parse_frontmatter(path.read_text(encoding="utf-8"))
+        if not fm:
+            continue
+        links = fm.get("links", [])
+        if not isinstance(links, list):
+            continue
+        for link in links:
+            if not isinstance(link, dict):
+                continue
+            target = link.get("target")
+            if target and target not in all_ids:
+                broken.append(f"{rel}: broken link to unknown id '{target}'")
+
+
 def main():
+    parser = argparse.ArgumentParser(description="Deterministic validation for Ethan OS.")
+    parser.add_argument(
+        "--life-root",
+        type=Path,
+        default=None,
+        help="Path to the companion life repository (default: sibling ethan-life).",
+    )
+    args = parser.parse_args()
+
+    global ETHAN_LIFE
+    ETHAN_LIFE = args.life_root.resolve() if args.life_root else _default_life_root()
+
     print(f"Ethan OS {VERSION} deterministic validation")
     print("=" * 40)
 
@@ -161,16 +200,7 @@ def main():
         validate_object(path, registry, all_ids, broken)
 
     # Pass 3: relationship targets
-    for path in files:
-        rel = path.relative_to(ROOT if str(path).startswith(str(ROOT)) else ETHAN_LIFE).as_posix()
-        text = path.read_text(encoding="utf-8")
-        fm = parse_frontmatter(text)
-        if not fm:
-            continue
-        for link in fm.get("links", []):
-            target = link.get("target")
-            if target and target not in all_ids:
-                broken.append(f"{rel}: broken link to unknown id '{target}'")
+    validate_relationship_targets(files, all_ids, broken)
 
     print(f"Checked {len(files)} Markdown files")
 

@@ -99,10 +99,16 @@ Inside `john-life`, create a `.john-os.yaml` file pointing back to your OS:
 ```yaml
 john_os:
   repository: ../john-os
-  version: 0.1.0
+  version: 0.1.1-beta
   domains:
     knowledge:
       enabled: true
+
+# Storage backend for user state. The default is a sibling Git repository,
+# but other backends (cloud folder, os_server, database) can be configured.
+storage:
+  backend: local_git
+  path: ../john-life
 ```
 
 The exact filename can be whatever your OS entrypoint expects. For Ethan OS-derived systems, this is typically `.<identifier>-os.yaml`. The runtime bootstrap in `john-os` will look for it.

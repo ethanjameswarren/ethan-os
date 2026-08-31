@@ -68,7 +68,7 @@ def get_upstream_remote(upstream_dir: Path) -> str:
         return run_git("remote", "get-url", "origin", cwd=upstream_dir)
     except (RuntimeError, FileNotFoundError):
         # Fall back to a generic canonical URL.
-        return "https://github.com/ethanjameswarren/ethan-os.git"
+        return "https://github.com/<upstream-owner>/ethan-os.git"
 
 
 def copy_upstream(upstream_dir: Path, target_dir: Path):
@@ -98,7 +98,7 @@ def rewrite_readme(target_dir: Path, os_name: str, identifier: str):
             break
 
     identity_block = (
-        f"\n{os_name} is a personal OS built from [Ethan OS](https://github.com/ethanjameswarren/ethan-os). "
+        f"\n{os_name} is a personal OS built from [Ethan OS]({get_upstream_remote(ROOT)}). "
         f"It reuses Ethan OS workflows and schemas while keeping {identifier}-life as the private companion repository.\n\n"
     )
     if identity_block.strip() not in text:

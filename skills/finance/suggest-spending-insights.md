@@ -20,6 +20,7 @@ Surface budget and account items worth Ethan's attention.
 
 ## Rules
 
+- Apply `instructions/policies/mandatory/financial-guidance.md` to suggested next steps; explain why each item was surfaced and use qualified planning language.
 - Do not change any Budget, Account, or Transaction; only surface findings.
 - Rank findings by: over-budget categories tied to a goal first, then other over-budget categories, then stale data, then under-utilized budgets.
 

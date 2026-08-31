@@ -114,10 +114,10 @@ A capability may include a compact frontmatter block for graph traversal:
 type: career.capability
 id: experimentation-causal-measurement
 evidence:
-  - lowes-grills-messaging-test
-  - lowes-water-heater-messaging-test
-  - lowes-wave-3-payroll-test
-  - lowes-product-pickup-analysis
+  - example-checkout-messaging-test
+  - example-delivery-messaging-test
+  - example-payroll-pilot-analysis
+  - example-product-pickup-analysis
 ---
 ```
 

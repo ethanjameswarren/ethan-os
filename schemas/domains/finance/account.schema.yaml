@@ -19,9 +19,23 @@ properties:
     enum:
       - checking
       - savings
+      - cash
       - credit_card
+      - taxable_investment
       - investment
+      - brokerage
+      - retirement_401k
+      - retirement_ira
+      - retirement_roth_ira
+      - hsa
       - loan
+      - mortgage
+      - auto_loan
+      - student_loan
+      - money_market
+      - cd
+      - other_asset
+      - other_debt
       - other
   status:
     type: string
@@ -44,6 +58,13 @@ properties:
           format: date
         balance:
           type: number
+        source:
+          type: string
+          enum:
+            - user_stated
+            - statement
+            - estimated
+          description: How this balance was obtained.
   links:
     type: array
     items:

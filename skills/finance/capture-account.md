@@ -11,7 +11,7 @@ Natural language mentioning an account and, optionally, a current balance.
 ## Extract
 
 - institution name, if mentioned
-- account type: checking, savings, credit_card, investment, loan, other
+- account type: checking, savings, cash, credit_card, taxable_investment, investment, brokerage, retirement_401k, retirement_ira, retirement_roth_ira, hsa, loan, mortgage, auto_loan, student_loan, money_market, cd, other_asset, other_debt, other
 - currency, if not USD or otherwise implied
 - current balance and date, if stated
 

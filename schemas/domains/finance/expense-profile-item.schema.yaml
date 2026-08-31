@@ -1,0 +1,97 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Expense Profile Item
+description: >
+  A recurring or expected expense in the user's spending profile.
+  Each item is a dated fact capturing what the user pays, how often, and
+  whether it is fixed or variable. Changes are captured as evolution entries.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - category
+  - amount
+  - frequency
+  - classification
+  - effective_date
+  - created_at
+  - provenance
+properties:
+  category:
+    type: string
+    description: Spending category, e.g. "Housing", "Groceries", "Subscriptions".
+  amount:
+    type: number
+    description: Expected amount per frequency period.
+  currency:
+    type: string
+  frequency:
+    type: string
+    enum:
+      - weekly
+      - biweekly
+      - semimonthly
+      - monthly
+      - quarterly
+      - annual
+      - one_time
+      - irregular
+  classification:
+    type: string
+    enum:
+      - essential
+      - committed
+      - discretionary
+    description: Financial-planning treatment used for reserve and allocation calculations.
+  due_date:
+    type: string
+    description: Due day or date when relevant; retain the user's stated precision.
+  monthly_equivalent:
+    type: number
+    description: Calculated value normalized from amount and frequency.
+  annual_equivalent:
+    type: number
+    description: Calculated value normalized from amount and frequency.
+  expense_type:
+    type: string
+    enum:
+      - fixed
+      - variable
+      - discretionary
+    description: >
+      fixed = does not change month to month (rent, insurance).
+      variable = necessary but amount varies (groceries, utilities).
+      discretionary = optional spending (dining out, entertainment).
+  essential:
+    type: boolean
+    description: Whether this expense is considered a need vs. a want.
+  effective_date:
+    type: string
+    format: date
+  end_date:
+    type: string
+    format: date
+    description: When this expense ended or is expected to end.
+  account_id:
+    type: string
+    description: ID of the finance.account this is paid from, if known.
+  budget_id:
+    type: string
+    description: ID of a finance.budget this item maps to, if any.
+  status:
+    type: string
+    enum:
+      - active
+      - ended
+      - expected
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

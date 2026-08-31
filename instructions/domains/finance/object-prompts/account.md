@@ -10,7 +10,7 @@ Generate or update an Account object.
 - `schema`: `finance.account`
 - `schema_version`: `1`
 - `title`
-- `account_type`: checking | savings | credit_card | investment | loan | other
+- `account_type`: checking | savings | cash | credit_card | taxable_investment | investment | brokerage | retirement_401k | retirement_ira | retirement_roth_ira | hsa | loan | mortgage | auto_loan | student_loan | money_market | cd | other_asset | other_debt | other
 - `created_at`
 - `provenance`
 
@@ -19,7 +19,7 @@ Generate or update an Account object.
 - `institution`
 - `status`: active | closed
 - `currency`
-- `balance_snapshots`: list of `{ date, balance }`
+- `balance_snapshots`: list of `{ date, balance, source }` where source is `user_stated` | `statement` | `estimated`
 - `links`: typed relationships
 - `## Evolution` section
 

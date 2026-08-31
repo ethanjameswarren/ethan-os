@@ -43,7 +43,7 @@ Specific compromises made in service of ATS compatibility:
 The `build-tailored-resume` workflow writes content into the commands at the top of `resume.tex`. Presentation is fully controlled by `ethan-resume.sty`.
 
 ```latex
-\name{Ethan Warren}
+\name{Your Name}
 \contacts{City, ST ~|~ email@example.com ~|~ linkedin.com/in/...}
 \summary{...}
 \skills{...}

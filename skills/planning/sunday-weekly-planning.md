@@ -61,7 +61,8 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
 
 ### 3. Identify next week's priorities
 
-- Run `skills/planning/suggest-next-actions.md` to surface active goals, projects, and unblocked tasks.
+- Run `skills/planning/suggest-next-actions.md` to surface active goals, projects, and unblocked tasks and rank feasible actions by commitments, impact, strategic relevance, learning, evidence, leverage, ownership, compounding value, and opportunity cost.
+- Preserve the skill's work-type distinctions so maintenance and necessary work remain visible without crowding out higher-leverage work by default.
 - If a strategic objective is active, load the current milestone horizon from `ethan-life/domains/career/milestone-roadmap-*.md`. Use the horizon's expectations to inform which goals and projects should be weighted highest. Surface any horizon expectation that has no supporting execution as a candidate priority.
 - Inspect active `knowledge.learning-program` objects and their current module/assessment status.
 - Inspect active reading state and retention reviews if relevant.
@@ -83,7 +84,7 @@ Build the upcoming week's concrete plan from the existing baseline, real calenda
 
 ### 5. Place flexible priorities
 
-- Fit high-value flexible work into the existing baseline containers first.
+- Fit high-value flexible work into the existing baseline containers first, using the rationale and unlocks from `suggest-next-actions` rather than urgency alone.
 - Use themed/flexible evening blocks before adding new time.
   - If Wednesday carries a Learning block and Guided Reading is a priority, use that block.
   - If Thursday is the Build block, place project work there.

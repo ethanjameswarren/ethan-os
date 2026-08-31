@@ -94,7 +94,7 @@ Dear Hiring Manager,
 <finished cover letter paragraphs>
 
 Sincerely,
-Ethan Warren
+<Your Name>
 
 ---
 

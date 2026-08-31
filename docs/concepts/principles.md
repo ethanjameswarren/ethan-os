@@ -44,6 +44,12 @@ The user can override, skip, pause, archive, or delete. They can say "not now," 
 
 External systems display or extend `ethan-life` data; they do not own it. If Notion or Spotify disagree with `ethan-life`, `ethan-life` wins.
 
+## Client and tool neutrality
+
+Ethan OS is not tied to a specific AI client, IDE, agent framework, or model provider. Core OS documents, instructions, workflows, schemas, and skills refer to the "AI client" or "adapter," not to Devin, Cursor, Windsurf, ChatGPT, Claude, or any other product name.
+
+Tool-specific prompts, bootstrap rules, tool-name mappings, and client integrations belong in `adapters/`. They are not checked into the core OS package. This keeps the OS portable and prevents any one client from becoming a hidden dependency.
+
 ## Vertical capabilities, horizontal services
 
 Vertical capabilities provide specialized behavior for a domain: reading, planning, finance, health, career, music. Horizontal services allow those capabilities to work together: context assembly, cross-domain retrieval, review orchestration, temporal state, decision records, and bounded proactive assistance. New capabilities are built as vertical layers on top of shared horizontal services, not as parallel silos.

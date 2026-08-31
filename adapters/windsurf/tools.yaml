@@ -1,0 +1,34 @@
+# Windsurf / Cursor / VS Code tool mapping for Ethan OS
+# This file is client-specific and lives in the adapter, not in core OS.
+
+adapter: windsurf
+version: 0.1.0
+
+# Windsurf and similar IDEs typically expose file-system and web tools indirectly
+# (e.g., via inline preview, built-in terminal, or extension APIs).
+# This mapping is a placeholder until those capabilities are formalized.
+
+capability_to_tools:
+  external_source_lookup:
+    - name: builtin_web_search
+      purpose: Search the public web from within the IDE chat.
+    - name: browser_preview
+      purpose: Render a URL for inspection when available.
+
+  load_instructions:
+    - name: file_read
+      purpose: Read Markdown and YAML files from the workspace.
+
+  write_state:
+    - name: file_edit
+      purpose: Apply validated changes to workspace files.
+    - name: file_write
+      purpose: Create new workspace files.
+
+  run_deterministic_script:
+    - name: integrated_terminal
+      purpose: Run Python scripts in the IDE's integrated terminal.
+
+  confirm_or_notify:
+    - name: chat_confirmation
+      purpose: Ask the user for confirmation in the chat panel before material changes.

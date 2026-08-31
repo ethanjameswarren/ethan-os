@@ -1,0 +1,74 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Financial Snapshot
+description: >
+  A dated point-in-time summary of the user's overall financial position.
+  Each snapshot is an immutable record; new snapshots are appended, never overwritten.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - as_of_date
+  - created_at
+  - provenance
+properties:
+  as_of_date:
+    type: string
+    format: date
+    description: The date this snapshot represents.
+  accounts_summary:
+    type: array
+    description: Per-account balances included in this snapshot.
+    items:
+      type: object
+      required:
+        - account_id
+        - balance
+      properties:
+        account_id:
+          type: string
+          description: ID of the finance.account.
+        balance:
+          type: number
+        balance_source:
+          type: string
+          enum:
+            - user_stated
+            - statement
+            - estimated
+          description: How this balance was obtained.
+  total_assets:
+    type: number
+    description: Sum of positive-balance accounts (checking, savings, investment, etc.).
+  total_liabilities:
+    type: number
+    description: Sum of outstanding debt balances (credit cards, loans, etc.).
+  net_worth:
+    type: number
+    description: "Calculated: total_assets minus total_liabilities."
+  net_worth_type:
+    type: string
+    enum:
+      - calculated
+      - user_stated
+    description: Whether net_worth was calculated from accounts or directly stated by the user.
+  monthly_income_total:
+    type: number
+    description: Total gross monthly income at this point in time, if known.
+  monthly_expense_total:
+    type: number
+    description: Total monthly expenses at this point in time, if known.
+  monthly_surplus:
+    type: number
+    description: "Calculated: monthly_income_total minus monthly_expense_total."
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

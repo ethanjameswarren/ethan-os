@@ -49,7 +49,7 @@ These are the most concrete ways to see Ethan OS in action:
 | [Guided Reading](capabilities/guided-reading.md) | Read and talk; the OS tracks progress, captures ideas, schedules retention, and recommends next reads. | [workflow](workflows/guided-reading.md) |
 | [Knowledge & Learning](capabilities/knowledge.md) | Capture, connect, summarize, and review ideas from books, articles, conversations, and experience. | [workflow](workflows/knowledge.md) |
 | [Planning & Projects](capabilities/planning.md) | Turn goals into projects and tasks; review what is happening next. | [workflow](workflows/planning.md) |
-| [Finance](capabilities/finance.md) | Log transactions and track budgets. | [workflow](workflows/finance.md) |
+| [Finance](capabilities/finance.md) | Log transactions, track budgets, plan debt payoff, manage income/expenses/goals, allocate cash flow, and run financial reviews. | [workflow](workflows/finance.md) |
 | [Health & Habits](capabilities/health.md) | Track habits, metrics, and medical notes. | [workflow](workflows/health.md) |
 | [Career](capabilities/career.md) | Capture evidence, tailor resumes, prepare interviews. | [workflow](workflows/career.md) |
 | [Music / DJ Workflows](capabilities/music.md) | Manage a collection, build sets, print labels, sync to Spotify. | [workflow](workflows/music.md) |

@@ -1,0 +1,106 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Debt
+description: >
+  A specific debt obligation. Tracks the original and current balance,
+  interest rate, minimum payment, and any promotional terms. Balance
+  history is additive (never overwritten).
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - debt_type
+  - current_balance
+  - interest_rate_pct
+  - minimum_payment
+  - created_at
+  - provenance
+properties:
+  debt_type:
+    type: string
+    enum:
+      - credit_card
+      - student_loan
+      - auto_loan
+      - mortgage
+      - personal_loan
+      - medical
+      - other
+  creditor:
+    type: string
+    description: Lender or creditor name.
+  account_id:
+    type: string
+    description: ID of the finance.account this debt corresponds to, if any.
+  original_balance:
+    type: number
+    description: Original principal or balance at time of origination.
+  current_balance:
+    type: number
+    description: Most recently reported outstanding balance.
+  balance_as_of:
+    type: string
+    format: date
+    description: Date the current_balance was reported.
+  interest_rate_pct:
+    type: number
+    description: Current annual interest rate as a percentage (e.g. 19.99).
+  interest_type:
+    type: string
+    enum:
+      - fixed
+      - variable
+  minimum_payment:
+    type: number
+    description: Required minimum monthly payment.
+  payment_due_date:
+    type: string
+    description: Recurring due day or full date, retaining the user's stated precision.
+  currency:
+    type: string
+  promo_rate_pct:
+    type: number
+    description: Promotional APR, if currently active (e.g. 0 for a 0% intro rate).
+  promo_end_date:
+    type: string
+    format: date
+    description: Date the promotional rate expires.
+  regular_rate_after_promo_pct:
+    type: number
+    description: APR that takes effect after promo period ends.
+  balance_history:
+    type: array
+    description: Dated balance snapshots for tracking payoff progress.
+    items:
+      type: object
+      required:
+        - date
+        - balance
+      properties:
+        date:
+          type: string
+          format: date
+        balance:
+          type: number
+  payoff_target_date:
+    type: string
+    format: date
+    description: User's target date to pay off this debt, if set.
+  status:
+    type: string
+    enum:
+      - active
+      - paid_off
+      - deferred
+      - in_collections
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

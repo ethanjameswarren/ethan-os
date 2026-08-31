@@ -1,0 +1,158 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Financial Review
+description: >
+  A periodic review of the user's overall financial position, combining
+  snapshot data, budget status, goal progress, debt trajectory, and
+  allocation effectiveness into one orchestrated assessment. Each review
+  is an immutable dated record.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - review_date
+  - review_period
+  - created_at
+  - provenance
+properties:
+  review_date:
+    type: string
+    format: date
+    description: Date the review was conducted.
+  review_period:
+    type: string
+    description: "Period covered, e.g. '2026-08' for monthly, '2026-Q3' for quarterly."
+  review_type:
+    type: string
+    enum:
+      - monthly
+      - quarterly
+      - annual
+      - ad_hoc
+  snapshot_id:
+    type: string
+    description: ID of the finance.financial-snapshot used as the basis for this review.
+  sections:
+    type: object
+    description: Structured review sections, each containing findings.
+    properties:
+      net_worth:
+        type: object
+        properties:
+          current:
+            type: number
+          prior:
+            type: number
+          change:
+            type: number
+          notes:
+            type: string
+      income:
+        type: object
+        properties:
+          total_monthly:
+            type: number
+          changes:
+            type: string
+          notes:
+            type: string
+      spending:
+        type: object
+        properties:
+          total_monthly:
+            type: number
+          vs_budget:
+            type: string
+          notable_categories:
+            type: array
+            items:
+              type: string
+          notes:
+            type: string
+      debt:
+        type: object
+        properties:
+          total_outstanding:
+            type: number
+          change_from_prior:
+            type: number
+          payoff_on_track:
+            type: boolean
+          notes:
+            type: string
+      goals:
+        type: object
+        properties:
+          on_track:
+            type: integer
+          behind:
+            type: integer
+          achieved:
+            type: integer
+          notes:
+            type: string
+      allocation:
+        type: object
+        properties:
+          surplus_available:
+            type: number
+          allocated_as_planned:
+            type: boolean
+          notes:
+            type: string
+  findings:
+    type: array
+    description: Prioritized list of observations and recommendations.
+    items:
+      type: object
+      required:
+        - category
+        - finding
+      properties:
+        category:
+          type: string
+          enum:
+            - fact
+            - calculation
+            - assumption
+            - recommendation
+          description: >
+            fact = user-stated datum.
+            calculation = derived from user facts.
+            assumption = something the OS assumed (flagged for user verification).
+            recommendation = suggested action (not auto-applied).
+        finding:
+          type: string
+        priority:
+          type: string
+          enum:
+            - high
+            - medium
+            - low
+        related_object_id:
+          type: string
+  action_items:
+    type: array
+    description: Suggested follow-up actions from this review.
+    items:
+      type: object
+      properties:
+        action:
+          type: string
+        status:
+          type: string
+          enum:
+            - suggested
+            - accepted
+            - declined
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

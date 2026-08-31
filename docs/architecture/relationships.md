@@ -31,4 +31,7 @@ links:
 
 - Keyword similarity alone is not sufficient.
 - Relationships require contextual justification.
+- Every `links[].target` is an internal object ID and must resolve in the configured state tree.
+- External documents, user-provided summaries, and uncaptured source material belong in `provenance.source_id` or `provenance.derived_from`; they are not internal links until stored as durable objects.
+- Deterministic validation fails on dangling internal links while preserving external provenance references.
 - No central relationship database in v0.1.

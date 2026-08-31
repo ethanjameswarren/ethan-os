@@ -21,6 +21,9 @@ Resumes and interviews are most convincing when every claim traces back to speci
 - Tracks job targets with requirements and priority evidence gaps.
 - Generates resume content that selects and reframes evidence for the target role.
 - Produces interview prep with stories tied to specific evidence IDs.
+- Reconstructs prior roles with facts, inferences, unknowns, and follow-up questions kept distinct.
+- Synthesizes capability maps and aligns projects and presentation assets to an authoritative career goal.
+- Generates copy/paste-ready LinkedIn, Indeed, and cover-letter assets with generation metadata.
 - Keeps presentation separate from content; PDF generation uses templates.
 
 ## Key ideas
@@ -43,6 +46,8 @@ Resumes and interviews are most convincing when every claim traces back to speci
 - **Job Target** — role, requirements, priority gaps, and linked evidence.
 - **Resume Content** — role-specific bullets and sections derived from evidence.
 - **Interview Prep** — stories with context, actions, results, and evidence links.
+- **Career Goal and Presentation Profiles** — authoritative positioning plus derived platform-specific assets.
+- **Role Reconstructions and Capability Maps** — reviewable evidence synthesis that preserves uncertainty.
 
 ## Important behaviors
 

@@ -17,6 +17,12 @@
   - New `ethan-life/domains/system/validation-matrix.yaml`
   - New `ethan-life/domains/planning/goals/goal-validate-ethan-os.md`
   - New `scripts/core/validation_matrix.py`
+- **Career Evidence and Presentation** — role reconstruction, capability synthesis, evidence-backed LinkedIn/Indeed/cover-letter generation, and explicit alignment to an authoritative career goal.
+- **Strategic Objective Alignment** — planning projections, project evaluation, weekly prioritization, and drift/gap review behavior without duplicating authoritative domain strategy.
+- **Calendar integration** — Google Calendar reads, deterministic ICS export, and explicit write-back are implemented with fixture tests; credentialed real-world validation remains outstanding.
+- **Location-aware Health** — training-location equipment inventories and equipment-constrained workout construction are implemented; real workout validation remains outstanding.
+- **Reproducible validation** — pinned PyYAML dependency, one aggregate validation command, and deterministic dangling-link coverage.
+- **Privacy boundary repair** — public templates and examples use fictional data; personal canonical data remains in `ethan-life`.
 
 ### Project status
 

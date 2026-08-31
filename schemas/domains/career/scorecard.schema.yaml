@@ -1,0 +1,29 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Scorecard
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+properties:
+  status:
+    type: string
+    enum:
+      - active
+      - archived
+  goal_id:
+    type: string
+  review_cadence:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

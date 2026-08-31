@@ -4,7 +4,7 @@ A concise human-facing view of where Ethan OS is today and where it is headed.
 
 For the long-term design philosophy and destination, see [VISION.md](../VISION.md).
 
-Last reviewed: 2026-08-28
+Last reviewed: 2026-08-31
 
 ## Maturity model
 
@@ -29,16 +29,16 @@ Ethan OS is a public behavior layer for personal AI systems. The core runtime, v
 | Knowledge | Beta | Sources, captures, ideas, summaries, reviews, typed relationships, retrieval across objects | Improve synthesis and cross-domain retrieval |
 | Guided Reading | Beta | Full reading lifecycle, library/backlog, active recall, retention scheduling, source grounding, spoiler protection, recommendations | Real-world friction testing and prompt refinement |
 | Planning / Projects | Beta | Goals, projects, tasks, weekly review | Tighter integration with scheduling |
-| Finance | Beta | Accounts, transactions, budgets, monthly review | Better reporting and integration boundaries |
-| Health | Beta | Habits, metrics, medical notes, weekly review | More flexible habit/review cadences |
-| Career | Beta | Career evidence, job targets, tailored resumes, interview prep | More robust evidence-to-asset matching |
+| Finance | Beta | Accounts, transactions, budgets, income sources, expense profiles, debts, financial goals, allocation policies, financial snapshots, debt payoff strategies (avalanche/snowball/promo-aware/custom), 401k per-paycheck targeting, cash-flow allocation, orchestrated financial reviews with epistemological labeling, and a stdlib Python calculator with deterministic tests | Real-world usage validation, trend analysis, and multi-period comparison |
+| Health | Beta | Habits, metrics, medical notes, weekly review, equipment inventories, and location-aware workout construction | Validate real workouts, substitutions, and unavailable-equipment recovery |
+| Career | Beta | Career evidence, role reconstruction, capability maps, job targets, goal-aligned resumes, LinkedIn/Indeed profiles, cover letters, and interview prep | Validate a target-specific presentation package and review claim selection |
 | Music / DJ Workflows | Beta | Collection management, DJ set building, record labels, Spotify sync | Polish and real-set usage feedback |
 | Spotify Integration | Beta | OAuth setup, playlist export/sync, track matching, collection-style sync | Scope review and privacy/scope documentation |
 | Notion Projection / Sync | Planned | Database mappings and sync architecture defined; live end-to-end sync not yet validated | Validate live sync behavior and decide projection scope |
 | Downstream Bootstrap & Updates | Beta | Bootstrap script, safe update assessment, conflict classification, validation, rollback, Apache-2.0 licensing/attribution support | Real-world fork/clone testing and refinement |
 | Human-Facing Documentation | Beta | README, docs index, core concepts, all major capability docs, representative workflow summaries per domain, and getting-started guides created | Additional polish and contributor documentation may still evolve |
 | Schedule Planning | Beta / Ready | End-to-end baseline, weekly planning, daily replanning, overrides, conflict detection, and schedule diagnosis implemented. Currently being validated through real-world use. | Real-world usage and calendar integration refinement |
-| Google Calendar Read Integration | In Development | OAuth, read client, event normalization, calendar selection config, and planning integration implemented; awaiting real-world credential test. | Real-world OAuth test and calendar write-back decision |
+| Google Calendar Integration | In Development | OAuth, event reads and normalization, deterministic ICS export, and explicit weekly-plan write-back are implemented; no credentialed real-world run is recorded. | Validate read and write-back with a test calendar, including partial-failure recovery |
 | Desktop AI Client Access | Planned | Conceptually supported by the file-based architecture; no official non-IDE desktop-client bridge implemented or validated yet. | Design and validate an MCP/server bridge that keeps ethan-life private and client adapters vendor-agnostic. |
 | Guided Learning | Beta / Ready | Supports university courses, online/self-paced learning, certifications, and workplace training with active recall, structured sessions, selective retention, progress tracking, assessment prep, and Sunday planning integration. Deterministic tests pass; real-world usage is now being used to refine prompts, material ingestion, and retention behavior. | LinkedIn Learning live test, prompt and retention refinement, and later syllabus/material ingestion automation |
 
@@ -54,7 +54,7 @@ These are the shared services that make the vertical capabilities feel like one 
 | Temporal State | Exploring | `updated_at` on core objects; schedule overrides already support `valid_for` ranges. | Decide minimal temporal metadata pattern before retrofitting every object. |
 | Decision Intelligence | Beta / Ready | `knowledge.decision` schema, `skills/knowledge/capture-decision.md`, `workflows/core/review-decision.md`, demo fixtures, and deterministic tests in place. Cross-domain reasoning recognizes decisions. | Live capture and real-world review cycles. |
 | Review Orchestrator | Beta / Ready | `scripts/core/review_orchestrator.py`, `workflows/core/review-orchestrator.md`, `workflows/planning/review-goal.md`, and `workflows/core/review-decision.md` in place. Skips empty domains, surfaces decisions, goals, learning, and retention reviews, and delegates to domain workflows. | Harden cadence logic and add more domain-specific review delegations. |
-| Priority Alignment | Beta / Ready | `scripts/core/cross_domain_reasoning.py` detects `priority_mismatch` and `evidence_gap` for goals and projects. The Review Orchestrator and Goal Review workflows consume these findings. | Add schedule-aware validation and richer execution-to-goal feedback. |
+| Priority Alignment | Beta / Ready | Strategic-objective policy, project evaluation, weekly planning, next-action ranking, goal review, and drift/gap findings connect an authoritative long-term goal to execution. A private planning goal may project the authoritative domain goal under explicit synchronization rules. | Validate monthly trajectory review and drift/gap recovery through real use. |
 | Workflow Evaluation | In Development | `evaluations/context-engine/expectations.md` and `evaluations/cross-domain-reasoning/expectations.md` now define behavioral expectations. Tests validate retrieval, reasoning, and privacy boundaries. | Extend to other high-stakes workflows such as resume and schedule planning. |
 | Beta Usage / Friction Tracking | Beta / Ready | `core.friction-log` schema, `skills/core/capture-friction.md`, `workflows/core/capture-friction.md`, `workflows/core/review-friction-log.md`, `scripts/core/friction_log.py`, and deterministic tests are in place. Capture, private persistence, review/triage, and evaluation-candidate conversion work end-to-end. | Real-world usage refinement; do not expand into a full issue tracker. |
 | Workflow Orchestration | Exploring | Workflows call skills; workflow-to-workflow composition is not yet formal. | Design orchestration primitive for multi-workflow events. |

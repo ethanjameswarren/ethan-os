@@ -17,8 +17,8 @@ Ethan OS is split into two repositories:
 4. AI classifies intent, determines domain, selects workflow.
 5. AI loads required instructions, policies, context, and skills in precedence order.
 6. AI executes workflow.
-7. AI validates generated objects against the schema registry.
-8. AI writes validated objects back to `ethan-life`.
+7. AI validates generated objects against the schema registry and checks that every internal relationship target resolves.
+8. AI writes validated objects back to `ethan-life`; uncaptured external inputs remain provenance references rather than internal links.
 9. AI returns a concise result.
 
 ## Design goals

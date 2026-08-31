@@ -1,0 +1,30 @@
+# Devin tool mapping for Ethan OS
+# This file is client-specific and lives in the adapter, not in core OS.
+
+adapter: devin
+version: 0.1.0
+
+capability_to_tools:
+  external_source_lookup:
+    - name: web_search
+      purpose: Search the public web for external facts (Discogs, Hard Wax, official sites, etc.).
+    - name: webfetch
+      purpose: Fetch a specific URL and return readable content.
+
+  load_instructions:
+    - name: read
+      purpose: Read Markdown and YAML files from the Ethan OS package and user state.
+
+  write_state:
+    - name: edit
+      purpose: Apply validated changes to files in the user's storage backend.
+    - name: write
+      purpose: Create new files in the user's storage backend.
+
+  run_deterministic_script:
+    - name: exec
+      purpose: Execute Python scripts in the local environment.
+
+  confirm_or_notify:
+    - name: ask_user_question
+      purpose: Ask the user for clarification or confirmation before material changes.

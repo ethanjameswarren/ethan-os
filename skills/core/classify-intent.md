@@ -11,7 +11,7 @@ Classify user input into one of the v0.1 intents.
 
 ## Output
 
-- intent: capture | process-learning-notes | ask | summarize | review | revise | status | schedule-change | plan-week | plan-day | diagnose-schedule | capture-friction | review-friction
+- intent: capture | process-learning-notes | ask | summarize | review | revise | status | suggest-next-actions | schedule-change | plan-week | plan-day | diagnose-schedule | capture-friction | review-friction
 - confidence: high | medium | low
 - domain hint (if applicable)
 - ambiguity note if intent is unclear
@@ -45,6 +45,7 @@ Classify user input into one of the v0.1 intents.
 - Decision-like inputs default to `capture-decision`: "I decided to...", "I chose...", "I'm going with...", "I am pausing...".
 - Goal-review inputs default to `review-goal`: "How am I doing on this goal?", "Review my AI-engineering goal".
 - Review requests default to `review-orchestrate`: "What should I review?", "What is due for review?", "Sunday review".
+- Questions asking what work to do next, today, at work, or within a stated time budget default to `suggest-next-actions`, not generic `ask`, `status`, or `plan-day`.
 - Friction or positive feedback about Ethan OS defaults to `capture-friction`: "That was annoying", "You already knew that", "That was actually good".
 - Friction review or triage requests default to `review-friction`: "Review my Ethan OS friction", "What has been annoying lately?", "What should we fix next?".
 - Questions starting with "what", "how", "why", "do I", "have I" default to `ask`.

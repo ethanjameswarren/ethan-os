@@ -68,6 +68,12 @@ schemas:
   career.presentation_profile:
     version: 1
     file: domains/career/presentation-profile.schema.yaml
+  career.generation-report:
+    version: 1
+    file: domains/career/generation-report.schema.yaml
+  career.scorecard:
+    version: 1
+    file: domains/career/scorecard.schema.yaml
   career.job-target:
     version: 1
     file: domains/career/job-target.schema.yaml
@@ -77,6 +83,9 @@ schemas:
   career.interview-prep:
     version: 1
     file: domains/career/interview-prep.schema.yaml
+  career.narrative:
+    version: 1
+    file: domains/career/narrative.schema.yaml
   planning.goal:
     version: 1
     file: domains/planning/goal.schema.yaml
@@ -104,6 +113,27 @@ schemas:
   finance.budget:
     version: 1
     file: domains/finance/budget.schema.yaml
+  finance.financial-snapshot:
+    version: 1
+    file: domains/finance/financial-snapshot.schema.yaml
+  finance.income-source:
+    version: 1
+    file: domains/finance/income-source.schema.yaml
+  finance.expense-profile-item:
+    version: 1
+    file: domains/finance/expense-profile-item.schema.yaml
+  finance.debt:
+    version: 1
+    file: domains/finance/debt.schema.yaml
+  finance.financial-goal:
+    version: 1
+    file: domains/finance/financial-goal.schema.yaml
+  finance.allocation-policy:
+    version: 1
+    file: domains/finance/allocation-policy.schema.yaml
+  finance.financial-review:
+    version: 1
+    file: domains/finance/financial-review.schema.yaml
   health.habit:
     version: 1
     file: domains/health/habit.schema.yaml

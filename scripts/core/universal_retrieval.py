@@ -355,13 +355,24 @@ class UniversalRetriever:
         return self.objects.get(obj_id)
 
 
-def build_retriever(demo_only: bool = False) -> UniversalRetriever:
-    """Build a retriever using ethan-life and demo fixtures."""
+def _default_life_root() -> Path:
+    """Default ethan-life state location when no explicit root is supplied."""
+    script_dir = Path(__file__).resolve().parent
+    return script_dir.parent.parent.parent / "ethan-life" / "domains"
+
+
+def build_retriever(demo_only: bool = False, life_root: Path | None = None) -> UniversalRetriever:
+    """Build a retriever using ethan-life and demo fixtures.
+
+    Args:
+        demo_only: If True, only load demo fixtures.
+        life_root: Path to the user's life state root (usually <life-repo>/domains).
+            Defaults to the sibling ethan-life/domains directory.
+    """
     script_dir = Path(__file__).resolve().parent
     roots = []
     if not demo_only:
-        life_root = script_dir.parent.parent.parent / "ethan-life" / "domains"
-        roots.append(life_root)
+        roots.append(life_root if life_root else _default_life_root())
     demo_root = script_dir.parent.parent / "config" / "demo-personality" / "fixtures" / "domains"
     roots.append(demo_root)
     return UniversalRetriever([r for r in roots if r.exists()])

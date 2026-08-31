@@ -1,0 +1,75 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Allocation Policy
+description: >
+  A configurable priority hierarchy for allocating surplus cash flow.
+  Defines the order in which each next available dollar is directed.
+  The policy is a user-stated preference, not an AI recommendation.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - effective_date
+  - tiers
+  - created_at
+  - provenance
+properties:
+  effective_date:
+    type: string
+    format: date
+    description: Date this policy became active.
+  supersedes_id:
+    type: string
+    description: ID of the allocation-policy this one replaces, if any.
+  tiers:
+    type: array
+    description: >
+      Ordered list of allocation tiers. Each tier is fully funded before
+      the next tier receives dollars. Within a tier, items split by weight.
+    items:
+      type: object
+      required:
+        - priority
+        - label
+      properties:
+        priority:
+          type: integer
+          description: "1 = highest priority; funded first."
+        label:
+          type: string
+          description: Human-readable name for this tier.
+        target_type:
+          type: string
+          enum:
+            - fixed_amount
+            - percentage
+            - remainder
+          description: >
+            fixed_amount = allocate a specific dollar amount.
+            percentage = allocate a percentage of surplus.
+            remainder = everything left after higher tiers.
+        amount:
+          type: number
+          description: Dollar amount (for fixed_amount) or percentage (for percentage).
+        goal_id:
+          type: string
+          description: ID of a finance.financial-goal this tier funds, if any.
+        debt_id:
+          type: string
+          description: ID of a finance.debt this tier pays toward, if any.
+        account_id:
+          type: string
+          description: ID of a finance.account to deposit into, if any.
+        notes:
+          type: string
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

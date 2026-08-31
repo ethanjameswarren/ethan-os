@@ -1,0 +1,28 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Generation Report
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - output_id
+  - provenance
+properties:
+  output_id:
+    type: string
+  validation_status:
+    type: string
+    enum:
+      - passed
+      - partial
+      - failed
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

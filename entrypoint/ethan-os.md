@@ -5,8 +5,8 @@ This is the canonical entrypoint for executing Ethan OS.
 ## Input
 
 - user input (natural language)
-- active working directory, expected to be an `ethan-life` repository
-- `.ethan-os.yaml` in the active directory
+- active working directory or configured storage root, expected to contain the user's state (`ethan-life` by default)
+- `.ethan-os.yaml` in the active directory, which may declare a `storage` backend (local Git, cloud folder, os_server, etc.); see `docs/architecture/storage-config.md`
 
 ## Repository routing rule
 

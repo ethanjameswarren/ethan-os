@@ -29,11 +29,11 @@ def _now_utc():
     return datetime.now(timezone.utc)
 
 
-def assemble(request: dict, retriever: UniversalRetriever | None = None, demo_only: bool = False) -> dict:
+def assemble(request: dict, retriever: UniversalRetriever | None = None, demo_only: bool = False, life_root: Path | None = None) -> dict:
     """Assemble a context bundle from a context request."""
     if retriever is None:
         from universal_retrieval import build_retriever
-        retriever = build_retriever(demo_only=demo_only)
+        retriever = build_retriever(demo_only=demo_only, life_root=life_root)
 
     intent = request.get("intent", "")
     query = request.get("query", request.get("user_input", ""))

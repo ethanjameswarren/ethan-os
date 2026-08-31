@@ -1,0 +1,108 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Financial Goal
+description: >
+  A specific financial objective with a target amount, date, and progress
+  tracking. Distinct from planning.goal in that it tracks monetary targets,
+  funding sources, and financial progress directly.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - goal_type
+  - target_amount
+  - status
+  - created_at
+  - provenance
+properties:
+  goal_type:
+    type: string
+    enum:
+      - starter_safety_reserve
+      - three_month_safety_reserve
+      - six_month_safety_reserve
+      - debt_payoff
+      - annual_401k_contribution
+      - taxable_investment
+      - major_purchase_savings
+      - custom
+  target_amount:
+    type: number
+    description: Dollar amount to reach.
+  current_amount:
+    type: number
+    description: Current progress toward target, if tracked.
+  current_amount_as_of:
+    type: string
+    format: date
+    description: Date the current_amount was last updated.
+  currency:
+    type: string
+  target_date:
+    type: string
+    format: date
+  monthly_contribution:
+    type: number
+    description: Planned monthly contribution toward this goal.
+  funding_account_id:
+    type: string
+    description: ID of the finance.account funding is directed to.
+  related_debt_id:
+    type: string
+    description: ID of a finance.debt this goal tracks payoff of, if applicable.
+  planning_goal_id:
+    type: string
+    description: ID of a planning.goal this financial goal supports, if any.
+  status:
+    type: string
+    enum:
+      - active
+      - achieved
+      - abandoned
+      - on_hold
+  priority:
+    type: integer
+    description: User-assigned priority rank (1 = highest).
+  progress_history:
+    type: array
+    description: Dated snapshots of progress toward this goal.
+    items:
+      type: object
+      required:
+        - date
+        - amount
+      properties:
+        date:
+          type: string
+          format: date
+        amount:
+          type: number
+  completion_criteria:
+    type: array
+    items:
+      type: string
+    description: Explicit conditions that make the goal complete.
+  dependencies:
+    type: array
+    items:
+      type: string
+    description: Object IDs or stated conditions that must be resolved first.
+  target_basis:
+    type: string
+    enum:
+      - user_stated
+      - calculated
+    description: Whether target_amount is a user fact or a calculation.
+  why_it_matters:
+    type: string
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

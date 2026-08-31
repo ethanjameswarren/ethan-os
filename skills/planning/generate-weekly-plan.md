@@ -19,7 +19,7 @@ Produce a concrete weekly plan from a baseline schedule, active overrides, goals
 4. If a permanent override has been confirmed, update the baseline blocks before generating the plan.
 5. Load normalized Google Calendar events for the date range if the integration is enabled; include `fixed` busy events, note `informational` events, and ignore cancelled/declined events.
 6. Place fixed blocks first: sleep, work, appointments, travel, hard commitments, and fixed calendar events.
-6. Place flexible blocks second: exercise, learning, project work, chores.
+6. Place flexible blocks second: exercise, learning, project work, chores. When choosing among candidate actions, use the ordered recommendations from `skills/planning/suggest-next-actions.md` rather than urgency alone.
 7. Place optional blocks last: extra reading, optional calls, bonus workouts.
 8. Resolve conflicts by:
    - preserving fixed blocks;

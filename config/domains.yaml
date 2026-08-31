@@ -33,7 +33,7 @@ domains:
     instructions: instructions/domains/finance/instructions.md
     object_prompts: instructions/domains/finance/object-prompts
     context: global
-    description: Track accounts, log transactions, and maintain budgets against categories and financial goals.
+    description: Personal finance planning and tracking — accounts, transactions, budgets, income sources, expense profiles, debts, financial goals, cash-flow allocation policies, periodic snapshots, debt payoff strategies, 401k targeting, and orchestrated financial reviews.
 
   health:
     enabled: true

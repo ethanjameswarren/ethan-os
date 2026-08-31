@@ -1,0 +1,78 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Career Narrative
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - status
+  - created_at
+  - provenance
+  - narrative
+properties:
+  status:
+    type: string
+    enum:
+      - draft
+      - validated
+      - confirmed
+  narrative:
+    type: string
+    description: The canonical professional narrative — the connective story across roles, capabilities, and outcomes.
+  themes:
+    type: array
+    items:
+      type: string
+    description: Recurring themes that tie evidence together.
+  throughline:
+    type: string
+    description: One-sentence professional throughline for headlines, intros, and elevator pitches.
+  evidence_claims:
+    type: array
+    items:
+      type: object
+      required:
+        - claim
+        - evidence_ids
+      properties:
+        claim:
+          type: string
+        evidence_ids:
+          type: array
+          items:
+            type: string
+        confidence:
+          type: string
+          enum:
+            - high
+            - medium
+            - low
+  target_positioning:
+    type: array
+    items:
+      type: string
+    description: Professional identities the narrative supports.
+  supported_by:
+    type: array
+    items:
+      type: string
+    description: IDs of career.evidence / career.work_artifact objects that support the narrative.
+  used_in:
+    type: array
+    items:
+      type: string
+    description: IDs of derived objects (resume, LinkedIn profile, etc.) that consume this narrative.
+  gaps:
+    type: array
+    items:
+      type: string
+    description: Missing evidence or unclear claims that weaken the narrative.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

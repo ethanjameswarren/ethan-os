@@ -12,6 +12,17 @@ venv/
 .vscode/
 .idea/
 
+# AI client / agent-specific configuration
+# Keep Ethan OS client-agnostic. Tool-specific adapters belong in adapters/.
+.cursorrules
+.windsurfrules
+.devin/
+.claude/
+.codeium/
+environment.yaml
+environment.yml
+.agents/
+
 # OS
 .DS_Store
 Thumbs.db

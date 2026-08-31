@@ -1,0 +1,127 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Income Source
+description: >
+  A recurring or one-time source of income. Each source is a dated fact;
+  changes in income are captured as new records or evolution entries, never
+  silent overwrites.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - income_type
+  - source
+  - frequency
+  - stability
+  - effective_date
+  - created_at
+  - provenance
+properties:
+  source:
+    type: string
+    description: User-provided name of the employer, client, business, or other income source.
+  income_type:
+    type: string
+    enum:
+      - salary
+      - hourly
+      - freelance
+      - rental
+      - investment
+      - side_business
+      - bonus
+      - other
+  employer:
+    type: string
+    description: Employer or payer name, if applicable.
+  gross_amount:
+    type: number
+    description: Gross amount per frequency period.
+  net_amount:
+    type: number
+    description: Net (after-tax/deduction) amount per frequency period, if known.
+  currency:
+    type: string
+    description: ISO 4217 currency code, e.g. USD.
+  frequency:
+    type: string
+    enum:
+      - weekly
+      - biweekly
+      - semimonthly
+      - monthly
+      - quarterly
+      - annual
+      - one_time
+      - irregular
+  expected_annual_amount:
+    type: number
+    description: User-entered expectation when stated; otherwise a labeled calculation from amount and frequency.
+  variable_bonus_component:
+    type: number
+    description: Expected variable or bonus amount, if known; keep separate from reliable recurring income.
+  stability:
+    type: string
+    enum:
+      - high
+      - medium
+      - low
+  effective_date:
+    type: string
+    format: date
+    description: Date this income level became effective.
+  end_date:
+    type: string
+    format: date
+    description: Date this income ended or is expected to end, if applicable.
+  pre_tax_deductions:
+    type: array
+    description: Recurring pre-tax deductions (401k, HSA, health insurance, etc.).
+    items:
+      type: object
+      required:
+        - label
+        - amount
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        per_paycheck:
+          type: boolean
+          description: True if amount is per paycheck; false if per month.
+  post_tax_deductions:
+    type: array
+    description: Recurring post-tax deductions (Roth 401k, etc.).
+    items:
+      type: object
+      required:
+        - label
+        - amount
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        per_paycheck:
+          type: boolean
+  account_id:
+    type: string
+    description: ID of the finance.account this income is deposited into, if known.
+  status:
+    type: string
+    enum:
+      - active
+      - ended
+      - expected
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

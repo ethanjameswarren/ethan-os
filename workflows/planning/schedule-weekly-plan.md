@@ -22,13 +22,14 @@ Build or adapt a concrete weekly plan from the baseline schedule, temporary over
    - temporary overrides whose date range covers the week;
    - permanent overrides flagged for baseline update.
 4. Load active goals and tasks for the same horizon.
-5. If `ethan-life/domains/planning/calendar-integration.yaml` is enabled, retrieve and normalize relevant Google Calendar events.
-6. Run `skills/planning/generate-weekly-plan.md` to produce a draft `planning.weekly-plan`.
-7. Run `skills/planning/apply-schedule-change.md` if the user is changing the baseline or adding an override.
-7. Surface conflicts, tradeoffs, and dependency implications.
-8. Present the draft for confirmation before saving as `accepted`.
-9. Save the accepted weekly plan to `ethan-life/domains/planning/weekly-plans/`.
-10. If a permanent override was confirmed, merge it into the baseline schedule and save the updated baseline.
+5. Run `skills/planning/suggest-next-actions.md` when choosing flexible work so the plan does not default to the most urgent task and instead reflects value, leverage, opportunity cost, and the available time/context.
+6. If `ethan-life/domains/planning/calendar-integration.yaml` is enabled, retrieve and normalize relevant Google Calendar events.
+7. Run `skills/planning/generate-weekly-plan.md` to produce a draft `planning.weekly-plan`.
+8. Run `skills/planning/apply-schedule-change.md` if the user is changing the baseline or adding an override.
+9. Surface conflicts, tradeoffs, and dependency implications.
+10. Present the draft for confirmation before saving as `accepted`.
+11. Save the accepted weekly plan to `ethan-life/domains/planning/weekly-plans/`.
+12. If a permanent override was confirmed, merge it into the baseline schedule and save the updated baseline.
 
 ## Output
 

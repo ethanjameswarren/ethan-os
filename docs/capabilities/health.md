@@ -20,6 +20,8 @@ Health data is most useful when it is low-friction and consistent. Ethan OS keep
 - Logs immutable entries for each habit, deriving the current streak from the log history.
 - Stores medical notes with date, topic, and confidentiality level.
 - Surfaces broken streaks, overdue follow-ups, and trends during review.
+- Stores training-location equipment inventories and builds workouts using exercises available at the selected location.
+- Reports substitutions and unavailable equipment rather than assuming access.
 - Never silently changes a habit status or deletes log history.
 
 ## Key ideas
@@ -41,6 +43,8 @@ Health data is most useful when it is low-friction and consistent. Ethan OS keep
 - **Habit** — activity, frequency, target, and status.
 - **Log Entry** — timestamp, habit, value, and optional notes.
 - **Medical Note** — date, topic, summary, follow-up date, and privacy flag.
+- **Training Location** — normalized equipment inventory for a real place.
+- **Workout** — exercise plan constrained by a selected training location.
 
 ## Important behaviors
 

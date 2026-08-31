@@ -129,9 +129,9 @@ Character count: X / 500
 
 ## Experience
 
-### Lowe's Companies, Inc.
-**Data Consultant — Store Operations AI / Computer Vision**
-Jul 2026 – Present
+### Example Retail Co.
+**Lead Data Platform Engineer**
+2023 – Present
 
 <1–2 sentence role summary>
 
@@ -144,7 +144,7 @@ Jul 2026 – Present
 
 ## Education
 
-California Polytechnic State University — B.S. Economics, 2018
+Example State University — B.S. Information Systems, 2018
 
 ---
 

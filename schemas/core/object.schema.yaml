@@ -1,6 +1,6 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 title: Ethan OS Core Object
--type: object
+type: object
 required:
   - id
   - schema

@@ -153,7 +153,7 @@ Example body structure:
 
 ## Headline
 
-Senior Data & AI Systems Leader | Enterprise Forecasting, Experimentation, and Agentic AI Platforms
+Lead Data Platform Engineer | Reliable Analytics Products | Experimentation
 
 Character count: 103 / 220
 
@@ -161,11 +161,11 @@ Character count: 103 / 220
 
 ## About
 
-Data Consultant focused on building AI-enabled data platforms that bridge data engineering, analytics, data science, and enterprise operations.
+Data platform engineer focused on building reliable analytics products that bridge data engineering, experimentation, and operations.
 
-I design systems that transform complex operational data into reliable, decision-ready products — spanning forecasting platforms, experimentation infrastructure, reusable analytics applications, and agentic AI workflows. My work sits across retail, manufacturing, and financial operations, where the common thread is turning ambiguous business problems into scalable technical architecture.
+I design systems that transform complex fixture data into decision-ready products, including forecasting workflows, measurement infrastructure, and reusable analytics applications. The common thread is turning ambiguous fictional business problems into maintainable technical architecture.
 
-I care most about the connective tissue between business needs and implementation: clean data models, repeatable processes, and platforms that teams can maintain and extend long after the initial build.
+I care most about the connective tissue between business needs and implementation: clear data models, repeatable processes, and platforms that teams can maintain and extend.
 
 Character count: 620 / 2,600
 
@@ -173,9 +173,9 @@ Character count: 620 / 2,600
 
 ## Experience
 
-### Lowe's Companies, Inc.
-**Data Consultant — Store Operations AI / Computer Vision**
-Jul 2026 – Present · Charlotte, NC
+### Example Retail Co.
+**Lead Data Platform Engineer**
+2023 – Present · Example City, ST
 
 <1–3 sentence role summary>
 

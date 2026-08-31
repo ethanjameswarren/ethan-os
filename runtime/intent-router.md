@@ -28,6 +28,7 @@ Classify user input into an intent and select the corresponding workflow.
 | review | "What should I review?" | `workflows/core/review.md` |
 | revise | "I changed my mind about..." | `workflows/core/revise.md` |
 | status | "Status", "What is pending?" | `workflows/core/status.md` |
+| suggest next actions | "What should I work on today?", "I have two free hours. What should I do?", "What should I work on at work?", "What's the highest-value thing I can do next?" | `skills/planning/suggest-next-actions.md` |
 | start listening session | "Start SK11X025", "Listen to KW34", "Lookup Holden Federico - Dust" | `workflows/music/lookup-release-and-listen.md` |
 | capture listening note | "A1 energy 3, rating 4", "B2 favorite", "next", "done" | `workflows/music/capture-listening-note.md` |
 | build dj set | "Build me a techno set", "Build a 90-minute hypnotic set", "Give me a driving set around 140 BPM", "Build a set from records I've rated highest", "Find some peak-time options from my collection" | `workflows/music/build-dj-set.md` |
@@ -43,6 +44,17 @@ Classify user input into an intent and select the corresponding workflow.
 | sync dj set to spotify | "Sync Hypnotic 01 to Spotify", "Sync the Spotify playlist" | `workflows/music/sync-dj-set-to-spotify.md` |
 | review spotify matches | "Show Spotify matches that need review", "Approve the Spotify match for RYCL016-A1", "Reject that Spotify match", "Use this Spotify track instead" | `workflows/music/review-spotify-matches.md` |
 | sync collection style to spotify | "Make sure my Techno records are in this playlist", "Add my [style] vinyl tracks to my [style] Spotify playlist", "Sync my collection's Techno tracks into <playlist>" | `workflows/music/sync-collection-style-to-spotify.md` |
+| log expense | "I spent $86 on groceries", "Paid $45 for gas", "Got $200 from freelance work" | `workflows/finance/log-expense.md` |
+| capture financial snapshot | "What's my net worth?", "Let's capture my financial snapshot", "Update my account balances", "Where do I stand financially?" | `workflows/finance/capture-financial-snapshot.md` |
+| capture income | "I make $85k salary", "My take-home is $2800 biweekly", "I got a raise to $95k", "I started freelancing on the side" | `workflows/finance/capture-income.md` |
+| capture expenses | "My rent is $1800", "Let's go through my monthly expenses", "I pay $200/month for insurance", "Build my expense profile" | `workflows/finance/capture-expense-profile.md` |
+| capture debt | "I owe $5000 on my credit card at 19%", "I have a car loan at 4.5%", "My student loans total $30k" | `skills/finance/capture-debt.md` |
+| set financial goal | "I want to save $10k for an emergency fund", "I want to pay off my credit card by December", "Set a goal to save for a house down payment" | `workflows/finance/set-financial-goals.md` |
+| plan debt payoff | "How should I pay off my debts?", "Compare avalanche vs snowball", "What's the fastest way to be debt-free?", "Should I pay off my promo card first?" | `workflows/finance/plan-debt-payoff.md` |
+| allocate cash flow | "Where should my next dollar go?", "Set up my allocation priorities", "How should I split my surplus?", "Update my cash flow allocation" | `workflows/finance/allocate-cash-flow.md` |
+| compute 401k target | "How much per paycheck for my 401k?", "Am I on track to max my 401k?", "What percentage do I need to contribute?" | `workflows/finance/compute-401k-target.md` |
+| financial review | "How did I do financially this month?", "Let's do my financial review", "Review my finances for August", "Give me a full financial checkup" | `workflows/finance/financial-review.md` |
+| budget review | "How am I doing on my budgets?", "Review my groceries budget", "Am I over budget this month?" | `workflows/finance/monthly-budget-review.md` |
 
 | schedule change | "I have dinner Thursday at 7", "For the next two weeks I'm working late Tuesday", "From now on Wednesday night is reading" | `workflows/planning/schedule-weekly-plan.md` |
 | plan week | "Plan my week", "What does tomorrow look like", "Make my schedule for this week" | `workflows/planning/schedule-weekly-plan.md` |

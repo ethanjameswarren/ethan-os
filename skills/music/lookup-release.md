@@ -33,7 +33,7 @@ Identify a music release from minimal input and retrieve objective Album/Track m
 
 ## External sources
 
-Use `web_search` and `webfetch` in this order:
+Perform an external source lookup via the configured adapter's `external_source_lookup` capability. For example, in an environment with web-search tools, the adapter may map this to a web search followed by a page fetch. Use these sources in order:
 
 1. **Discogs** — `site:discogs.com <identifier>`.
 2. **Hard Wax** — `site:hardwax.com <identifier>`.

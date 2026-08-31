@@ -2,14 +2,14 @@
 
 ## What it does
 
-Google Calendar can provide real fixed commitments to the Schedule Planning workflow. Ethan OS reads the events, normalizes them, and treats busy events as fixed blocks when generating daily or weekly plans.
+Google Calendar can provide fixed commitments to the Schedule Planning workflow. Ethan OS can read and normalize events, treat busy events as fixed blocks, export weekly plans as deterministic ICS files, and explicitly write selected plan blocks back to a chosen calendar.
 
 Ethan OS remains the source of truth for your baseline schedule, preferences, and generated plans. Google Calendar is an external commitment source, not a replacement for your routine.
 
 ## What it does not do
 
 - It does not copy calendar events into your baseline schedule.
-- It does not automatically write Ethan OS generated plans back to Google Calendar.
+- It does not write generated plans automatically; write-back occurs only when the user explicitly runs or approves the create-events operation.
 - It does not treat all-day events, free events, cancelled events, or declined meetings as fixed commitments.
 
 ## Setup
@@ -78,6 +78,14 @@ Example prompts:
 
 No caching is implemented by design in Beta. Every planning call fetches fresh calendar events. This avoids stale-calendar weirdness while the behavior is being validated. If latency becomes annoying later, a very short-lived cache can be added.
 
-## Write-back status
+## Export and write-back status
 
-Writing generated plans to Google Calendar is planned for v1.1. For v1, the integration is read-only.
+ICS export is implemented and deterministic:
+
+```
+python ethan-os/scripts/calendar/export_weekly_plan_to_ics.py path/to/weekly-plan.md
+```
+
+Google Calendar write-back is implemented through `scripts/calendar/create_events.py`. It creates selected goal/career/review blocks by default, or all blocks with `--all`, in the explicitly chosen calendar. This is a real external side effect and requires user approval plus valid credentials.
+
+The code paths have deterministic fixture coverage, but no credentialed real-world read/write validation is recorded. The private integration remains disabled until credentials and calendar IDs are configured.

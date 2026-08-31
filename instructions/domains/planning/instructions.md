@@ -34,7 +34,9 @@ Goal → Task (directly, for goals too small to warrant a project)
 
 ## Next actions and review
 
-- Use `skills/planning/suggest-next-actions.md` to identify what is actionable now: unblocked tasks, stale projects, goals with no active project or task.
+- Use `skills/planning/suggest-next-actions.md` for next-work questions and to identify what is actionable now: unblocked tasks, stale projects, goals with no active project or task.
+- Next-work recommendations must balance commitments and deadlines with impact, strategic relevance, learning, evidence, leverage, ownership, compounding value, opportunity cost, and the available time/context. Urgency alone does not determine the answer.
+- Distinguish maintenance, necessary, skill-building, career-advancing, leverage-building, asset-creating, and compounding work in the recommendation. These are contextual labels, not a separate numeric score or mandatory stored fields.
 - `workflows/planning/weekly-review.md` runs this periodically and surfaces the result; it does not silently reprioritize or close items without confirmation.
 
 ## Relationships

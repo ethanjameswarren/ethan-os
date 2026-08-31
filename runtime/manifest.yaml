@@ -1,0 +1,100 @@
+# Ethan OS runtime manifest
+# Machine-readable contract for adapters and clients.
+# See adapters/adapter-contract.md for the human-readable adapter contract.
+
+runtime:
+  name: Ethan OS
+  version_source: VERSION
+  manifest_version: 1
+  entrypoint: entrypoint/ethan-os.md
+  preflight: runtime/preflight.md
+  resolver: runtime/resolver.md
+  intent_router: runtime/intent-router.md
+  loader: runtime/loader.md
+  instruction_precedence: docs/architecture/instruction-precedence.md
+  adapter_contract: adapters/adapter-contract.md
+  storage_config_spec: docs/architecture/storage-config.md
+
+config_files:
+  os: config/ethan-os.config.yaml
+  domains: config/domains.yaml
+
+schemas:
+  registry: schemas/registry.yaml
+  root: schemas/
+
+instructions:
+  invariants: instructions/invariants.md
+  mandatory_root: instructions/policies/mandatory/
+  configurable_root: instructions/policies/configurable/
+  global: instructions/global.md
+  domains_root: instructions/domains/
+
+workflows:
+  root: workflows/
+
+skills:
+  root: skills/
+
+templates:
+  root: templates/
+
+scripts:
+  root: scripts/
+  validate: scripts/validate.py
+  bootstrap: scripts/bootstrap-personal-os.py
+  update: scripts/update-from-upstream.py
+
+domains:
+  knowledge:
+    enabled: true
+    schema_prefix: knowledge
+    life_prefix: domains/knowledge
+    instructions: instructions/domains/knowledge/instructions.md
+    object_prompts: instructions/domains/knowledge/object-prompts
+    context: global
+    description: Capture, understand, connect, summarize, review, and revise learning material.
+  career:
+    enabled: true
+    schema_prefix: career
+    life_prefix: domains/career
+    instructions: instructions/domains/career/instructions.md
+    object_prompts: instructions/domains/career/object-prompts
+    context: global
+    description: Capture career evidence, analyze target roles, and build evidence-backed resumes and interview prep.
+  planning:
+    enabled: true
+    schema_prefix: planning
+    life_prefix: domains/planning
+    instructions: instructions/domains/planning/instructions.md
+    object_prompts: instructions/domains/planning/object-prompts
+    context: global
+    description: Capture goals, break them into projects and tasks, and surface what to do next.
+  finance:
+    enabled: true
+    schema_prefix: finance
+    life_prefix: domains/finance
+    instructions: instructions/domains/finance/instructions.md
+    object_prompts: instructions/domains/finance/object-prompts
+    context: global
+    description: Personal finance planning and tracking — accounts, transactions, budgets, income sources, expense profiles, debts, financial goals, cash-flow allocation policies, periodic snapshots, debt payoff strategies, 401k targeting, and orchestrated financial reviews.
+  health:
+    enabled: true
+    schema_prefix: health
+    life_prefix: domains/health
+    instructions: instructions/domains/health/instructions.md
+    object_prompts: instructions/domains/health/object-prompts
+    context: global
+    description: Track recurring health habits, log metrics against them, and record medical notes.
+  music:
+    enabled: true
+    schema_prefix: music
+    life_prefix: domains/music
+    instructions: instructions/domains/music/instructions.md
+    object_prompts: instructions/domains/music/object-prompts
+    context: global
+    description: Identify music releases, capture listening observations, and maintain canonical collection data.
+
+# Note: This manifest is static metadata. It does not replace the prompt-based runtime in
+# entrypoint/ethan-os.md. Adapters may use either the manifest or the prompt-based entrypoint,
+# depending on the client environment.

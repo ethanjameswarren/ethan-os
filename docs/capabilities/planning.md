@@ -22,8 +22,12 @@ Goals become vague unless they are broken into trackable pieces. Ethan OS keeps 
 - Creates projects and milestones only when a goal needs multiple coordinated steps.
 - Links every task back to its project or goal.
 - Surfaces unblocked next actions, blocked items, stale projects, and goals without momentum.
+- Distinguishes maintenance, necessary, skill-building, career-advancing, leverage-building, asset-creating, and compounding work when recommending what to do next.
+- Balances deadlines with impact, strategic relevance, learning, evidence, reuse, ownership, compounding value, opportunity cost, and available time instead of treating urgency as value.
 - Runs a weekly review of your active planning landscape.
-- Does not silently close, reprioritize, or change status without your confirmation.
+- Projects authoritative cross-domain goals into planning without duplicating their full strategy, using explicit synchronization rules.
+- Detects strategic drift and milestone gaps and can export plans to ICS or explicitly write selected blocks to Google Calendar.
+- Does not silently close, reprioritize, change status, or write to an external calendar without your confirmation.
 
 ## Key ideas
 

@@ -53,12 +53,20 @@ What works now:
 - Surfacing over-budget, under-utilized, uncategorized, and goal-linked items.
 - Prioritizing findings for human review.
 
+Now also available — the comprehensive financial review (`workflows/finance/financial-review.md`) extends this budget-focused review with:
+
+- Financial snapshot comparison (net worth change).
+- Income source assessment.
+- Expense profile vs. actual spending.
+- Debt trajectory and payoff progress.
+- Financial goal progress.
+- Allocation policy effectiveness.
+- Explicitly labeled findings (fact / calculation / assumption / recommendation).
+
 Not yet implemented:
 
 - Automatic detection of recurring vs. one-off expenses.
 - Carrying explicit observations forward into next-period planning.
-- Comparing the current month to prior months or trends.
-- Suggesting next-period adjustments beyond highlighting current issues.
 
 ## Safeguards
 
@@ -73,3 +81,4 @@ Not yet implemented:
 - Skills: `skills/finance/update-budget.md`, `skills/finance/suggest-spending-insights.md`
 - Schemas: `schemas/domains/finance/account.schema.yaml`, `transaction.schema.yaml`, `budget.schema.yaml`
 - For the broader Finance domain, see [Finance](../capabilities/finance.md).
+- For comprehensive financial reviews, see `workflows/finance/financial-review.md`.

@@ -192,6 +192,43 @@ def test_goal_review_historical_not_current():
     print("  PASS")
 
 
+def test_next_work_prioritization_contract():
+    print("R. Next-work prioritization contract")
+    root = Path(__file__).resolve().parent.parent
+    skill = (root / "skills" / "planning" / "suggest-next-actions.md").read_text(encoding="utf-8")
+    router = (root / "runtime" / "intent-router.md").read_text(encoding="utf-8")
+    work_types = [
+        "maintenance work",
+        "necessary work",
+        "skill-building work",
+        "career-advancing work",
+        "leverage-building work",
+        "asset-creating work",
+        "compounding work",
+    ]
+    for work_type in work_types:
+        assert work_type in skill
+    for factor in [
+        "business impact",
+        "career impact",
+        "strategic relevance",
+        "learning value",
+        "evidence created",
+        "usefulness to other people",
+        "scope or ownership",
+        "compounding value",
+        "opportunity cost",
+        "available time",
+    ]:
+        assert factor in skill
+    assert "Do not create or calculate a separate numeric score" in skill
+    assert "Do X first because it unlocks Y and Z." in skill
+    assert "This task is useful but low leverage" in skill
+    assert "What should I work on today?" in router
+    assert "skills/planning/suggest-next-actions.md" in router
+    print("  PASS")
+
+
 def main():
     print("Decision Intelligence + Review Orchestrator tests")
     print("=" * 48)
@@ -212,6 +249,7 @@ def main():
     test_goal_review_activity_and_outcome()
     test_goal_review_conflicting_commitments()
     test_goal_review_historical_not_current()
+    test_next_work_prioritization_contract()
     print("\nAll Decision + Review tests passed.")
 
 

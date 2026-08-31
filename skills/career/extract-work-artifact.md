@@ -97,9 +97,9 @@ A work artifact may include a compact frontmatter block for graph traversal:
 ```yaml
 ---
 type: career.work_artifact
-id: lowes-store-ops-ai-os
-employer: lowes
-role: lowes-store-operations-ai
+id: example-retail-operations-ai-platform
+employer: example-retail-co
+role: example-data-platform-engineer
 capabilities:
   - ai-platforms-agentic-systems
   - technical-architecture

@@ -31,9 +31,9 @@ A note about a book, a project plan, a health log, or a DJ set all flow through 
 - **Guided Reading** — read and talk about books; track progress, capture ideas, schedule retention, recommend next reads, and respect spoiler boundaries.
 - **Knowledge & Learning** — capture ideas from books, articles, podcasts, conversations, and experience; connect them; summarize; review.
 - **Planning** — turn goals into projects and tasks; review what is happening next.
-- **Finance** — log transactions and track budgets.
-- **Health** — track habits, metrics, and medical notes.
-- **Career** — capture evidence, analyze roles, build tailored resumes, prepare interviews.
+- **Finance** — log transactions, track budgets, plan debt payoff, manage income/expenses/goals, allocate cash flow, and run periodic financial reviews.
+- **Health** — track habits, metrics, and medical notes; inventory training locations and build equipment-aware workouts.
+- **Career** — capture evidence, reconstruct roles, align work to career goals, and build evidence-backed resumes, profiles, cover letters, and interview preparation.
 - **Music / DJ Workflows** — manage a collection, build DJ sets, print record labels, sync to Spotify.
 
 ## See Ethan OS in action
@@ -112,6 +112,18 @@ Use structured music knowledge to build and refine a DJ set.
 | `ethan-os` | behavior, schemas, workflows, skills, validation, docs, tests | public |
 | `ethan-life` | captures, sources, ideas, state, personal context | private |
 | `ethan-notion` | optional Notion presentation/sync architecture | private |
+
+## Setup and validation
+
+Ethan OS requires Python 3.10+ and one external package:
+
+```bash
+python -m venv .venv
+python -m pip install -r requirements.txt
+python scripts/validate-all.py --life-root ../ethan-life
+```
+
+The final command runs schema and relationship-integrity validation plus every deterministic test. Keep `ethan-life` outside this public repository; pass its path explicitly when it is not a sibling directory.
 
 ## Project status
 
