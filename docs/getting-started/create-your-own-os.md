@@ -90,6 +90,48 @@ What the script does:
 
 The script does **not** copy any private `ethan-life` data.
 
+## Push to your own GitHub repositories
+
+Create two repositories on GitHub:
+
+- `<identifier>-os` (public) — your downstream OS.
+- `<identifier>-life` (private) — your companion data repository.
+
+Using the GitHub CLI:
+
+```bash
+gh repo create <identifier>-os --public
+gh repo create <identifier>-life --private
+```
+
+Or create them manually at [github.com/new](https://github.com/new).
+
+Make sure the new OS points to your repo, not `ethan-os`:
+
+```bash
+cd <identifier>-os
+git remote -v
+```
+
+You should see `upstream` pointing to `ethanjameswarren/ethan-os.git` and `origin` pointing to `https://github.com/<owner>/<identifier>-os.git`. If `origin` was not preconfigured, add it before pushing:
+
+```bash
+git remote add origin https://github.com/<owner>/<identifier>-os.git
+git push -u origin master
+```
+
+In the companion repo, do the same:
+
+```bash
+cd <identifier>-life
+git init
+git remote add origin https://github.com/<owner>/<identifier>-life.git
+# add .<identifier>-os.yaml and any initial data
+git add .
+git commit -m "init <identifier>-life"
+git push -u origin master
+```
+
 ## Step 2: Create your private companion repository
 
 Create `john-life` as an empty private repository in your chosen location, for example `C:\git\john-life`.
