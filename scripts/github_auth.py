@@ -81,18 +81,35 @@ def check_github_auth() -> tuple:
     return AuthState.NEEDS_AUTH, f"{gh_reason} {ssh_reason}"
 
 
+def browser_login() -> tuple:
+    """Open the user's browser for GitHub CLI login. Returns (ok, message)."""
+    if not gh_installed():
+        return False, "GitHub CLI (gh) is not installed."
+    print("Opening a browser window for GitHub login...")
+    print("Click your GitHub account in the browser to continue.")
+    result = subprocess.run(
+        ["gh", "auth", "login", "--web"],
+        stdin=None,
+        stdout=None,
+        stderr=None,
+    )
+    if result.returncode != 0:
+        return False, "GitHub login did not complete. You can re-run the publish step after logging in."
+    return True, "GitHub login completed."
+
+
 def recommended_setup(technical_level: str = "beginner") -> str:
     """Return a single, safe, environment-appropriate recommendation."""
     if technical_level.lower() in ("beginner", "non-technical", "novice"):
         return (
-            "Install the GitHub CLI and log in with the device flow:\n"
+            "Install the GitHub CLI and log in with the browser flow:\n"
             "  1. Install `gh':\n"
             "       Windows: winget install GitHub.cli\n"
             "       macOS:   brew install gh\n"
             "       Linux:   sudo apt install gh  (or use the official package)\n"
-            "  2. Run: gh auth login\n"
-            "     Choose 'GitHub.com' and 'HTTPS'.\n"
-            "     When asked, choose to authenticate with a web browser or one-time code.\n"
+            "  2. Run: gh auth login --web\n"
+            "     A browser window opens. Click your GitHub account.\n"
+            "     If your version of gh does not support --web, run: gh auth login and pick the web-browser option.\n"
             "  3. Run: gh auth setup-git\n"
             "     This makes `gh' the secure credential helper for `git push' -- no PAT required.\n"
             "  4. Re-run the publish step."
@@ -100,7 +117,7 @@ def recommended_setup(technical_level: str = "beginner") -> str:
 
     return (
         "Choose one of these secure, token-free methods and then re-run the publish step:\n"
-        "  - GitHub CLI:        gh auth login && gh auth setup-git\n"
+        "  - GitHub CLI:        gh auth login --web && gh auth setup-git\n"
         "  - SSH key:           ssh-keygen -t ed25519 -C 'you@example.com' and add the public key to GitHub\n"
         "  - Git Credential Manager: https://github.com/GitCredentialManager/git-credential-manager\n"
         "Do not use a PAT embedded in a remote URL."

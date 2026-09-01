@@ -98,7 +98,7 @@ Do not paste a personal access token into a remote URL. Use one of the secure me
 
 Local Git must be able to push to GitHub. Being signed into your IDE, Devin, or Windsurf is not the same thing — those accounts are not available to the `git` command on this machine.
 
-The recommended path for most users is the GitHub CLI device flow:
+The recommended path for most users is the GitHub CLI browser flow:
 
 ```bash
 # Install gh if you do not have it
@@ -106,28 +106,13 @@ winget install GitHub.cli        # Windows
 brew install gh                  # macOS
 sudo apt install gh              # Debian/Ubuntu
 
-# Log in (no PAT required)
-gh auth login
-
 # Make git use the secure gh credential helper
 gh auth setup-git
 ```
 
-For users who prefer SSH, add an SSH key to GitHub instead.
-
-### Check authentication
-
-From `ethan-os`, test whether this machine can push:
-
-```bash
-python scripts/github_auth.py
-```
-
-If it reports that you are authenticated, continue. If not, it prints the exact next step for your environment.
-
 ### Publish the repositories
 
-Run the resumable publish script. If it fails, fix the issue and re-run the same command; it will not restart the bootstrap.
+Run the resumable publish script. If `gh` is installed and you are not logged in, it opens a browser window so you can click your GitHub account, then continues automatically.
 
 ```bash
 python scripts/publish-to-github.py \
@@ -138,12 +123,13 @@ python scripts/publish-to-github.py \
 
 This will:
 
-1. Verify local Git can push to GitHub.
-2. Create the `<identifier>-os` (public) and `<identifier>-life` (private) GitHub repositories if they do not exist.
-3. Add an `origin` remote using `https://github.com/<owner>/<repo>.git` — never a PAT-in-URL.
-4. Push both repositories to `origin`.
+1. Check whether local Git can push to GitHub.
+2. If `gh` is installed and you are not logged in, open `gh auth login --web` in a browser for you to click your account.
+3. Create the `<identifier>-os` (public) and `<identifier>-life` (private) GitHub repositories if they do not exist.
+4. Add an `origin` remote using `https://github.com/<owner>/<repo>.git` — never a PAT-in-URL.
+5. Push both repositories to `origin`.
 
-If you do not want to publish on GitHub, skip this step. The local repositories are already fully functional.
+If `gh` is not installed, the script prints the exact install and login commands. Fix that and re-run the same command; it will resume from the publishing step. If you do not want to publish on GitHub, skip this step. The local repositories are already fully functional.
 
 ## Step 3: Set up the companion pointer
 

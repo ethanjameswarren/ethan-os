@@ -16,7 +16,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from github_auth import AuthState, check_github_auth, gh_installed, recommended_setup
+from github_auth import (
+    AuthState,
+    browser_login,
+    check_github_auth,
+    gh_installed,
+    recommended_setup,
+)
 
 
 class PublishError(RuntimeError):
@@ -220,13 +226,31 @@ def main():
     print(message)
 
     if state != AuthState.AUTHENTICATED:
-        print("\n" + recommended_setup("beginner"))
-        print("\n" + "=" * 60)
-        print("Bootstrap local setup is already complete.")
-        print("After authenticating, re-run the same command to continue publishing:")
-        print("  " + " ".join(sys.argv))
-        print("=" * 60)
-        return 1
+        if gh_installed():
+            print("\nA browser window will open so you can click your GitHub account.")
+            login_ok, login_msg = browser_login()
+            print(login_msg)
+            if not login_ok:
+                print("\n" + recommended_setup("beginner"))
+                print("\n" + "=" * 60)
+                print("Bootstrap local setup is already complete.")
+                print("After logging in, re-run the same command to continue publishing:")
+                print("  " + " ".join(sys.argv))
+                print("=" * 60)
+                return 1
+            state, message = check_github_auth()
+            if state != AuthState.AUTHENTICATED:
+                print("\n" + message)
+                print("\n" + recommended_setup("beginner"))
+                return 1
+        else:
+            print("\n" + recommended_setup("beginner"))
+            print("\n" + "=" * 60)
+            print("Bootstrap local setup is already complete.")
+            print("After installing gh and logging in, re-run the same command to continue publishing:")
+            print("  " + " ".join(sys.argv))
+            print("=" * 60)
+            return 1
 
     # When using GitHub CLI, make sure git uses it for HTTPS credentials.
     if not args.ssh and gh_installed():
