@@ -83,6 +83,22 @@ Google Calendar can provide real fixed commitments, but Ethan OS remains the own
 - Diagnose schedule problems with targeted fixes, not blanket overhauls.
 - External calendar events do not modify the baseline.
 
+## Schedule Adaptation
+
+Overrides are not just changes to this week; they are behavioral evidence. Ethan OS uses repeated overrides to detect when the baseline schedule itself no longer matches real life.
+
+The loop is:
+
+- Capture structured evidence for every override.
+- Classify it as `exception`, `preference`, `friction`, or `unknown`.
+- Analyze accumulated history for each recurring block.
+- Detect emerging patterns and schedule drift against configurable thresholds.
+- Generate evidence-backed baseline correction recommendations.
+- Apply corrections only after explicit approval.
+- Validate accepted corrections by comparing override rates before and after.
+
+See [Schedule Adaptation](schedule-adaptation.md) for details.
+
 ## Sunday Weekly Planning
 
 On Sunday, Ethan OS starts with your normal week, loads your real calendar and current priorities, and builds a concrete weekly plan by changing only what needs to change.
@@ -107,6 +123,8 @@ It does not rebuild your life every Sunday. It preserves your baseline, protects
 
 ## Technical implementation
 
-- Workflows: `workflows/planning/schedule-weekly-plan.md`
-- Skills: `skills/planning/apply-schedule-change.md`, `skills/planning/generate-weekly-plan.md`, `skills/planning/diagnose-schedule.md`
+- Workflows: `workflows/planning/schedule-weekly-plan.md`, `workflows/planning/analyze-schedule-overrides.md`, `workflows/planning/recommend-baseline-correction.md`, `workflows/planning/validate-schedule-change.md`
+- Skills: `skills/planning/apply-schedule-change.md`, `skills/planning/generate-weekly-plan.md`, `skills/planning/diagnose-schedule.md`, `skills/planning/classify-schedule-override.md`
 - Schemas: `schemas/domains/planning/baseline-schedule.schema.yaml`, `weekly-plan.schema.yaml`, `schedule-override.schema.yaml`
+- Policy: `instructions/policies/configurable/schedule-drift-detection.md`
+- Tests: `scripts/test-schedule-adaptation.py`

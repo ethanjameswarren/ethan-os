@@ -27,6 +27,7 @@ Goals become vague unless they are broken into trackable pieces. Ethan OS keeps 
 - Runs a weekly review of your active planning landscape.
 - Projects authoritative cross-domain goals into planning without duplicating their full strategy, using explicit synchronization rules.
 - Detects strategic drift and milestone gaps and can export plans to ICS or explicitly write selected blocks to Google Calendar.
+- Treats repeated schedule overrides as behavioral evidence and uses them to propose baseline corrections through `workflows/planning/analyze-schedule-overrides.md`.
 - Does not silently close, reprioritize, change status, or write to an external calendar without your confirmation.
 
 ## Key ideas
