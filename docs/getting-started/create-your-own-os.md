@@ -114,10 +114,21 @@ gh auth setup-git
 
 Run the resumable publish script. If `gh` is installed and you are not logged in, it opens a browser window so you can click your GitHub account, then continues automatically.
 
-```bash
+On Windows:
+
+```powershell
 python scripts/publish-to-github.py \
   --os-dir C:\git\caitlin-os \
   --companion-dir C:\git\caitlin-life \
+  --owner caitlin-github-username
+```
+
+On macOS or Linux:
+
+```bash
+python scripts/publish-to-github.py \
+  --os-dir ~/git/caitlin-os \
+  --companion-dir ~/git/caitlin-life \
   --owner caitlin-github-username
 ```
 

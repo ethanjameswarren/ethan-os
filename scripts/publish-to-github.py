@@ -268,6 +268,9 @@ def main():
         else:
             identifier = os_name
 
+    # The companion .<identifier>-os.yaml points back to the OS as a sibling.
+    os_rel = (Path("..") / os_name).as_posix()
+
     try:
         publish_os(args.os_dir, args.owner, create_repos=args.create_repos, use_ssh=args.ssh)
 
@@ -276,7 +279,7 @@ def main():
                 args.companion_dir,
                 args.owner,
                 identifier,
-                Path(args.os_dir).resolve(),
+                os_rel,
                 create_repos=args.create_repos,
                 use_ssh=args.ssh,
             )

@@ -198,10 +198,13 @@ class TestPublishToGithub(unittest.TestCase):
     def test_ensure_companion_creates_pointer_and_commit(self, subprocess_mock):
         subprocess_mock.return_value = fake_result(0, "", "")
         companion = Path(self.temp.name) / "caitlin-life"
-        result = publish_to_github.ensure_companion(companion, "caitlin-os", Path("../caitlin-os"))
+        result = publish_to_github.ensure_companion(companion, "caitlin-os", "../caitlin-os")
         pointer = result / ".caitlin-os-os.yaml"
+        text = pointer.read_text(encoding="utf-8")
         self.assertTrue(pointer.exists())
-        self.assertIn("caitlin-os_os:", pointer.read_text(encoding="utf-8"))
+        self.assertIn("caitlin-os_os:", text)
+        self.assertIn("repository: ../caitlin-os", text)
+        self.assertNotIn("\\", text)  # no Windows backslashes in the stored pointer
 
     @patch("publish_to_github.check_github_auth")
     @patch("publish_to_github.publish_os")
