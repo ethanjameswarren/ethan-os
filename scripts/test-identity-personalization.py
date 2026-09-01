@@ -63,7 +63,7 @@ class TestIdentityPersonalization(unittest.TestCase):
         (self.repo / "docs" / "capabilities").mkdir()
         (self.repo / "docs" / "capabilities" / "example.md").write_text(
             "# Example\n\nEthan OS helps Ethan organize his life.\n"
-            "The companion repo is ethan-life.\n",
+            "The companion repo is ethan-life, not ethan-os-life.\n",
             encoding="utf-8",
         )
 
@@ -100,6 +100,7 @@ class TestIdentityPersonalization(unittest.TestCase):
         text = (self.repo / "docs" / "capabilities" / "example.md").read_text(encoding="utf-8")
         self.assertIn("John OS helps John organize his life.", text)
         self.assertIn("companion repo is john-life", text)
+        self.assertIn("not ethan-os-life", text)  # hyphenated compounds are not rewritten
 
     def test_core_workflows_protected(self):
         touched = self._run_personalizer()

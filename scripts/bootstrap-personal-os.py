@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""
+r"""
 Bootstrap a personalized downstream OS from ethan-os.
 
 Example:
-    python scripts/bootstrap-personal-os.py \
-        --target-dir D:\GIT\john-os \
-        --os-name "John OS" \
-        --identifier john-os \
+    python scripts/bootstrap-personal-os.py ^
+        --target-dir D:\GIT\john-os ^
+        --os-name "John OS" ^
+        --identifier john-os ^
         --companion-repo john-life
 
 The script:
@@ -86,7 +86,7 @@ def copy_upstream(upstream_dir: Path, target_dir: Path):
     shutil.copytree(upstream_dir, target_dir, ignore=ignore)
 
 
-def rewrite_readme(target_dir: Path, os_name: str, identifier: str, remote: str, framework_name: str, owner_name: str):
+def rewrite_readme(target_dir: Path, os_name: str, identifier: str, remote: str, framework_name: str, owner_name: str, companion_repo: str):
     readme = target_dir / "README.md"
     text = readme.read_text(encoding="utf-8")
 
@@ -104,7 +104,7 @@ def rewrite_readme(target_dir: Path, os_name: str, identifier: str, remote: str,
 
     identity_block = (
         f"\n{os_name} is a personal OS built from [{framework_name}]({remote}). "
-        f"It reuses {framework_name} workflows and schemas while keeping {identifier}-life as the private companion repository.\n\n"
+        f"It reuses {framework_name} workflows and schemas while keeping {companion_repo} as the private companion repository.\n\n"
     )
     if identity_block.strip() not in text:
         if title_idx is not None:
@@ -235,7 +235,7 @@ def main():
         framework = framework_config.get("framework", framework_config.get("ethan_os", {}))
         framework_name = framework.get("name", "Ethan OS")
 
-        rewrite_readme(target_dir, args.os_name, args.identifier, remote, framework_name, owner_name)
+        rewrite_readme(target_dir, args.os_name, args.identifier, remote, framework_name, owner_name, companion_repo)
         rewrite_config(target_dir, args.os_name, os_repo, companion_repo, owner_name)
 
         # Apply the downstream identity layer to all user-facing content.

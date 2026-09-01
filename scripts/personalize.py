@@ -110,7 +110,8 @@ class Personalizer:
         # bare owner name. The framework id (ethan-os) is left intact as provenance.
         line = re.sub(rf"\b{re.escape(self.framework_name)}\b", self.os, line)
         line = re.sub(rf"\bethan-life\b", self.life_repo, line)
-        line = re.sub(rf"\bEthan\b", self.owner, line)
+        # Only replace the bare owner name, not a hyphenated compound like ethan-os-life.
+        line = re.sub(rf"\bEthan\b(?!-)", self.owner, line)
         return line
 
     def _transform(self, text: str) -> str:
