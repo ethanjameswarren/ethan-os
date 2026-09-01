@@ -2,21 +2,21 @@
 
 ## Purpose
 
-Adopt improvements from the upstream `ethan-os` repository into a downstream personal OS safely.
+Import selected improvements from the upstream `ethan-os` repository into a downstream personal OS, then update the downstream's own repo and manifest. This is an import, not a `git pull`: the downstream history is preserved, changes are merged selectively, and the user's customizations are not overwritten.
 
 ## Triggers
 
 - "Check for Ethan OS updates."
-- "Update John OS from upstream."
+- "Import updates into John OS."
 - "What changed upstream?"
-- "Can I upgrade to Ethan OS 1.5?"
+- "Can I import Ethan OS 1.5 into my OS?"
 
 ## Steps
 
 1. Confirm the current repository is a downstream OS with a `.os-upstream.yaml` manifest.
 2. Read the recorded upstream base commit from the manifest.
-3. Fetch the latest upstream changes.
-4. Run `scripts/update-from-upstream.py --check` to produce a dry-run update plan.
+3. Fetch (not pull) the latest upstream changes.
+4. Run `scripts/update-from-upstream.py --check` to produce a dry-run import plan.
 5. Present the plan in plain language:
    - safe updates,
    - safe additions,

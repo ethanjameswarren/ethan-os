@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-Assess and apply safe updates from upstream ethan-os to a downstream personal OS.
+Assess and import safe updates from upstream ethan-os into a downstream personal OS.
+
+This is an import, not a `git pull`. The downstream repo's own history is
+preserved and a new branch is created with the safe upstream changes. Conflicts
+are left for manual review.
 
 This script is meant to be run from inside a downstream OS repository that was
 bootstrapped from ethan-os. It uses `.os-upstream.yaml` to know which upstream
@@ -9,7 +13,7 @@ commit the downstream repo was derived from.
 Dry run (default):
     python scripts/update-from-upstream.py --check
 
-Apply safe updates:
+Import safe updates:
     python scripts/update-from-upstream.py --apply
 
 The script refuses to modify files with downstream customizations unless those
