@@ -4,6 +4,10 @@ Ethan OS evolves over time. Your downstream OS can import improvements from upst
 
 This is an import, not a `git pull` from `ethan-os`. The process fetches the latest upstream state, compares it to your OS, and applies only safe changes to a new branch in your own repository. Conflicting files are left untouched for you to review.
 
+**You do not need a separate `ethan-os` clone on your machine.** Your `john-os` repository already has an `upstream` remote pointing to `ethan-os`. The update tool uses that remote and the base commit stored in `.os-upstream.yaml`.
+
+**Do not run `git pull origin master` to update.** `origin` is your own `john-os` repo. Use `python scripts/update-from-upstream.py --check` / `--apply` instead.
+
 This guide explains the safe import workflow.
 
 ## The basic idea
