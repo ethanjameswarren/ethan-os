@@ -131,6 +131,9 @@ schemas:
   finance.allocation-policy:
     version: 1
     file: domains/finance/allocation-policy.schema.yaml
+  finance.projection-assumptions:
+    version: 1
+    file: domains/finance/projection-assumptions.schema.yaml
   finance.financial-review:
     version: 1
     file: domains/finance/financial-review.schema.yaml

@@ -65,7 +65,8 @@ python scripts/bootstrap-personal-os.py \
   --target-dir C:\git\john-os \
   --os-name "John OS" \
   --identifier john-os \
-  --companion-repo john-life
+  --companion-repo john-life \
+  --configure-devin-permissions
 ```
 
 Or on macOS/Linux:
@@ -75,7 +76,8 @@ python scripts/bootstrap-personal-os.py \
   --target-dir ~/git/john-os \
   --os-name "John OS" \
   --identifier john-os \
-  --companion-repo john-life
+  --companion-repo john-life \
+  --configure-devin-permissions
 ```
 
 What the script does:
@@ -89,6 +91,47 @@ What the script does:
 7. Commits the initial downstream state.
 
 The script does **not** copy any private `ethan-life` data. It also does not authenticate with or push to GitHub; publishing is a separate resumable step.
+
+### Optional: configure Devin permissions during bootstrap
+
+Add `--configure-devin-permissions` to the bootstrap command to automatically
+write Devin/local-agent permission rules for your new OS and its companion
+repository. This skips the repetitive approval prompts for routine actions
+(reads, edits, tests, local commits, and common project scripts) while still
+requiring approval for destructive git operations, push/deploy, credentials,
+system-wide changes, machine-wide installs, and anything outside the approved
+repositories.
+
+```powershell
+python scripts/bootstrap-personal-os.py \
+  --target-dir C:\git\john-os \
+  --os-name "John OS" \
+  --identifier john-os \
+  --companion-repo john-life \
+  --configure-devin-permissions \
+  --life-dir C:\git\john-life
+```
+
+If you skip it during bootstrap, you can apply the same configuration later by
+running the standalone helper from inside your OS repository:
+
+```powershell
+python scripts/configure-devin-permissions.py --os-dir . --life-dir ..\john-life
+```
+
+What it configures:
+
+- `Read` and `Write` grants for the OS directory and the companion directory.
+- `Exec` grants for routine git read/local-commit commands and common dev
+  scripts (`npm run`, `pnpm test`, `python`, `node`, `make`, `cargo`, etc.).
+- `ask` rules that force approval for destructive git ops, deploy tools,
+  global package installs, system commands, and credential files.
+- `deny` rules for a few irreversible destructive commands (`rm -rf /`,
+  `format`, `diskpart`, etc.).
+
+The helper writes to `%APPDATA%\devin\config.json` on Windows or
+`~/.config/devin/config.json` elsewhere and preserves any other Devin settings
+you already have.
 
 What it rewrites:
 

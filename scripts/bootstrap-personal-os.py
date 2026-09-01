@@ -191,6 +191,28 @@ def init_git(target_dir: Path, remote: str, version: str):
     )
 
 
+def configure_devin_permissions(
+    target_dir: Path, life_dir: Path | None, notion_dir: Path | None
+):
+    """Optionally apply Devin local-autonomy permissions for the new OS."""
+    helper = target_dir / "scripts" / "configure-devin-permissions.py"
+    if not helper.exists():
+        print(f"WARNING: Devin permissions helper not found: {helper}")
+        return
+
+    cmd = [sys.executable, str(helper), "--os-dir", str(target_dir)]
+    if life_dir:
+        cmd.extend(["--life-dir", str(life_dir)])
+    if notion_dir:
+        cmd.extend(["--notion-dir", str(notion_dir)])
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"WARNING: Devin permissions configuration failed:\n{result.stderr.strip()}")
+        return
+    print(result.stdout.strip())
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Bootstrap a personal downstream OS from ethan-os."
@@ -209,6 +231,21 @@ def main():
         default=None,
         help="Path or URL to upstream ethan-os. Defaults to the repository containing this script.",
     )
+    parser.add_argument(
+        "--configure-devin-permissions",
+        action="store_true",
+        help="Write Devin local-autonomy permissions for the new OS and its companion repo.",
+    )
+    parser.add_argument(
+        "--life-dir",
+        default=None,
+        help="Path to the private companion (life) repository. Defaults to <target-dir-parent>/<companion-repo>.",
+    )
+    parser.add_argument(
+        "--notion-dir",
+        default=None,
+        help="Optional path to a Notion integration repository to include in Devin permissions.",
+    )
     args = parser.parse_args()
 
     target_dir = Path(args.target_dir).resolve()
@@ -217,6 +254,9 @@ def main():
     owner_name = args.owner_name or args.os_name.removesuffix(" OS").strip() or "User"
     os_repo = target_dir.name
     companion_repo = args.companion_repo or f"{owner_name.lower()}-life"
+
+    life_dir = Path(args.life_dir).resolve() if args.life_dir else target_dir.parent / companion_repo
+    notion_dir = Path(args.notion_dir).resolve() if args.notion_dir else None
 
     if not upstream_dir.exists():
         print(f"ERROR: upstream directory does not exist: {upstream_dir}")
@@ -246,6 +286,9 @@ def main():
                        companion_repo, remote, commit)
         init_git(target_dir, remote, version)
 
+        if args.configure_devin_permissions:
+            configure_devin_permissions(target_dir, life_dir, notion_dir)
+
         print(f"\nBootstrapped {args.os_name} at {target_dir}")
         print(f"Upstream:     ethan-os {version} ({commit})")
         print(f"Companion:    {companion_repo}")
@@ -261,6 +304,8 @@ def main():
         print(f"3. If you prefer not to use GitHub, skip publishing and use the local repositories.")
         print(f"4. Run validation: python scripts/validate.py")
         print(f"5. To update later: python scripts/update-from-upstream.py --check")
+        print(f"6. To configure Devin/local-agent permissions for autonomous work in this OS and its companion repo:")
+        print(f"     python scripts/configure-devin-permissions.py --os-dir {target_dir} --life-dir {life_dir}")
 
     except Exception as exc:
         print(f"ERROR: {exc}")

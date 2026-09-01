@@ -1,0 +1,65 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Projection Assumptions
+description: >
+  A dated set of user-configurable assumptions used for financial projections
+  and scenario planning. These are planning inputs, not facts, and should be
+  clearly labeled as assumptions whenever they are used.
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - effective_date
+  - created_at
+  - provenance
+properties:
+  effective_date:
+    type: string
+    format: date
+    description: The date these assumptions became active.
+  supersedes_id:
+    type: string
+    description: ID of the prior projection-assumptions object these replace, if any.
+  annual_income_growth_pct:
+    type: number
+    description: Assumed annual growth rate for salary and recurring income.
+  annual_investment_return_pct:
+    type: number
+    description: Assumed annual nominal return for taxable investments.
+  annual_retirement_return_pct:
+    type: number
+    description: Assumed annual nominal return for retirement accounts.
+  annual_inflation_pct:
+    type: number
+    description: Assumed annual inflation rate applied to expenses.
+  annual_contribution_growth_pct:
+    type: number
+    description: Assumed annual growth rate for dollar contributions to goals.
+  employer_match_rules:
+    type: array
+    description: Employer 401k match tiers for this projection.
+    items:
+      type: object
+      required:
+        - threshold_pct
+        - match_rate
+      properties:
+        threshold_pct:
+          type: number
+          description: Percentage of employee contribution this tier applies to.
+        match_rate:
+          type: number
+          description: Employer match rate (e.g., 1.0 for 100%, 0.5 for 50%).
+        note:
+          type: string
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

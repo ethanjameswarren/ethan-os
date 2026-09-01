@@ -54,6 +54,7 @@ Classify user input into an intent and select the corresponding workflow.
 | allocate cash flow | "Where should my next dollar go?", "Set up my allocation priorities", "How should I split my surplus?", "Update my cash flow allocation" | `workflows/finance/allocate-cash-flow.md` |
 | compute 401k target | "How much per paycheck for my 401k?", "Am I on track to max my 401k?", "What percentage do I need to contribute?" | `workflows/finance/compute-401k-target.md` |
 | financial review | "How did I do financially this month?", "Let's do my financial review", "Review my finances for August", "Give me a full financial checkup" | `workflows/finance/financial-review.md` |
+| generate financial report | "Generate my financial report.", "Make my monthly financial review.", "Update my financial packet.", "Show me how my finances have changed.", "Generate a projection based on my current plan." | `workflows/finance/generate-financial-report.md` |
 | budget review | "How am I doing on my budgets?", "Review my groceries budget", "Am I over budget this month?" | `workflows/finance/monthly-budget-review.md` |
 
 | schedule change | "I have dinner Thursday at 7", "For the next two weeks I'm working late Tuesday", "From now on Wednesday night is reading" | `workflows/planning/schedule-weekly-plan.md` |

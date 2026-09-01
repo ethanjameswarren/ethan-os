@@ -117,6 +117,7 @@ Ideas that have come up but are not yet committed.
 - Vector/semantic search backend as an optional layer.
 - Gmail or messaging integrations for action/capture extraction.
 - Fitness device integrations for Health domain.
+- CSV bank statement import and merchant-level transaction categorization for Finance (e.g. Chase, Navy Federal).
 - Financial data provider integrations for Finance domain.
 - External automation hooks such as Zapier or Make.
 - A public documentation site beyond the repository Markdown files.

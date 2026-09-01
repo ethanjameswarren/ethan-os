@@ -97,6 +97,8 @@ Ethan OS provides educational financial-planning assistance, not professional fi
 
 ## Related workflows
 
+- [Onboarding / seed finance data](../workflows/finance/onboarding.md)
+- [Generate financial report](../workflows/finance/generate-financial-report.md)
 - [Monthly financial review](../workflows/finance.md)
 - [Comprehensive financial review](../workflows/monthly-financial-review.md)
 
@@ -106,5 +108,6 @@ Ethan OS provides educational financial-planning assistance, not professional fi
 - Skills: `skills/finance/`
 - Calculation guidance: `skills/finance/calculation-guidance.md`
 - Calculator: `scripts/finance/finance_calculator.py`
+- Report generator: `scripts/finance/generate_report.py`
 - Tests: `scripts/test-finance-calculator.py`
 - Schemas: `schemas/domains/finance/` (account, transaction, budget, financial-snapshot, income-source, expense-profile-item, debt, financial-goal, allocation-policy, financial-review)
