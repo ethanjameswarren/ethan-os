@@ -1,7 +1,14 @@
-ethan_os:
+framework:
+  id: ethan-os
   name: Ethan OS
   version: 0.1.1-beta
   default_domain: knowledge
   capture_channel: prompt
   supported_schema_versions:
     - 1
+
+identity:
+  owner_name: Ethan
+  os_name: Ethan OS
+  os_repo: ethan-os
+  life_repo: ethan-life

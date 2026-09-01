@@ -26,7 +26,7 @@ Import selected improvements from the upstream `ethan-os` repository into a down
    - new capabilities available.
 6. For each conflict, explain what upstream changed, what downstream changed, the likely impact, and a recommended resolution.
 7. Ask whether to apply safe changes and which conflicts to resolve.
-8. If approved, run `scripts/update-from-upstream.py --apply`.
+8. If approved, run `scripts/update-from-upstream.py --apply`. The script applies safe upstream changes, then re-runs `scripts/personalize.py` on the downstream repo so newly imported user-facing `Ethan` / `Ethan OS` wording is rewritten to the downstream identity before the commit is finalized.
 9. After application, run validation tests. If they fail, report failure and provide rollback instructions.
 10. If validation passes, update the manifest and summarize the result.
 

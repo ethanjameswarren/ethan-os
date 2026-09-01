@@ -26,6 +26,8 @@ from pathlib import Path
 
 import yaml
 
+from personalize import Personalizer, load_config as load_identity_config
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -84,22 +86,25 @@ def copy_upstream(upstream_dir: Path, target_dir: Path):
     shutil.copytree(upstream_dir, target_dir, ignore=ignore)
 
 
-def rewrite_readme(target_dir: Path, os_name: str, identifier: str):
+def rewrite_readme(target_dir: Path, os_name: str, identifier: str, remote: str, framework_name: str, owner_name: str):
     readme = target_dir / "README.md"
     text = readme.read_text(encoding="utf-8")
+
+    # Load the upstream framework name from the copied config so attribution is accurate.
+    framework_name = framework_name or "Ethan OS"
 
     # Replace the first-level heading with the new OS name.
     lines = text.splitlines()
     title_idx = None
     for i, line in enumerate(lines):
-        if line.startswith("# Ethan OS"):
+        if line.startswith(f"# {framework_name}"):
             lines[i] = f"# {os_name}"
             title_idx = i
             break
 
     identity_block = (
-        f"\n{os_name} is a personal OS built from [Ethan OS]({get_upstream_remote(ROOT)}). "
-        f"It reuses Ethan OS workflows and schemas while keeping {identifier}-life as the private companion repository.\n\n"
+        f"\n{os_name} is a personal OS built from [{framework_name}]({remote}). "
+        f"It reuses {framework_name} workflows and schemas while keeping {identifier}-life as the private companion repository.\n\n"
     )
     if identity_block.strip() not in text:
         if title_idx is not None:
@@ -115,10 +120,19 @@ def rewrite_readme(target_dir: Path, os_name: str, identifier: str):
     readme.write_text(text, encoding="utf-8")
 
 
-def rewrite_config(target_dir: Path, os_name: str):
+def rewrite_config(target_dir: Path, os_name: str, os_repo: str, companion_repo: str, owner_name: str):
     config_path = target_dir / "config" / "ethan-os.config.yaml"
     data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    data["ethan_os"]["name"] = os_name
+
+    # Keep the framework section exactly as upstream; only the identity section changes.
+    if "framework" not in data:
+        data["framework"] = data.pop("ethan_os", {})
+    data["identity"] = {
+        "owner_name": owner_name,
+        "os_name": os_name,
+        "os_repo": os_repo,
+        "life_repo": companion_repo,
+    }
     config_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
@@ -183,6 +197,7 @@ def main():
     )
     parser.add_argument("--target-dir", required=True, help="Path for the new downstream OS repository.")
     parser.add_argument("--os-name", required=True, help="Display name for the new OS, e.g. 'John OS'.")
+    parser.add_argument("--owner-name", default=None, help="Person's name, e.g. 'John'. Defaults to <os-name> without ' OS'.")
     parser.add_argument("--identifier", required=True, help="Short identifier, e.g. 'john-os'.")
     parser.add_argument(
         "--companion-repo",
@@ -198,7 +213,10 @@ def main():
 
     target_dir = Path(args.target_dir).resolve()
     upstream_dir = Path(args.upstream_repo).resolve() if args.upstream_repo else ROOT
-    companion_repo = args.companion_repo or f"{args.identifier}-life"
+
+    owner_name = args.owner_name or args.os_name.removesuffix(" OS").strip() or "User"
+    os_repo = target_dir.name
+    companion_repo = args.companion_repo or f"{owner_name.lower()}-life"
 
     if not upstream_dir.exists():
         print(f"ERROR: upstream directory does not exist: {upstream_dir}")
@@ -212,8 +230,18 @@ def main():
         remote = args.upstream_repo or get_upstream_remote(upstream_dir)
         version = read_version(upstream_dir)
 
-        rewrite_readme(target_dir, args.os_name, args.identifier)
-        rewrite_config(target_dir, args.os_name)
+        # Read the upstream framework name from the copied config before it is overwritten.
+        framework_config = yaml.safe_load((target_dir / "config" / "ethan-os.config.yaml").read_text(encoding="utf-8"))
+        framework = framework_config.get("framework", framework_config.get("ethan_os", {}))
+        framework_name = framework.get("name", "Ethan OS")
+
+        rewrite_readme(target_dir, args.os_name, args.identifier, remote, framework_name, owner_name)
+        rewrite_config(target_dir, args.os_name, os_repo, companion_repo, owner_name)
+
+        # Apply the downstream identity layer to all user-facing content.
+        identity, framework = load_identity_config(target_dir)
+        Personalizer(target_dir, identity, framework).personalize_repo()
+
         write_manifest(target_dir, version, args.os_name, args.identifier,
                        companion_repo, remote, commit)
         init_git(target_dir, remote, version)

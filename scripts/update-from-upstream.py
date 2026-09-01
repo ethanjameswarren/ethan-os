@@ -29,6 +29,8 @@ from pathlib import Path
 
 import yaml
 
+from personalize import Personalizer, load_config as load_identity_config
+
 MANIFEST = ".os-upstream.yaml"
 
 
@@ -349,6 +351,11 @@ def apply_safe_changes(repo: Path, plan: dict, upstream_branch: str):
             # Only remove if it exists in the working tree.
             if (repo / item["path"]).exists():
                 run_git("rm", "-f", item["path"], cwd=repo)
+
+        # Re-apply the downstream identity layer to newly imported files so
+        # John OS does not accumulate Ethan-specific user-facing wording again.
+        identity, framework = load_identity_config(repo)
+        Personalizer(repo, identity, framework).personalize_repo()
 
         run_git("add", ".", cwd=repo)
 

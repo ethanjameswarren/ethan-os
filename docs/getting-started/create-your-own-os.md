@@ -90,6 +90,13 @@ What the script does:
 
 The script does **not** copy any private `ethan-life` data. It also does not authenticate with or push to GitHub; publishing is a separate resumable step.
 
+What it rewrites:
+
+- `README.md` title and the attribution line pointing back to `ethan-os`.
+- `config/ethan-os.config.yaml` `identity` section (owner, `os_name`, `os_repo`, `life_repo`).
+- `config/ethan-os.config.yaml` `framework` section is preserved unchanged so upstream provenance remains stable.
+- User-facing `Ethan` / `Ethan OS` / `ethan-life` wording in docs, workflows, skills, and instructions using `scripts/personalize.py` while protecting `LICENSE`, `NOTICE`, `.os-upstream.yaml`, `runtime/manifest.yaml`, `config/ethan-os.config.yaml` `framework`, and other provenance.
+
 ## Step 2: Authenticate and publish to GitHub
 
 Do not paste a personal access token into a remote URL. Use one of the secure methods below, then publish with the provided script.
