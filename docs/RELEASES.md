@@ -23,6 +23,7 @@
 - **Location-aware Health** — training-location equipment inventories and equipment-constrained workout construction are implemented; real workout validation remains outstanding.
 - **Reproducible validation** — pinned PyYAML dependency, one aggregate validation command, and deterministic dangling-link coverage.
 - **Privacy boundary repair** — public templates and examples use fictional data; personal canonical data remains in `ethan-life`.
+- **Distribution pipeline validated** — Windows and macOS bootstrap, GitHub authentication/publishing, downstream repo creation, upstream → downstream updates, three-way selective merge behavior, downstream customization preservation, and license/upstream provenance with downstream personalization all validated end-to-end (see [Distribution Validation](distribution-validation.md)).
 
 ### Project status
 
