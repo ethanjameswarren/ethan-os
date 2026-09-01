@@ -88,51 +88,64 @@ What the script does:
 6. Writes `.os-upstream.yaml` recording the exact upstream commit you started from.
 7. Commits the initial downstream state.
 
-The script does **not** copy any private `ethan-life` data.
+The script does **not** copy any private `ethan-life` data. It also does not authenticate with or push to GitHub; publishing is a separate resumable step.
 
-## Push to your own GitHub repositories
+## Step 2: Authenticate and publish to GitHub
 
-Create two repositories on GitHub:
+Do not paste a personal access token into a remote URL. Use one of the secure methods below, then publish with the provided script.
 
-- `<identifier>-os` (public) — your downstream OS.
-- `<identifier>-life` (private) — your companion data repository.
+### Before you publish
 
-Using the GitHub CLI:
+Local Git must be able to push to GitHub. Being signed into your IDE, Devin, or Windsurf is not the same thing — those accounts are not available to the `git` command on this machine.
 
-```bash
-gh repo create <identifier>-os --public
-gh repo create <identifier>-life --private
-```
-
-Or create them manually at [github.com/new](https://github.com/new).
-
-Make sure the new OS points to your repo, not `ethan-os`:
+The recommended path for most users is the GitHub CLI device flow:
 
 ```bash
-cd <identifier>-os
-git remote -v
+# Install gh if you do not have it
+winget install GitHub.cli        # Windows
+brew install gh                  # macOS
+sudo apt install gh              # Debian/Ubuntu
+
+# Log in (no PAT required)
+gh auth login
+
+# Make git use the secure gh credential helper
+gh auth setup-git
 ```
 
-You should see `upstream` pointing to `ethanjameswarren/ethan-os.git` and `origin` pointing to `https://github.com/<owner>/<identifier>-os.git`. If `origin` was not preconfigured, add it before pushing:
+For users who prefer SSH, add an SSH key to GitHub instead.
+
+### Check authentication
+
+From `ethan-os`, test whether this machine can push:
 
 ```bash
-git remote add origin https://github.com/<owner>/<identifier>-os.git
-git push -u origin master
+python scripts/github_auth.py
 ```
 
-In the companion repo, do the same:
+If it reports that you are authenticated, continue. If not, it prints the exact next step for your environment.
+
+### Publish the repositories
+
+Run the resumable publish script. If it fails, fix the issue and re-run the same command; it will not restart the bootstrap.
 
 ```bash
-cd <identifier>-life
-git init
-git remote add origin https://github.com/<owner>/<identifier>-life.git
-# add .<identifier>-os.yaml and any initial data
-git add .
-git commit -m "init <identifier>-life"
-git push -u origin master
+python scripts/publish-to-github.py \
+  --os-dir C:\git\caitlin-os \
+  --companion-dir C:\git\caitlin-life \
+  --owner caitlin-github-username
 ```
 
-## Step 2: Create your private companion repository
+This will:
+
+1. Verify local Git can push to GitHub.
+2. Create the `<identifier>-os` (public) and `<identifier>-life` (private) GitHub repositories if they do not exist.
+3. Add an `origin` remote using `https://github.com/<owner>/<repo>.git` — never a PAT-in-URL.
+4. Push both repositories to `origin`.
+
+If you do not want to publish on GitHub, skip this step. The local repositories are already fully functional.
+
+## Step 3: Set up the companion pointer
 
 Create `john-life` as an empty private repository in your chosen location, for example `C:\git\john-life`.
 
@@ -155,7 +168,7 @@ storage:
 
 The exact filename can be whatever your OS entrypoint expects. For Ethan OS-derived systems, this is typically `.<identifier>-os.yaml`. The runtime bootstrap in `john-os` will look for it.
 
-## Step 3: Validate
+## Step 4: Validate
 
 From `john-os`, run:
 
@@ -165,7 +178,7 @@ python scripts/validate.py
 
 This checks that all Markdown files have valid frontmatter and that schemas are consistent.
 
-## Step 4: Customize
+## Step 5: Customize
 
 You can now change anything in `john-os`:
 

@@ -161,16 +161,13 @@ def write_manifest(target_dir: Path, version: str, os_name: str, identifier: str
     )
 
 
-def init_git(target_dir: Path, remote: str, version: str, github_owner: str = None):
+def init_git(target_dir: Path, remote: str, version: str):
     run_git("init", cwd=target_dir)
     run_git("remote", "add", "upstream", remote, cwd=target_dir)
-    if github_owner:
-        origin_url = f"https://github.com/{github_owner}/{target_dir.name}.git"
-        run_git("remote", "add", "origin", origin_url, cwd=target_dir)
-        run_git("config", "--local", "remote.pushDefault", "origin", cwd=target_dir)
-    else:
-        # Prevent accidental pushes to the upstream ethan-os remote.
-        run_git("config", "--local", "push.default", "nothing", cwd=target_dir)
+    # Prevent accidental pushes to the upstream ethan-os remote. The separate
+    # `publish-to-github.py` script will configure `origin` once the user is
+    # authenticated with GitHub.
+    run_git("config", "--local", "push.default", "nothing", cwd=target_dir)
     run_git("add", ".", cwd=target_dir)
     run_git(
         "commit",
@@ -197,11 +194,6 @@ def main():
         default=None,
         help="Path or URL to upstream ethan-os. Defaults to the repository containing this script.",
     )
-    parser.add_argument(
-        "--github-owner",
-        default=None,
-        help="GitHub username or organization. If given, adds an `origin` remote pointing to https://github.com/<owner>/<dir>.git and makes it the default for `git push`.",
-    )
     args = parser.parse_args()
 
     target_dir = Path(args.target_dir).resolve()
@@ -224,25 +216,23 @@ def main():
         rewrite_config(target_dir, args.os_name)
         write_manifest(target_dir, version, args.os_name, args.identifier,
                        companion_repo, remote, commit)
-        init_git(target_dir, remote, version, args.github_owner)
+        init_git(target_dir, remote, version)
 
         print(f"\nBootstrapped {args.os_name} at {target_dir}")
         print(f"Upstream:     ethan-os {version} ({commit})")
         print(f"Companion:    {companion_repo}")
-        if args.github_owner:
-            print(f"Origin:       https://github.com/{args.github_owner}/{target_dir.name}.git")
         print(f"\nNext steps:")
-        print(f"1. Create a public GitHub repository for the OS: '{target_dir.name}'.")
-        print(f"2. Create a private GitHub repository for the companion: '{companion_repo}'.")
-        print(f"3. Add a .{args.identifier}-os.yaml file in the companion repo pointing back to this directory.")
+        print(f"1. Authenticate local Git with GitHub:")
+        print(f"     gh auth login")
+        print(f"     gh auth setup-git")
+        print(f"2. Publish to GitHub (resumable; safe, no PAT in URL):")
+        print(f"     python scripts/publish-to-github.py \\")
+        print(f"       --os-dir {target_dir} \\")
+        print(f"       --companion-dir <path-to-{companion_repo}> \\")
+        print(f"       --owner <your-github-username-or-org>")
+        print(f"3. If you prefer not to use GitHub, skip publishing and use the local repositories.")
         print(f"4. Run validation: python scripts/validate.py")
-        if args.github_owner:
-            print(f"5. Push to your preconfigured origin: git push -u origin master")
-        else:
-            print(f"5. Set your GitHub origin and push:")
-            print(f"   git remote add origin https://github.com/<owner>/{target_dir.name}.git")
-            print(f"   git push -u origin master")
-        print(f"6. To update later: python scripts/update-from-upstream.py --check")
+        print(f"5. To update later: python scripts/update-from-upstream.py --check")
 
     except Exception as exc:
         print(f"ERROR: {exc}")

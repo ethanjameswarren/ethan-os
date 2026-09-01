@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Create a personalized downstream OS repository from the public `ethan-os` upstream, preserving the upstream project identity while giving the new OS its own name and companion repository.
+Create a personalized downstream OS repository from the public `ethan-os` upstream, preserving the upstream project identity while giving the new OS its own name and companion repository. Local bootstrap and GitHub publishing are separate steps.
 
 ## Input
 
@@ -11,6 +11,7 @@ Create a personalized downstream OS repository from the public `ethan-os` upstre
 - Identifier (e.g., `john-os`).
 - Optional companion repository name (defaults to `<identifier>-life`).
 - Optional upstream repo path or URL (defaults to the repository containing this script).
+- Optional GitHub owner/organization, only asked if the user chooses to publish.
 
 ## Output
 
@@ -18,7 +19,8 @@ Create a personalized downstream OS repository from the public `ethan-os` upstre
 - A downstream README with the new OS identity and attribution to `ethan-os`.
 - `config/ethan-os.config.yaml` updated with the new OS name.
 - `.os-upstream.yaml` recording the upstream project, version, commit, and install date.
-- Upstream set as a git remote so future updates can be fetched.
+- `upstream` remote pointing to `ethan-os` and `push.default` set to `nothing` so nothing can be pushed upstream by accident.
+- Optionally, published GitHub repositories and `origin` remotes after the user authenticates.
 
 ## Rules
 
@@ -27,3 +29,5 @@ Create a personalized downstream OS repository from the public `ethan-os` upstre
 3. Preserve upstream project attribution in the README and manifest.
 4. Record the exact upstream commit so future updates can compare safely.
 5. Keep demo fixtures; they are public, generic, and used by tests.
+6. Never store, print, or suggest embedding a GitHub PAT or token in a remote URL, repository file, or log.
+7. Separate local bootstrap from authenticated publishing. If GitHub authentication is missing, stop after the local setup is complete and give the user the exact resumption command.
