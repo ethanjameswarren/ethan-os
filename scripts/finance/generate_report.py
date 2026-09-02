@@ -64,6 +64,10 @@ LIABILITY_TYPES = {
 
 LIQUID_TYPES = {"checking", "savings", "cash", "money_market"}
 
+OPERATING_TYPES = {"checking", "cash"}
+
+RESERVE_TYPES = {"savings", "money_market"}
+
 RETIREMENT_TYPES = {"retirement_401k", "retirement_ira", "retirement_roth_ira", "hsa"}
 
 INVESTMENT_TYPES = {"taxable_investment", "investment", "brokerage"}
@@ -75,6 +79,24 @@ SAFETY_RESERVE_GOALS = {
     "three_month_safety_reserve",
     "six_month_safety_reserve",
 }
+
+DEBT_TYPE_LABELS = {
+    "auto_loan": "Auto",
+    "student_loan": "Student",
+    "credit_card": "Credit card",
+    "personal_loan": "Other",
+    "mortgage": "Mortgage",
+    "medical": "Medical",
+    "other_debt": "Other",
+}
+
+ASSUMPTION_KEYS = [
+    "annual_income_growth_pct",
+    "annual_investment_return_pct",
+    "annual_retirement_return_pct",
+    "annual_inflation_pct",
+    "annual_contribution_growth_pct",
+]
 
 
 def _fmt_currency(value, currency="USD"):
@@ -577,17 +599,29 @@ class FinancialData:
                 "type": a.get("account_type", "other"),
             }
 
+        # Build a set of account IDs used as dedicated reserve/goal funding
+        self._reserve_account_ids = set()
+        for g in getattr(self, 'goals', []) or []:
+            fid = g.get("funding_account_id")
+            if fid:
+                self._reserve_account_ids.add(fid)
+
         # Asset/liability split
         self.total_assets = 0.0
         self.total_liabilities = 0.0
         self.liquid_cash = 0.0
+        self.operating_cash = 0.0
+        self.reserve_cash = 0.0
         self.retirement_balance = 0.0
         self.investment_balance = 0.0
         self.other_asset = 0.0
+        self._has_retirement_balance = False
+        self._has_vehicle_value = False
 
         for ab in self.account_balances.values():
             bal = ab["balance"]
             typ = ab["type"]
+            aid = ab["account"].get("id", "")
             if typ in LIABILITY_TYPES:
                 # Liability account balances are intentionally not double-counted;
                 # the canonical debt total comes from finance.debt objects below.
@@ -596,10 +630,20 @@ class FinancialData:
 
             if typ in LIQUID_TYPES:
                 self.liquid_cash += bal
+                if typ in OPERATING_TYPES and aid not in self._reserve_account_ids:
+                    self.operating_cash += bal
+                else:
+                    self.reserve_cash += bal
             elif typ in RETIREMENT_TYPES:
                 self.retirement_balance += bal
+                if bal > 0:
+                    self._has_retirement_balance = True
             elif typ in INVESTMENT_TYPES:
                 self.investment_balance += bal
+            elif typ == "other_asset" and "vehicle" in ab["account"].get("title", "").lower():
+                self.other_asset += bal
+                if bal > 0:
+                    self._has_vehicle_value = True
             else:
                 self.other_asset += bal
 
@@ -668,10 +712,50 @@ class FinancialData:
         self.total_liabilities = self.total_debt
         self.net_worth = self.total_assets - self.total_liabilities
 
-        # Cash flow
-        self.available_monthly_cash_flow = (
+        # Biweekly income breakdown
+        self._biweekly_sources = [
+            s for s in self.income_sources
+            if s.get("frequency") == "biweekly" and s.get("status") != "ended"
+        ]
+        self.two_paycheck_month_income = sum(
+            (s.get("net_amount") or s.get("gross_amount") or 0) * 2
+            for s in self._biweekly_sources
+        )
+        self.three_paycheck_month_income = sum(
+            (s.get("net_amount") or s.get("gross_amount") or 0) * 3
+            for s in self._biweekly_sources
+        )
+        # Add non-biweekly income to both
+        non_biweekly_monthly = sum(
+            _monthly_income(s) for s in self.income_sources
+            if s.get("frequency") != "biweekly" and s.get("status") != "ended"
+        )
+        self.two_paycheck_month_income += non_biweekly_monthly
+        self.three_paycheck_month_income += non_biweekly_monthly
+
+        # Cash flow — renamed from "available_monthly_cash_flow"
+        self.avg_budgeted_cash_flow = (
             self.monthly_income_total - self.monthly_expenses_total - self.monthly_debt_payments
         )
+        # Keep backward-compatible alias
+        self.available_monthly_cash_flow = self.avg_budgeted_cash_flow
+
+        # Net worth semantics — detect missing major asset classes
+        self._has_auto_loan = any(
+            d.get("debt_type") == "auto_loan" for d in self.debts if d.get("status") != "paid_off"
+        )
+        self._has_retirement_debt = any(
+            d.get("debt_type") == "personal_loan" and "401k" in (d.get("title") or "").lower()
+            for d in self.debts if d.get("status") != "paid_off"
+        )
+        self._missing_asset_categories = []
+        if not self._has_retirement_balance and (self._has_retirement_debt or any(
+            s.get("pre_tax_deductions") for s in self.income_sources
+        )):
+            self._missing_asset_categories.append("retirement account balances")
+        if self._has_auto_loan and not self._has_vehicle_value:
+            self._missing_asset_categories.append("vehicle market value")
+        self.is_tracked_net_worth = len(self._missing_asset_categories) > 0
 
         # Latest snapshot date
         self.latest_snapshot_date = _latest_snapshot_date(self.snapshots)
@@ -679,6 +763,15 @@ class FinancialData:
         # Active projection assumptions and allocation policy
         self.assumptions = self._active_assumptions()
         self.active_policy = self._active_allocation_policy()
+
+        # Assumptions completeness
+        self.assumptions_complete = bool(self.assumptions) and all(
+            (self.assumptions.get(k) or 0) != 0 for k in ASSUMPTION_KEYS
+        )
+        if self.assumptions:
+            match_rules = self.assumptions.get("employer_match_rules", [])
+            if not match_rules:
+                self.assumptions_complete = False
 
     def _active_assumptions(self):
         if not self.policies:
@@ -1089,18 +1182,21 @@ def _progress_bar(value, max_value, color="#2563eb"):
 
 
 def _svg_horizontal_bar(items, width=640, height=None, palette=None):
-    """Ranked horizontal bar chart. Items are (label, value, color)."""
+    """Ranked horizontal bar chart. Items are (label, value, color).
+    Handles negative values by rendering them leftward from a zero axis."""
     if not items:
         return ""
     palette = palette or {}
-    max_v = max(float(v) for _, v, _ in items)
-    if max_v <= 0:
+    values = [float(v) for _, v, _ in items]
+    max_abs = max(abs(v) for v in values)
+    if max_abs <= 0:
         return ""
-    margin_left = 132
-    margin_right = 80
+    has_negative = any(v < 0 for v in values)
+    margin_left = 180
+    margin_right = 90
     margin_top = 20
-    bar_h = 22
-    gap = 18
+    bar_h = 24
+    gap = 14
     n = len(items)
     if height is None:
         height = margin_top * 2 + n * (bar_h + gap) - gap
@@ -1108,21 +1204,48 @@ def _svg_horizontal_bar(items, width=640, height=None, palette=None):
     text_c = palette.get("text", "#111827")
     muted_c = palette.get("muted", "#6b7280")
 
+    # If we have negative values, center the zero axis
+    if has_negative:
+        zero_x = margin_left + plot_w / 2
+        scale = (plot_w / 2) / max_abs
+    else:
+        zero_x = margin_left
+        scale = plot_w / max_abs
+
     parts = []
     for i, (label, value, color) in enumerate(items):
         y = margin_top + i * (bar_h + gap)
-        bar_w = float(value) / max_v * plot_w
+        bar_w = abs(float(value)) * scale
+        bar_w = max(bar_w, 0)  # Never negative width
+        if float(value) < 0:
+            bar_x = zero_x - bar_w
+        else:
+            bar_x = zero_x
         parts.append(
-            f'<rect x="{margin_left}" y="{y}" width="{bar_w:.1f}" height="{bar_h}" '
+            f'<rect x="{bar_x:.1f}" y="{y}" width="{bar_w:.1f}" height="{bar_h}" '
             f'fill="{color}" rx="4" data-tooltip="{html_module.escape(label)}: {_fmt_currency(value)}" />'
         )
         parts.append(
-            f'<text x="{margin_left - 10}" y="{y + bar_h / 2 + 4}" text-anchor="end" '
+            f'<text x="{margin_left - 10}" y="{y + bar_h / 2 + 5}" text-anchor="end" '
             f'font-size="12" fill="{text_c}">{html_module.escape(label)}</text>'
         )
+        # Value label — place beside bar end
+        if float(value) < 0:
+            val_x = bar_x - 8
+            anchor = "end"
+        else:
+            val_x = bar_x + bar_w + 8
+            anchor = "start"
         parts.append(
-            f'<text x="{margin_left + bar_w + 8}" y="{y + bar_h / 2 + 4}" font-size="12" '
-            f'fill="{muted_c}">{_fmt_currency(value)}</text>'
+            f'<text x="{val_x:.1f}" y="{y + bar_h / 2 + 5}" font-size="12" '
+            f'text-anchor="{anchor}" fill="{muted_c}">{_fmt_currency(value)}</text>'
+        )
+    # Zero line when negative values present
+    if has_negative:
+        parts.append(
+            f'<line x1="{zero_x}" y1="{margin_top - 4}" x2="{zero_x}" '
+            f'y2="{margin_top + n * (bar_h + gap) - gap + bar_h + 4}" '
+            f'stroke="{muted_c}" stroke-width="1" stroke-dasharray="4,3" />'
         )
     return f'<svg viewBox="0 0 {width} {height}" class="bar-chart">{"".join(parts)}</svg>'
 
@@ -1388,7 +1511,9 @@ def _css(profile: DesignProfile) -> str:
             f".scenario strong {{ color: {t.get('accent')}; }}",
             f".disclaimer {{ border-left: 3px solid {t.get('muted')}; padding: 1rem 1.2rem; background: {t.get('background')}; color: {t.get('muted')}; font-size: 0.9rem; border-radius: 0 {t.get('radius')} {t.get('radius')} 0; }}",
             f"#tooltip {{ position: fixed; pointer-events: none; background: {t.get('text')}; color: {t.get('surface')}; padding: 0.35rem 0.6rem; border-radius: 6px; font-size: 0.8rem; z-index: 1000; opacity: 0; transition: opacity 0.12s ease; white-space: nowrap; }}",
+            f".kpi-small .sub {{ font-size: 0.8rem; color: {t.get('muted')}; margin-top: 0.2rem; }}",
             f"footer {{ margin-top: 2rem; color: {t.get('muted')}; font-size: 0.85rem; }}",
+            "@media print { .card { break-inside: avoid; } details { break-inside: avoid; } body { background: white; } }",
         ]
     )
 
@@ -1513,12 +1638,35 @@ def _render_goals(data: FinancialData) -> str:
     for g in sorted(data.goals, key=lambda x: (x.get("priority") or 99)):
         target = g.get("target_amount", 0) or 0
         current = g.get("current_amount", 0) or 0
-        pct = (current / target * 100) if target else 0
+        goal_type = g.get("goal_type", "—")
+
+        # Debt payoff goals: calculate progress from baseline
+        if goal_type == "debt_payoff":
+            baseline = g.get("original_balance") or g.get("target_amount") or 0
+            related_id = g.get("related_debt_id")
+            if related_id and baseline:
+                related_debt = next((d for d in data.debts if d.get("id") == related_id), None)
+                if related_debt:
+                    current_bal = related_debt.get("current_balance", 0) or 0
+                    paid_down = max(0, float(baseline) - float(current_bal))
+                    pct = (paid_down / float(baseline) * 100) if baseline else 0
+                    progress_display = f'{_progress_bar(paid_down, float(baseline))}{_fmt_percent(pct)}'
+                else:
+                    progress_display = "<span class='muted'>Baseline not established</span>"
+            elif baseline == 0 or not baseline:
+                progress_display = "<span class='muted'>Baseline not established</span>"
+            else:
+                pct = (current / target * 100) if target else 0
+                progress_display = f'{_progress_bar(current, target)}{_fmt_percent(pct)}'
+        else:
+            pct = (current / target * 100) if target else 0
+            progress_display = f'{_progress_bar(current, target)}{_fmt_percent(pct)}'
+
         rows.append(
             f"<tr>"
             f"<td>{html_module.escape(g.get('title', g.get('id')))}</td>"
-            f"<td>{html_module.escape(g.get('goal_type', '—'))}</td>"
-            f'<td>{_progress_bar(current, target)}{_fmt_percent(pct)}</td>'
+            f"<td>{html_module.escape(goal_type)}</td>"
+            f'<td>{progress_display}</td>'
             f"<td class='text-right'>{_fmt_currency(target)}</td>"
             f"<td class='text-right'>{_fmt_currency(current)}</td>"
             f"<td class='text-right'>{_coerce_date(g.get('target_date'))}</td>"
@@ -1649,12 +1797,28 @@ def _render_expense_by_category(data: FinancialData) -> str:
 def _render_safety_net(data: FinancialData) -> str:
     if data.monthly_essential <= 0:
         return "<p class='muted'>Capture essential expenses to calculate safety-net coverage.</p>"
-    months = data.liquid_cash / data.monthly_essential
-    return (
-        f"<p>Liquid cash of {_fmt_currency(data.liquid_cash)} covers "
-        f"<strong>{months:.1f} months</strong> of essential monthly expenses "
-        f"({_fmt_currency(data.monthly_essential)}). Safety-net goals below assume this expense rate.</p>"
+    total_outflow = data.monthly_expenses_total + data.monthly_debt_payments
+    reserve_months = data.reserve_cash / total_outflow if total_outflow > 0 else 0
+    operating_months = data.operating_cash / total_outflow if total_outflow > 0 else 0
+    parts = []
+    parts.append(
+        f"<div class='kpi-grid'>"
+        f"<div class='kpi kpi-small'><div class='label'>Dedicated reserves</div>"
+        f"<div class='value'>{_fmt_currency(data.reserve_cash)}</div>"
+        f"<div class='sub muted'>{reserve_months:.1f} months coverage</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>Operating / checking</div>"
+        f"<div class='value'>{_fmt_currency(data.operating_cash)}</div>"
+        f"<div class='sub muted'>{operating_months:.1f} months coverage</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>Total liquid</div>"
+        f"<div class='value'>{_fmt_currency(data.liquid_cash)}</div></div>"
+        f"</div>"
     )
+    parts.append(
+        f"<p class='muted'>Safety-net coverage uses dedicated reserve accounts only. "
+        f"Operating buffer is earmarked for upcoming bills and should not be counted as emergency savings. "
+        f"Coverage months based on total monthly outflow of {_fmt_currency(total_outflow)}.</p>"
+    )
+    return "".join(parts)
 
 
 def _render_debt_payoff_scenarios(data: FinancialData) -> str:
@@ -1829,6 +1993,90 @@ def _render_assumptions(data: FinancialData) -> str:
     )
 
 
+def _render_debt_bars(data: FinancialData, palette: dict) -> str:
+    """Sorted horizontal bars for debts, colored by debt type."""
+    active_debts = [d for d in data.debts if d.get("status") != "paid_off"]
+    if not active_debts:
+        return "<p class='muted'>No active debts.</p>"
+
+    type_colors = {
+        "Auto": palette.get("warning", "#f59e0b"),
+        "Student": palette.get("accent", "#1e3a5f"),
+        "Credit card": palette.get("danger", "#b91c1c"),
+        "Other": palette.get("muted", "#6b7280"),
+        "Mortgage": "#475569",
+        "Medical": "#9ca3af",
+    }
+
+    items = []
+    for d in sorted(active_debts, key=lambda x: x.get("current_balance", 0) or 0, reverse=True):
+        label = d.get("title", d.get("id"))
+        # Shorten long labels: strip institution prefix before em-dash
+        if " — " in label:
+            label = label.split(" — ", 1)[1]
+        balance = d.get("current_balance", 0) or 0
+        dtype = DEBT_TYPE_LABELS.get(d.get("debt_type", ""), "Other")
+        color = type_colors.get(dtype, palette.get("muted", "#6b7280"))
+        rate = d.get("interest_rate_pct", 0) or 0
+        items.append((f"{label} ({rate:.1f}%)", balance, color))
+
+    bar_height = 20 * 2 + len(items) * (24 + 14) - 14
+    chart = _svg_horizontal_bar(items, width=760, height=bar_height, palette=palette)
+
+    # Legend for debt types
+    seen = set()
+    legend_parts = []
+    for d in active_debts:
+        dtype = DEBT_TYPE_LABELS.get(d.get("debt_type", ""), "Other")
+        if dtype not in seen:
+            seen.add(dtype)
+            color = type_colors.get(dtype, palette.get("muted"))
+            legend_parts.append(
+                f'<span><span class="legend-dot" style="background:{color};"></span>{html_module.escape(dtype)}</span>'
+            )
+    legend = f'<div class="chart-legend">{"".join(legend_parts)}</div>'
+    return legend + chart
+
+
+def _render_net_worth_bridge(data: FinancialData, palette: dict) -> str:
+    """Balance-sheet comparison as horizontal bars instead of a donut."""
+    accent = palette.get("accent", "#1e3a5f")
+    success = palette.get("success", "#047857")
+    danger = palette.get("danger", "#b91c1c")
+    muted = palette.get("muted", "#6b7280")
+    net_class = "positive" if data.net_worth >= 0 else "negative"
+
+    items = []
+    if data.liquid_cash > 0:
+        items.append(("Liquid cash", data.liquid_cash, success))
+    if data.retirement_balance > 0:
+        items.append(("Retirement", data.retirement_balance, accent))
+    if data.investment_balance > 0:
+        items.append(("Investments", data.investment_balance, "#2563eb"))
+    if data.other_asset > 0:
+        items.append(("Other assets", data.other_asset, muted))
+    items.append(("Total debt", -data.total_debt, danger))
+
+    chart = _svg_horizontal_bar(items, width=760, palette=palette)
+    kpis = (
+        f"<div class='kpi-grid' style='margin-top:1rem;'>"
+        f"<div class='kpi kpi-small'><div class='label'>Total assets</div><div class='value positive'>{_fmt_currency(data.total_assets)}</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>Total liabilities</div><div class='value negative'>{_fmt_currency(data.total_liabilities)}</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>{'Tracked net worth' if data.is_tracked_net_worth else 'Net worth'}</div>"
+        f"<div class='value {net_class}'>{_fmt_currency(data.net_worth)}</div></div>"
+        f"</div>"
+    )
+    note = ""
+    if data.is_tracked_net_worth:
+        missing = ", ".join(data._missing_asset_categories)
+        note = (
+            f"<p class='muted'>Labeled &ldquo;Tracked net worth&rdquo; because the following major asset categories "
+            f"are not yet recorded: {html_module.escape(missing)}. "
+            f"This metric will understate true net worth until those balances are added.</p>"
+        )
+    return chart + kpis + note
+
+
 def _render_report(data: FinancialData, output_path: Path) -> str:
     profile = DesignProfile(data.life_dir)
     palette = profile.palette()
@@ -1843,11 +2091,12 @@ def _render_report(data: FinancialData, output_path: Path) -> str:
     muted = palette["muted"]
 
     net_class = "positive" if data.net_worth >= 0 else "negative"
-    flow_class = "positive" if data.available_monthly_cash_flow >= 0 else "negative"
+    flow_class = "positive" if data.avg_budgeted_cash_flow >= 0 else "negative"
+    nw_label = "Tracked net worth" if data.is_tracked_net_worth else "Net worth"
 
-    safety_months = None
-    if data.monthly_essential > 0:
-        safety_months = data.liquid_cash / data.monthly_essential
+    # Safety-net coverage uses dedicated reserves
+    total_outflow = data.monthly_expenses_total + data.monthly_debt_payments
+    reserve_months = data.reserve_cash / total_outflow if total_outflow > 0 else None
 
     sections = []
 
@@ -1861,215 +2110,258 @@ def _render_report(data: FinancialData, output_path: Path) -> str:
         f"</header>"
     )
 
-    # 1. Financial Overview (KPI cards)
+    # ---------------------------------------------------------------
+    # SECTION 1: Executive Financial Dashboard
+    # ---------------------------------------------------------------
     overview = []
+    # Hero KPIs
     overview.append(
         f"<div class='kpi-grid'>"
         f"<div class='kpi kpi-hero'>"
-        f"<div class='label'>Net worth</div>"
+        f"<div class='label'>{html_module.escape(nw_label)}</div>"
         f"<div class='value {net_class}'>{_fmt_currency(data.net_worth)}</div>"
         f"<div class='sub'>Assets {_fmt_currency(data.total_assets)} · Liabilities {_fmt_currency(data.total_liabilities)}</div>"
         f"</div>"
         f"<div class='kpi kpi-hero'>"
-        f"<div class='label'>Available monthly cash flow</div>"
-        f"<div class='value {flow_class}'>{_fmt_currency(data.available_monthly_cash_flow)}</div>"
+        f"<div class='label'>Avg budgeted cash flow</div>"
+        f"<div class='value {flow_class}'>{_fmt_currency(data.avg_budgeted_cash_flow)}</div>"
         f"<div class='sub'>Income {_fmt_currency(data.monthly_income_total)} · Outgo {_fmt_currency(data.monthly_expenses_total + data.monthly_debt_payments)}</div>"
         f"</div>"
         f"<div class='kpi kpi-hero'>"
-        f"<div class='label'>Safety-net coverage</div>"
-        f"<div class='value'>{f'{safety_months:.1f} months' if safety_months is not None else '—'}</div>"
-        f"<div class='sub'>Liquid cash {_fmt_currency(data.liquid_cash)} · Essentials {_fmt_currency(data.monthly_essential)}/mo</div>"
+        f"<div class='label'>Reserve coverage</div>"
+        f"<div class='value'>{f'{reserve_months:.1f} months' if reserve_months is not None else '—'}</div>"
+        f"<div class='sub'>Reserves {_fmt_currency(data.reserve_cash)} · Outflow {_fmt_currency(total_outflow)}/mo</div>"
         f"</div>"
         f"</div>"
     )
+    if data.is_tracked_net_worth:
+        missing = ", ".join(data._missing_asset_categories)
+        overview.append(
+            f"<p class='muted' style='margin-top:-0.5rem;'>&#9888; Labeled &ldquo;Tracked net worth&rdquo; &mdash; not yet recording: {html_module.escape(missing)}.</p>"
+        )
+    # Secondary KPIs
     overview.append(
         f"<div class='kpi-grid'>"
-        f"<div class='kpi kpi-small'><div class='label'>Liquid cash</div><div class='value'>{_fmt_currency(data.liquid_cash)}</div></div>"
-        f"<div class='kpi kpi-small'><div class='label'>Monthly income</div><div class='value'>{_fmt_currency(data.monthly_income_total)}</div></div>"
-        f"<div class='kpi kpi-small'><div class='label'>Monthly expenses</div><div class='value'>{_fmt_currency(data.monthly_expenses_total)}</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>Operating cash</div><div class='value'>{_fmt_currency(data.operating_cash)}</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>Dedicated reserves</div><div class='value'>{_fmt_currency(data.reserve_cash)}</div></div>"
         f"<div class='kpi kpi-small'><div class='label'>Total debt</div><div class='value'>{_fmt_currency(data.total_debt)}</div></div>"
+        f"<div class='kpi kpi-small'><div class='label'>Debt minimums</div><div class='value'>{_fmt_currency(data.monthly_debt_payments)}</div></div>"
         f"</div>"
     )
-    sections.append(
-        f"<div class='card'><h2 class='card-title'>Financial Overview</h2>{''.join(overview)}</div>"
-    )
+    # Income breakdown for biweekly pay
+    if data._biweekly_sources:
+        overview.append(
+            f"<div class='kpi-grid'>"
+            f"<div class='kpi kpi-small'><div class='label'>2-paycheck month income</div><div class='value'>{_fmt_currency(data.two_paycheck_month_income)}</div></div>"
+            f"<div class='kpi kpi-small'><div class='label'>3-paycheck month income</div><div class='value'>{_fmt_currency(data.three_paycheck_month_income)}</div></div>"
+            f"<div class='kpi kpi-small'><div class='label'>Annualized avg monthly</div><div class='value'>{_fmt_currency(data.monthly_income_total)}</div></div>"
+            f"<div class='kpi kpi-small'><div class='label'>Monthly expenses + debt</div><div class='value'>{_fmt_currency(total_outflow)}</div></div>"
+            f"</div>"
+        )
 
-    # 2. Monthly Money Flow
+    # Money flow bar chart
     flow_items = [
-        ("Monthly income", data.monthly_income_total, accent),
-        ("Monthly expenses", data.monthly_expenses_total, danger),
-        ("Debt minimums", data.monthly_debt_payments, warning),
-        ("Available cash flow", data.available_monthly_cash_flow, success if data.available_monthly_cash_flow >= 0 else danger),
+        ("Avg monthly income", data.monthly_income_total, accent),
+        ("Non-debt expenses", data.monthly_expenses_total, warning),
+        ("Debt minimums", data.monthly_debt_payments, danger),
+        ("Avg budgeted cash flow", data.avg_budgeted_cash_flow, success if data.avg_budgeted_cash_flow >= 0 else danger),
     ]
-    sections.append(
-        f"<div class='card'>"
-        f"<h2 class='card-title'>Monthly Money Flow</h2>"
-        f"{_svg_horizontal_bar(flow_items, width=760, height=180, palette=palette)}"
-        f"<p class='muted'>Income versus committed and discretionary outgo. Available cash flow is what remains after expenses and minimum debt payments.</p>"
-        f"</div>"
+    overview.append(_svg_horizontal_bar(flow_items, width=760, palette=palette))
+    overview.append(
+        f"<p class='muted'>Average monthly income uses the annualized biweekly rate (26 pay periods &divide; 12). "
+        f"Debt-payment expenses are excluded from &ldquo;Non-debt expenses&rdquo; to avoid double-counting with debt minimums.</p>"
     )
 
-    # 3. Balance Sheet
-    balance_segments = [
-        ("Assets", data.total_assets, success),
-        ("Liabilities", data.total_liabilities, danger),
-    ]
     sections.append(
-        f"<div class='card'>"
-        f"<h2 class='card-title'>Balance Sheet</h2>"
-        f"<div class='two-col'>"
-        f"<div>{_svg_donut(balance_segments, width=320, height=280, palette=palette)}</div>"
-        f"<div>"
-        f"<div class='kpi kpi-small' style='margin-bottom:0.75rem;'><div class='label'>Total assets</div><div class='value positive'>{_fmt_currency(data.total_assets)}</div></div>"
-        f"<div class='kpi kpi-small' style='margin-bottom:0.75rem;'><div class='label'>Total liabilities</div><div class='value negative'>{_fmt_currency(data.total_liabilities)}</div></div>"
-        f"<div class='kpi kpi-small' style='margin-bottom:0.75rem;'><div class='label'>Net worth</div><div class='value {net_class}'>{_fmt_currency(data.net_worth)}</div></div>"
-        f"<p class='muted'>Composition of assets and liabilities. Assets include liquid cash, retirement, and investment accounts. Liabilities reflect active debt balances.</p>"
-        f"</div>"
-        f"</div>"
-        f"</div>"
+        f"<div class='card'><h2 class='card-title'>Executive Dashboard</h2>{''.join(overview)}</div>"
     )
 
-    # 4. Goals
+    # ---------------------------------------------------------------
+    # SECTION 2: Goals, Debt Strategy, Projections
+    # ---------------------------------------------------------------
+
+    # 2a. Goals
     goal_cards = []
     for g in sorted((g for g in data.goals if g.get("status") == "active"), key=lambda x: (x.get("priority") or 99)):
         target = g.get("target_amount", 0) or 0
         current = g.get("current_amount", 0) or 0
-        pct = (current / target * 100) if target else 0
-        remaining = max(0, target - current)
+        goal_type = g.get("goal_type", "goal")
+
+        if goal_type == "debt_payoff":
+            baseline = g.get("original_balance") or g.get("target_amount") or 0
+            related_id = g.get("related_debt_id")
+            if related_id and baseline:
+                related_debt = next((d for d in data.debts if d.get("id") == related_id), None)
+                if related_debt:
+                    current_bal = related_debt.get("current_balance", 0) or 0
+                    paid_down = max(0, float(baseline) - float(current_bal))
+                    pct = (paid_down / float(baseline) * 100) if baseline else 0
+                    remaining = max(0, float(current_bal))
+                    progress = _progress_bar(paid_down, float(baseline), color=accent)
+                    pct_display = _fmt_percent(pct)
+                    remaining_display = f"{_fmt_currency(remaining)} remaining"
+                else:
+                    progress = ""
+                    pct_display = ""
+                    remaining_display = "Baseline not established"
+            elif not baseline:
+                progress = ""
+                pct_display = ""
+                remaining_display = "Baseline not established"
+            else:
+                pct = (current / target * 100) if target else 0
+                remaining = max(0, target - current)
+                progress = _progress_bar(current, target, color=accent)
+                pct_display = _fmt_percent(pct)
+                remaining_display = f"{_fmt_currency(remaining)} remaining"
+        else:
+            pct = (current / target * 100) if target else 0
+            remaining = max(0, target - current)
+            progress = _progress_bar(current, target, color=accent)
+            pct_display = _fmt_percent(pct)
+            remaining_display = f"{_fmt_currency(remaining)} remaining"
+
         goal_cards.append(
             f"<div class='goal-card'>"
             f"<h4>{html_module.escape(g.get('title', g.get('id')))}</h4>"
-            f"<div class='meta'>{html_module.escape(g.get('goal_type', 'goal'))} · {_fmt_currency(current)} of {_fmt_currency(target)}</div>"
-            f"{_progress_bar(current, target, color=accent)}"
+            f"<div class='meta'>{html_module.escape(goal_type)} · {_fmt_currency(current)} of {_fmt_currency(target)}</div>"
+            f"{progress}"
             f"<div style='display:flex;justify-content:space-between;margin-top:0.4rem;font-size:0.85rem;color:{muted};'>"
-            f"<span>{_fmt_percent(pct)}</span><span>{_fmt_currency(remaining)} remaining</span></div>"
+            f"<span>{pct_display}</span><span>{remaining_display}</span></div>"
             f"</div>"
         )
     sections.append(
         f"<div class='card'>"
         f"<h2 class='card-title'>Goals</h2>"
-        f"<div class='goal-grid'>{''.join(goal_cards) if goal_cards else '<p class=\'muted\'>No active goals.</p>'}</div>"
+        f"<div class='goal-grid'>{''.join(goal_cards) if goal_cards else '<p class=\"muted\">No active goals.</p>'}</div>"
         f"</div>"
     )
 
-    # 5. Debt Strategy
-    active_debts = [d for d in data.debts if d.get("status") != "paid_off"]
-    palette_colors = [danger, warning, accent, "#6b7280", "#9ca3af", "#475569"]
-    debt_segments = [
-        (d.get("title", d.get("id", d["id"])), d.get("current_balance", 0) or 0, palette_colors[i % len(palette_colors)])
-        for i, d in enumerate(active_debts)
-    ]
-    debt_ranked = sorted(
-        debt_segments,
-        key=lambda item: next((d.get("interest_rate_pct", 0) or 0 for d in active_debts if d.get("title", d.get("id")) == item[0]), 0),
-        reverse=True,
-    )
+    # 2b. Debt Strategy — horizontal bars instead of donut
     sections.append(
         f"<div class='card'>"
         f"<h2 class='card-title'>Debt Strategy</h2>"
-        f"<div class='two-col'>"
-        f"<div>{_svg_donut(debt_segments, width=300, height=260, palette=palette)}</div>"
-        f"<div>{_svg_horizontal_bar(debt_ranked, width=420, height=150, palette=palette)}</div>"
-        f"</div>"
+        f"{_render_debt_bars(data, palette)}"
         f"{_render_debt_payoff_scenarios(data)}"
         f"</div>"
     )
 
-    # 6. Projections
-    cash_series = [p["cash"] for p in projections]
-    debt_series = [p["debt"] for p in projections]
-    net_series = [p["cash"] - p["debt"] for p in projections]
-    projection_labels = [f"M{i+1}" for i in range(len(projections))]
-    projection_chart = _svg_line_chart(
-        projection_labels,
-        [
-            ("Liquid cash", success, cash_series),
-            ("Remaining debt", danger, debt_series),
-            ("Net position", accent, net_series),
-        ],
-        width=760,
-        height=260,
-        palette=palette,
-        fill_area=True,
-    )
-    ef = _project_emergency_fund(data, months=12)
-    ef_labels = ["Now"] + [f"M{i+1}" for i in range(1, 13)]
-    ef_current = ef["current"]
-    ef_target = ef["target"]
-    monthly_rate = ef["monthly_rate"]
-    ef_series = [ef_current + monthly_rate * i for i in range(13)]
-    ef_chart = _svg_line_chart(
-        ef_labels,
-        [
-            ("Emergency reserve", accent, ef_series),
-            ("Target", warning, [ef_target] * 13),
-        ],
-        width=760,
-        height=220,
-        palette=palette,
-    )
-    sections.append(
-        f"<div class='card'>"
-        f"<h2 class='card-title'>Projections</h2>"
-        f"<h3 class='card-title' style='font-size:1rem;margin-top:0;'>Cash, debt, and net position</h3>"
-        f"{projection_chart}"
-        f"<h3 class='card-title' style='font-size:1rem;margin-top:1.5rem;'>Emergency fund trajectory</h3>"
-        f"{ef_chart}"
-        f"<div class='two-col' style='margin-top:1rem;'>"
-        f"<div>{_render_retirement_projection(data)}</div>"
-        f"<div>{_render_emergency_fund_projection(data)}</div>"
-        f"</div>"
-        f"</div>"
-    )
+    # 2c. Projections — guarded by assumptions completeness
+    if data.assumptions_complete:
+        cash_series = [p["cash"] for p in projections]
+        debt_series = [p["debt"] for p in projections]
+        net_series = [p["cash"] - p["debt"] for p in projections]
+        projection_labels = [f"M{i+1}" for i in range(len(projections))]
+        projection_chart = _svg_line_chart(
+            projection_labels,
+            [
+                ("Liquid cash", success, cash_series),
+                ("Remaining debt", danger, debt_series),
+                ("Net position", accent, net_series),
+            ],
+            width=760,
+            height=260,
+            palette=palette,
+            fill_area=True,
+        )
+        ef = _project_emergency_fund(data, months=12)
+        ef_labels = ["Now"] + [f"M{i+1}" for i in range(1, 13)]
+        ef_current = ef["current"]
+        ef_target = ef["target"]
+        monthly_rate = ef["monthly_rate"]
+        ef_series = [ef_current + monthly_rate * i for i in range(13)]
+        ef_chart = _svg_line_chart(
+            ef_labels,
+            [
+                ("Emergency reserve", accent, ef_series),
+                ("Target", warning, [ef_target] * 13),
+            ],
+            width=760,
+            height=220,
+            palette=palette,
+        )
+        sections.append(
+            f"<div class='card'>"
+            f"<h2 class='card-title'>Projections</h2>"
+            f"<h3 class='card-title' style='font-size:1rem;margin-top:0;'>Cash, debt, and net position</h3>"
+            f"{projection_chart}"
+            f"<h3 class='card-title' style='font-size:1rem;margin-top:1.5rem;'>Emergency fund trajectory</h3>"
+            f"{ef_chart}"
+            f"<div class='two-col' style='margin-top:1rem;'>"
+            f"<div>{_render_retirement_projection(data)}</div>"
+            f"<div>{_render_emergency_fund_projection(data)}</div>"
+            f"</div>"
+            f"</div>"
+        )
+    else:
+        missing_keys = [k.replace("annual_", "").replace("_pct", "").replace("_", " ") for k in ASSUMPTION_KEYS if not data.assumptions.get(k)]
+        if not data.assumptions:
+            missing_note = "No projection assumptions configured."
+        else:
+            missing_note = f"Missing or zero: {', '.join(missing_keys)}." if missing_keys else "Employer match rules not configured."
+        sections.append(
+            f"<div class='card'>"
+            f"<h2 class='card-title'>Projections</h2>"
+            f"<div class='disclaimer'>"
+            f"<strong>Assumptions incomplete</strong> — projections are suppressed because key assumptions are unset or zero. "
+            f"{html_module.escape(missing_note)} "
+            f"Configure a <code>finance.projection-assumptions</code> object with all required values to enable projections."
+            f"</div>"
+            f"</div>"
+        )
 
-    # 7. Current Plan vs Target Plan
+    # 2d. Current Plan vs Target Plan
     current_vs_target = _render_current_vs_target(data)
     if current_vs_target:
         sections.append(current_vs_target.replace("<div class='section'>", "<div class='card'>"))
 
-    # 8. Historical Trends
+    # ---------------------------------------------------------------
+    # SECTION 3: Historical Trends
+    # ---------------------------------------------------------------
     if len(data.snapshots) >= 2:
         sections.append(
-            f"<h2 class='card-title' style='margin-top:0;'>Historical Trends</h2>{_render_historical_charts(data, palette)}"
+            f"<div class='card'><h2 class='card-title'>Historical Trends</h2>{_render_historical_charts(data, palette)}</div>"
         )
     else:
         sections.append(
             f"<div class='card'><h2 class='card-title'>Historical Trends</h2>"
-            f"<p class='muted'>No snapshots on file. Save a new snapshot next period to see trends.</p></div>"
+            f"<p class='muted'>Trend charts require at least two snapshots. Save a new snapshot next period to see trends.</p></div>"
         )
 
-    # 9. Detailed Data
+    # ---------------------------------------------------------------
+    # SECTION 4: Collapsible Appendix — Detailed Data & Assumptions
+    # ---------------------------------------------------------------
     details = []
+    details.append(("Balance sheet", _render_net_worth_bridge(data, palette)))
+    details.append(("Liquidity breakdown", _render_safety_net(data)))
     details.append(("Accounts", _render_account_table(data)))
     details.append(("Income sources", _render_income_table(data)))
     details.append(("Expenses", _render_expense_table(data)))
     details.append(("Expenses by category", _render_expense_by_category(data)))
     details.append(("Debts", _render_debt_table(data)))
     details.append(("Goals (detail)", _render_goals(data)))
+    details.append(("Projection assumptions", _render_assumptions(data)))
     detail_html = "".join(
         f"<details><summary>{html_module.escape(title)}</summary><div class='details-body'>{content}</div></details>"
         for title, content in details
     )
     sections.append(
-        f"<div class='card'><h2 class='card-title'>Detailed Data</h2>{detail_html}</div>"
+        f"<div class='card'><h2 class='card-title'>Detailed Data &amp; Assumptions</h2>{detail_html}</div>"
     )
 
-    # 10. Assumptions & Disclaimer
+    # Disclaimer
     sections.append(
-        f"<div class='card'>"
-        f"<h2 class='card-title'>Assumptions &amp; Disclaimer</h2>"
-        f"{_render_assumptions(data)}"
-        f"<div class='disclaimer' style='margin-top:1rem;'>"
+        f"<div class='disclaimer'>"
         f"This report is based on information you provided. Calculations, projections, and suggestions are "
         f"planning scenarios, not professional financial, tax, investment, or legal advice. Projections use the "
         f"active assumptions listed above, but real-world results will differ. Review important decisions with a "
         f"qualified professional."
         f"</div>"
-        f"</div>"
     )
 
     html = (
-        f"<!DOCTYPE html><html><head><meta charset='utf-8'><title>Financial Report</title>"
+        f"<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>"
+        f"<title>Financial Report</title>"
         f"<style>{_css(profile)}</style></head><body>"
         f"<div class='container'>"
         f"{''.join(sections)}"
@@ -2116,8 +2408,9 @@ def main():
         f.write(html)
 
     print(f"Financial report generated: {output}")
-    print(f"  Net worth: {_fmt_currency(data.net_worth)}")
-    print(f"  Monthly cash flow: {_fmt_currency(data.available_monthly_cash_flow)}")
+    nw_label = "Tracked net worth" if data.is_tracked_net_worth else "Net worth"
+    print(f"  {nw_label}: {_fmt_currency(data.net_worth)}")
+    print(f"  Avg budgeted cash flow: {_fmt_currency(data.avg_budgeted_cash_flow)}")
 
 
 if __name__ == "__main__":
