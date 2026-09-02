@@ -42,6 +42,12 @@ properties:
     enum:
       - active
       - closed
+  credit_limit:
+    type: number
+    description: >
+      Credit limit for revolving credit accounts (credit cards, lines of credit).
+      Used only for utilization ratio calculations. Must never be presented as
+      available funds or spending capacity.
   currency:
     type: string
     description: ISO 4217 currency code, e.g. USD.

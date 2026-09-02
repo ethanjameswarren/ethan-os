@@ -51,6 +51,13 @@ Examples include:
 - Retirement contributions use the selected annual target, year-to-date contributions, remaining pay periods, and dated plan or legal limits.
 - Investment suggestions may use commonly discussed diversification, liquidity, time-horizon, and risk-management principles; they must not imply guaranteed returns.
 
+## Credit limit and available credit
+
+- Credit limits are stored solely for credit utilization ratio calculations (e.g. credit score health metrics).
+- Available credit (credit limit minus balance) must never be presented as available funds, spending capacity, or a financial resource.
+- Do not suggest, imply, or frame unused credit as money the user can or should spend.
+- Utilization ratios may be surfaced in snapshots and credit health summaries as analytical metrics only.
+
 ## Disclaimer prominence
 
 - Do not clutter routine factual capture, balance updates, or low-impact calculations with a large repeated disclaimer.

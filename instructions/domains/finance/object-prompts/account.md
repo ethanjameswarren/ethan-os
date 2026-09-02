@@ -18,6 +18,7 @@ Generate or update an Account object.
 
 - `institution`
 - `status`: active | closed
+- `credit_limit`: for revolving credit accounts only; used for utilization ratio calculations, never presented as spending capacity
 - `currency`
 - `balance_snapshots`: list of `{ date, balance, source }` where source is `user_stated` | `statement` | `estimated`
 - `links`: typed relationships

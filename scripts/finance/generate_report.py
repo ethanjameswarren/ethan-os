@@ -639,16 +639,22 @@ class FinancialData:
             if exp.get("status") == "ended":
                 continue
             m = _monthly_expense(exp)
-            self.monthly_expenses_total += m
-            classification = exp.get("classification", "committed")
-            if classification == "essential":
-                self.monthly_essential += m
-            elif classification == "committed":
-                self.monthly_committed += m
-            elif classification == "discretionary":
-                self.monthly_discretionary += m
-
             cat = exp.get("category", "Other")
+            # Expenses with category "Debt Payment" are tracked as expense
+            # items for scheduling/account purposes but their amounts are
+            # already reflected in finance.debt minimum_payment totals.
+            # Exclude them from the expense aggregates to avoid double-counting.
+            is_debt_payment = cat == "Debt Payment"
+            if not is_debt_payment:
+                self.monthly_expenses_total += m
+                classification = exp.get("classification", "committed")
+                if classification == "essential":
+                    self.monthly_essential += m
+                elif classification == "committed":
+                    self.monthly_committed += m
+                elif classification == "discretionary":
+                    self.monthly_discretionary += m
+
             self.expense_by_category[cat] = self.expense_by_category.get(cat, 0.0) + m
 
         # Debt
