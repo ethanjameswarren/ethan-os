@@ -82,6 +82,26 @@ properties:
     items:
       type: string
     description: Explicit section numbers where this asset may appear.
+  lore_book_presentation:
+    type: boolean
+    description: True if this asset is the preferred book presentation/illustration for the linked section(s), taking precedence over model/reference photography.
+  lore_book_size:
+    type: string
+    enum:
+      - standard
+      - dominant
+      - wide
+    description: Optional size/scale hint for lore-book presentation assets. Dominant illustrations occupy more of the page width for command characters, and wide is used for groups or expansive compositions.
+  lore_book_layout:
+    type: string
+    enum:
+      - floating-bottom-right
+      - floating-bottom-wide
+      - chapter-opener
+      - full-art
+      - editorial-profile
+      - facing-spread
+    description: Optional art-directed page-composition class for lore-book presentation assets. editorial-profile and facing-spread support premium dossier/spread layouts.
   related_lore_ids:
     type: array
     items:

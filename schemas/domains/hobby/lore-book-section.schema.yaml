@@ -60,6 +60,9 @@ properties:
     items:
       type: string
     description: Collection items referenced in the section (e.g., unit profiles).
+  background_media_id:
+    type: string
+    description: Optional hobby.media id for a full-page background image used only for this section, overriding the edition's default background.
   excluded_reason:
     type: string
   edition_inclusion:
