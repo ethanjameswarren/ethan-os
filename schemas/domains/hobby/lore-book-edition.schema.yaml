@@ -94,6 +94,47 @@ properties:
             - outstanding
             - in_progress
             - supplied
+  trim_width_in:
+    type: number
+    description: Trim width in inches.
+  trim_height_in:
+    type: number
+    description: Trim height in inches.
+  safe_margins_in:
+    type: array
+    items:
+      type: number
+    minItems: 4
+    maxItems: 4
+    description: Top, right, bottom, left safe content margins in inches.
+  bleed_in:
+    type: number
+    description: Optional bleed in inches.
+  default_visual_theme:
+    type: string
+    description: Default theme id (e.g., cyan) for pages without an explicit section theme.
+  visual_themes:
+    type: object
+    additionalProperties:
+      type: object
+      properties:
+        background_media_id:
+          type: string
+      description: Theme id to configuration map.
+    description: Available visual themes and their background media.
+  front_matter_order:
+    type: array
+    items:
+      type: string
+    description: Order of book sections, including cover, title, toc, body, visual_gaps, appendix.
+  renderer_version:
+    type: string
+    description: Renderer version used to produce the edition.
+  output_formats:
+    type: array
+    items:
+      type: string
+    description: Rendered output formats (e.g., html, pdf).
   notes:
     type: string
   links:

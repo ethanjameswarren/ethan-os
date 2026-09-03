@@ -1,0 +1,9 @@
+{
+  "name": "ethan-os",
+  "version": "0.2.0",
+  "description": "Ethan operating system and publication tooling",
+  "private": true,
+  "devDependencies": {
+    "pagedjs-cli": "0.4.3"
+  }
+}

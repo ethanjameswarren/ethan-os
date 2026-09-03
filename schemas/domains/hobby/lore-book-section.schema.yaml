@@ -28,6 +28,9 @@ properties:
   content:
     type: string
     description: Body text or a summary/placeholder for the section.
+  theme:
+    type: string
+    description: Visual theme id for this section (e.g., cyan, red, purple).
   page_layout:
     type: string
     enum:
