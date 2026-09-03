@@ -1,0 +1,74 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Technique Skill
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - technique_name
+  - status
+properties:
+  technique_name:
+    type: string
+  category:
+    type: string
+    enum:
+      - assembly
+      - preparation
+      - priming
+      - base_coating
+      - drybrushing
+      - washing
+      - highlighting
+      - glazing
+      - effects
+      - basing
+      - magnetization
+      - subassembly
+      - photography
+      - other
+  status:
+    type: string
+    enum:
+      - new
+      - practicing
+      - comfortable
+      - proficient
+  first_practiced_date:
+    type: string
+    format: date
+  practiced_on_model_ids:
+    type: array
+    items:
+      type: string
+    description: IDs of hobby.collection-item or hobby.painting-log records where the technique was used.
+  difficulty_for_user:
+    type: string
+    enum:
+      - foundational
+      - beginner
+      - intermediate
+      - advanced
+  why_it_matters:
+    type: string
+  common_mistakes:
+    type: array
+    items:
+      type: string
+  tips:
+    type: array
+    items:
+      type: string
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

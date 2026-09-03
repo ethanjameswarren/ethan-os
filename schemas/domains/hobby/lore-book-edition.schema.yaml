@@ -1,0 +1,104 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Lore Book Edition
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - edition_year
+  - status
+properties:
+  edition_year:
+    type: integer
+  subtitle:
+    type: string
+  edition_status:
+    type: string
+    enum:
+      - draft
+      - finalized
+      - archived
+      - superseded
+  generated_date:
+    type: string
+    format: date
+  source_commit:
+    type: string
+    description: Optional commit hash or snapshot identifier used to render the edition.
+  print_status:
+    type: string
+    enum:
+      - digital_only
+      - print_ready
+      - printed
+      - print_ordered
+  included_section_ids:
+    type: array
+    items:
+      type: string
+  included_lore_ids:
+    type: array
+    items:
+      type: string
+  included_media_ids:
+    type: array
+    items:
+      type: string
+  included_narrative_ids:
+    type: array
+    items:
+      type: string
+  omitted_empty_sections:
+    type: array
+    items:
+      type: string
+    description: IDs of sections intentionally omitted because they are empty/TBD.
+  visual_gaps:
+    type: array
+    items:
+      type: object
+      properties:
+        description:
+          type: string
+        section_id:
+          type: string
+        media_type:
+          type: string
+        priority:
+          type: string
+          enum:
+            - required
+            - recommended
+            - optional
+        lore_book_location:
+          type: string
+          description: Where in the book the asset should appear (e.g., cover, section number, appendix).
+        orientation:
+          type: string
+          enum:
+            - landscape
+            - portrait
+            - square
+            - any
+        aspect_ratio:
+          type: string
+          description: Preferred aspect ratio hint (e.g., 1/1, 2/3, 16/9).
+        completion_status:
+          type: string
+          enum:
+            - outstanding
+            - in_progress
+            - supplied
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

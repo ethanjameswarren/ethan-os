@@ -1,0 +1,76 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Painting Log
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - collection_item_id
+properties:
+  collection_item_id:
+    type: string
+  plan_id:
+    type: string
+  start_date:
+    type: string
+    format: date
+  end_date:
+    type: string
+    format: date
+  status:
+    type: string
+    enum:
+      - in_progress
+      - completed
+      - abandoned
+  phases_completed:
+    type: array
+    items:
+      type: string
+  recipe:
+    type: object
+    description: Map of areas to paint/technique IDs used.
+    additionalProperties:
+      type: string
+  techniques_practiced:
+    type: array
+    items:
+      type: string
+    description: IDs of hobby.technique-skill records.
+  mistakes:
+    type: array
+    items:
+      type: string
+  corrections:
+    type: array
+    items:
+      type: string
+  time_spent_minutes:
+    type: integer
+  photos:
+    type: array
+    items:
+      type: string
+    description: Relative file paths or captions for photos.
+  self_assessment:
+    type: string
+  lessons:
+    type: string
+  next_model_notes:
+    type: string
+  session_ids:
+    type: array
+    items:
+      type: string
+    description: IDs of related hobby.session records.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

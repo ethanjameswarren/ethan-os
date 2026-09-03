@@ -1,0 +1,109 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Collection Item
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - item_type
+  - faction
+  - game_system
+  - quantity
+  - purchase_status
+properties:
+  item_type:
+    type: string
+    enum:
+      - kit
+      - miniature
+      - unit
+      - accessory
+      - terrain
+      - book
+      - tool
+      - supply
+      - other
+  faction:
+    type: string
+  game_system:
+    type: string
+  quantity:
+    type: integer
+    minimum: 0
+  purchase_status:
+    type: string
+    enum:
+      - owned
+      - ordered
+      - wishlist
+      - not_owned
+      - sold
+      - gifted
+  assembly_status:
+    type: string
+    enum:
+      - unassembled
+      - assembled
+      - partially_assembled
+      - damaged
+      - unknown
+    default: unknown
+  painting_status:
+    type: string
+    enum:
+      - unprimed
+      - primed
+      - painting
+      - completed
+      - archived
+      - not_applicable
+  magnetization_status:
+    type: string
+    enum:
+      - not_applicable
+      - planned_review
+      - decided_no
+      - decided_yes
+      - partially_magnetized
+      - fully_magnetized
+  magnetization_note:
+    type: string
+  alternate_builds:
+    type: array
+    items:
+      type: string
+  game_first_used_at:
+    type: string
+    format: date
+  battles_participated:
+    type: array
+    items:
+      type: string
+  events:
+    type: array
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        event_type:
+          type: string
+        note:
+          type: string
+  notes:
+    type: string
+  linked_lore_id:
+    type: string
+    description: ID of a hobby.lore-canon entry for this item, if promoted.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

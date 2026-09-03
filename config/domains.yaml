@@ -53,6 +53,15 @@ domains:
     context: global
     description: Identify music releases, capture listening observations, and maintain canonical collection data.
 
+  hobby:
+    enabled: true
+    schema_prefix: hobby
+    life_prefix: domains/hobby
+    instructions: instructions/domains/hobby/instructions.md
+    object_prompts: instructions/domains/hobby/object-prompts
+    context: global
+    description: Capture hobby collection state, sessions, battle reports, lore candidates, lore canon, media, narratives, annual print lore-book editions, and digital reports while keeping reusable behavior in Ethan OS and personal data in ethan-life.
+
   # Future domains (not implemented in v0.1)
   # projects:
   #   enabled: false

@@ -1,0 +1,62 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Session
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - session_type
+  - session_date
+properties:
+  session_type:
+    type: string
+    enum:
+      - build
+      - paint
+      - lore
+      - planning
+      - game
+      - photo
+      - magnetization
+      - shopping
+      - review
+      - other
+  session_date:
+    type: string
+    format: date
+  duration_minutes:
+    type: integer
+    minimum: 0
+  collection_item_ids:
+    type: array
+    items:
+      type: string
+  battle_report_id:
+    type: string
+  lore_candidate_ids:
+    type: array
+    items:
+      type: string
+  canon_update_ids:
+    type: array
+    items:
+      type: string
+  notes:
+    type: string
+  outcomes:
+    type: string
+  photos:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

@@ -1,0 +1,76 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Narrative / Vignette
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - narrative_type
+  - status
+properties:
+  narrative_type:
+    type: string
+    enum:
+      - illustrated_scene
+      - comic_spread
+      - flashback
+      - vignette
+      - story_excerpt
+      - dialogue
+      - quote
+      - battle_moment
+      - character_introduction
+      - historical_event
+  status:
+    type: string
+    enum:
+      - planned
+      - drafting
+      - reviewing
+      - approved
+      - excluded
+  content:
+    type: string
+    description: Prose, script, captions, or scene description.
+  scene_description:
+    type: string
+    description: Visual description for art/photography.
+  source_lore_ids:
+    type: array
+    items:
+      type: string
+  source_battle_ids:
+    type: array
+    items:
+      type: string
+  source_media_ids:
+    type: array
+    items:
+      type: string
+  related_collection_item_ids:
+    type: array
+    items:
+      type: string
+  characters_present:
+    type: array
+    items:
+      type: string
+  location:
+    type: string
+  timeline_date:
+    type: string
+  edition_inclusion:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

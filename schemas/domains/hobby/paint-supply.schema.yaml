@@ -1,0 +1,63 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Paint / Tool / Supply
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - supply_type
+  - status
+properties:
+  supply_type:
+    type: string
+    enum:
+      - paint
+      - primer
+      - spray
+      - wash
+      - shade
+      - dry_paint
+      - technical
+      - contrast
+      - brush
+      - drybrush
+      - tool
+      - accessory
+      - other
+  manufacturer:
+    type: string
+  color_family:
+    type: string
+    description: e.g., metallic, black, white, cyan, red, purple, bone.
+  status:
+    type: string
+    enum:
+      - owned
+      - wishlist
+      - empty
+      - depleted
+      - discarded
+  quantity:
+    type: string
+    description: Free-form (e.g., "full pot", "nearly empty", "1 bottle").
+  used_for:
+    type: array
+    items:
+      type: string
+    description: Technique or area this supply supports (e.g., base coat, wash, drybrush, energy glow).
+  purchase_date:
+    type: string
+    format: date
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

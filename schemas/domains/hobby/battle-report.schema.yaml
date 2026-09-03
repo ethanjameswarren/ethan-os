@@ -1,0 +1,85 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Battle Report
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - game_system
+  - played_date
+  - opponent_faction
+  - result
+properties:
+  game_system:
+    type: string
+  played_date:
+    type: string
+    format: date
+  points:
+    type: integer
+    minimum: 0
+  scenario:
+    type: string
+  army_list:
+    type: array
+    items:
+      type: string
+  opponent_faction:
+    type: string
+  opponent_name:
+    type: string
+  outcome_summary:
+    type: string
+  result:
+    type: string
+    enum:
+      - victory
+      - defeat
+      - draw
+      - narrative
+      - unfinished
+  losses:
+    type: array
+    items:
+      type: string
+  effective_units:
+    type: array
+    items:
+      type: string
+  notable_events:
+    type: array
+    items:
+      type: string
+  doctrine_observations:
+    type: string
+  failure_analysis:
+    type: string
+  narrative_consequences:
+    type: string
+  lore_candidate_ids:
+    type: array
+    items:
+      type: string
+  canon_update_ids:
+    type: array
+    items:
+      type: string
+  collection_item_ids:
+    type: array
+    items:
+      type: string
+  photos:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

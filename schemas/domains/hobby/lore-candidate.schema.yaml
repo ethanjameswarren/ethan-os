@@ -1,0 +1,56 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Lore Candidate
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - candidate_type
+  - status
+  - content
+properties:
+  candidate_type:
+    type: string
+    enum:
+      - character
+      - unit_designation
+      - battle_honor
+      - doctrine_shift
+      - faction_relation
+      - territory
+      - artifact
+      - other
+  status:
+    type: string
+    enum:
+      - proposed
+      - under_review
+      - approved
+      - rejected
+      - merged
+      - superseded
+  content:
+    type: string
+  originating_battle_id:
+    type: string
+  originating_session_id:
+    type: string
+  originating_collection_item_id:
+    type: string
+  canon_id_if_merged:
+    type: string
+  rejection_reason:
+    type: string
+  review_notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

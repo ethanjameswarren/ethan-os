@@ -1,0 +1,100 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Painting Plan
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - collection_item_id
+properties:
+  collection_item_id:
+    type: string
+  status:
+    type: string
+    enum:
+      - planned
+      - in_progress
+      - completed
+      - abandoned
+  visual_language_id:
+    type: string
+    description: ID of the lore-canon entry defining the army color scheme.
+  rationale:
+    type: string
+    description: Why these colors/techniques were chosen for this unit.
+  recommended_subassemblies:
+    type: array
+    items:
+      type: string
+  magnetization_notes:
+    type: string
+  phases:
+    type: array
+    items:
+      type: object
+      required:
+        - order
+        - name
+        - status
+      properties:
+        order:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending
+            - in_progress
+            - done
+            - skipped
+        why:
+          type: string
+        paint_ids:
+          type: array
+          items:
+            type: string
+        technique_ids:
+          type: array
+          items:
+            type: string
+        brush_tool_ids:
+          type: array
+          items:
+            type: string
+        common_errors:
+          type: array
+          items:
+            type: string
+        inspect_for:
+          type: array
+          items:
+            type: string
+        do_not_touch:
+          type: array
+          items:
+            type: string
+        tips:
+          type: string
+        photo_prompt:
+          type: string
+  prerequisites:
+    type: array
+    items:
+      type: string
+    description: Technique or skill prerequisites before starting this plan.
+  estimated_time_minutes:
+    type: integer
+  notes:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

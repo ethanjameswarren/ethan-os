@@ -158,3 +158,42 @@ schemas:
   health.workout:
     version: 1
     file: domains/health/workout.schema.yaml
+  hobby.collection-item:
+    version: 1
+    file: domains/hobby/collection-item.schema.yaml
+  hobby.session:
+    version: 1
+    file: domains/hobby/session.schema.yaml
+  hobby.battle-report:
+    version: 1
+    file: domains/hobby/battle-report.schema.yaml
+  hobby.lore-candidate:
+    version: 1
+    file: domains/hobby/lore-candidate.schema.yaml
+  hobby.lore-canon:
+    version: 1
+    file: domains/hobby/lore-canon.schema.yaml
+  hobby.lore-book-section:
+    version: 1
+    file: domains/hobby/lore-book-section.schema.yaml
+  hobby.lore-book-edition:
+    version: 1
+    file: domains/hobby/lore-book-edition.schema.yaml
+  hobby.media:
+    version: 1
+    file: domains/hobby/media.schema.yaml
+  hobby.narrative:
+    version: 1
+    file: domains/hobby/narrative.schema.yaml
+  hobby.paint-supply:
+    version: 1
+    file: domains/hobby/paint-supply.schema.yaml
+  hobby.technique-skill:
+    version: 1
+    file: domains/hobby/technique-skill.schema.yaml
+  hobby.painting-plan:
+    version: 1
+    file: domains/hobby/painting-plan.schema.yaml
+  hobby.painting-log:
+    version: 1
+    file: domains/hobby/painting-log.schema.yaml

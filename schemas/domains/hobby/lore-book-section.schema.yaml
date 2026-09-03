@@ -1,0 +1,75 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Lore Book Section
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - section_number
+  - status
+properties:
+  section_number:
+    type: string
+    description: Section/chapter number as shown in the book.
+  status:
+    type: string
+    enum:
+      - planned
+      - TBD
+      - drafting
+      - reviewing
+      - complete
+      - excluded
+  content:
+    type: string
+    description: Body text or a summary/placeholder for the section.
+  page_layout:
+    type: string
+    enum:
+      - text
+      - full_bleed_image
+      - two_page_spread
+      - image_left
+      - image_right
+      - diagram
+      - comic
+      - gallery
+    description: Optional layout hint for the renderer.
+  source_lore_ids:
+    type: array
+    items:
+      type: string
+    description: Lore-canon entries that feed this section.
+  source_media_ids:
+    type: array
+    items:
+      type: string
+    description: Media entries (photos, art) to include.
+  source_narrative_ids:
+    type: array
+    items:
+      type: string
+    description: Narrative/vignette entries to include.
+  source_collection_item_ids:
+    type: array
+    items:
+      type: string
+    description: Collection items referenced in the section (e.g., unit profiles).
+  excluded_reason:
+    type: string
+  edition_inclusion:
+    type: array
+    items:
+      type: string
+    description: Edition IDs for which this section is included.
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"

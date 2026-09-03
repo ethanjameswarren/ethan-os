@@ -1,0 +1,134 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Hobby Media Asset
+type: object
+allOf:
+  - $ref: "../../core/object.schema.yaml"
+required:
+  - id
+  - schema
+  - schema_version
+  - title
+  - created_at
+  - provenance
+  - media_type
+  - status
+properties:
+  media_type:
+    type: string
+    enum:
+      - photograph
+      - miniature_photo
+      - army_photo
+      - portrait
+      - concept_art
+      - generated_art
+      - heraldry
+      - symbol
+      - diagram
+      - map
+      - comic_panel
+      - page_decoration
+      - reference_image
+      - other
+  status:
+    type: string
+    enum:
+      - available
+      - placeholder
+      - planned
+      - generated
+      - excluded
+  file_path:
+    type: string
+    description: Relative path within the project where the asset is stored.
+  subject:
+    type: string
+    description: Lore subject, unit, character, or location shown.
+  caption:
+    type: string
+  tags:
+    type: array
+    items:
+      type: string
+    description: Free-form topical tags (e.g., paint-reference, destroyer-cult, dominion, heraldry).
+  faction:
+    type: string
+    description: Dynasty/faction shown (e.g., pale-crown, necrons).
+  unit_type:
+    type: string
+    description: Unit or model type shown (e.g., overlord, skorpekh-destroyers, doomstalker).
+  color_scheme:
+    type: string
+    description: Dominant color scheme (e.g., black-silver-cyan).
+  energy_color:
+    type: string
+    description: Glow/energy color (e.g., cyan, red, purple).
+  associated_lore_concept:
+    type: string
+    description: Short lore concept label (e.g., destroyer-curse, c'tan-dominion, pale-crown-heraldry).
+  canon_status:
+    type: string
+    enum:
+      - canonical
+      - candidate
+      - reference
+      - unverified
+    description: Whether the image represents approved canon, a candidate, or general reference.
+  lore_book_section_id:
+    type: string
+    description: Explicit section number (e.g., "13") where this asset should appear.
+  lore_book_section_ids:
+    type: array
+    items:
+      type: string
+    description: Explicit section numbers where this asset may appear.
+  related_lore_ids:
+    type: array
+    items:
+      type: string
+  related_collection_item_ids:
+    type: array
+    items:
+      type: string
+  related_narrative_ids:
+    type: array
+    items:
+      type: string
+  creator:
+    type: string
+    description: Photographer, artist, or generator tool.
+  source_url:
+    type: string
+  generated_by:
+    type: string
+    description: If generated, identify the tool/model used.
+  is_generated:
+    type: boolean
+  created_date:
+    type: string
+    format: date
+  print_suitability:
+    type: string
+    enum:
+      - print_ready
+      - low_resolution
+      - not_print_ready
+      - needs_crop
+  resolution_dpi:
+    type: integer
+  orientation:
+    type: string
+    enum:
+      - landscape
+      - portrait
+      - square
+  preferred_crop:
+    type: string
+  rights_or_provenance:
+    type: string
+  links:
+    type: array
+    items:
+      $ref: "../../core/relationship.schema.yaml"
+  provenance:
+    $ref: "../../core/provenance.schema.yaml"
