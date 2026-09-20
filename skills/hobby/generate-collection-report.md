@@ -2,27 +2,34 @@
 
 ## Purpose
 
-Render a lightweight, regeneratable digital report of the current hobby collection state.
+Render the clean, regeneratable Collection Overview home page for a physical Warhammer army.
 
 ## Input
 
-- All `hobby.collection-item` records for the project.
+- Canonical `collection/inventory.yaml` records.
+- Append-only `rules/points.yaml` records.
+- `purchases/plan.yaml`.
+- `army-lists/lists.yaml`.
+- `painting/scheme-references.yaml`.
 
 ## Output
 
-- HTML file at `ethan-life/reports/hobby/<project>/reports/collection-report.html`.
-- Summary of owned vs planned units, build/paint/magnetization progress, and acquisition gaps.
+- HTML at `ethan-life/reports/hobby/<project>/reports/collection-overview.html`.
+- Dynamic summaries of ownership, current verified points, assembly, painting, energy classes, planned expansion, represented groups, projected collection size, and list readiness.
 
 ## Steps
 
-1. Load `hobby.collection-item` records from the project directory.
-2. Group by purchase status: owned, wishlist/ordered, sold/gifted.
-3. Surface assembly status, painting status, and magnetization status per item.
-4. List acquisition gaps: items not owned that appear in plans or unit profiles.
-5. Write the HTML report and return its path.
+1. Run `python scripts/hobby/generate_collection_overview.py --project <project-path>`.
+2. Use only canonical source files; never parse totals back from the generated HTML.
+3. Use the newest verified points record for each unit and unit size. Show `Needs verification` when an exact quantity cannot be calculated from verified records.
+4. Group owned units using each inventory record's `collection_group`; keep planned purchases separate.
+5. Mark an empty list `DRAFT`, a list exceeding owned quantities `MISSING MODELS`, and a fully owned list at its target with complete verified points `READY`.
+6. Return the generated path and a concise summary.
 
 ## Rules
 
-- This is a digital operational report, not content for the annual print lore book.
-- Do not write raw points or rules text unless explicitly stored in collection items.
-- Keep the report concise; do not duplicate the annual lore book.
+- The overview is a derived view, never a source of truth.
+- Never hard-code quantities, points, progress, purchase state, or list readiness in the page.
+- Do not mix planned or ordered models into owned totals.
+- Regenerate after collection, points, painting, purchase, or army-list changes.
+- This operational page is separate from the annual print lore book.

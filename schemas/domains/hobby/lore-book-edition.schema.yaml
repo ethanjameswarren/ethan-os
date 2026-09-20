@@ -110,6 +110,12 @@ properties:
   bleed_in:
     type: number
     description: Optional bleed in inches.
+  print_vendor:
+    type: string
+    description: Intended print vendor (e.g., PrintNinja).
+  print_production_notes:
+    type: string
+    description: Vendor-specific production requirements and unresolved print decisions (binding, color profile, cover setup, preflight checklist).
   default_visual_theme:
     type: string
     description: Default theme id (e.g., cyan) for pages without an explicit section theme.

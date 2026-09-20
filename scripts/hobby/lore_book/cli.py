@@ -2,14 +2,15 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from datetime import datetime
 from pathlib import Path
 
 from .html_renderer import render_html
-from .pdf import render_pdf
+from .pdf import render_pdf, render_pdf_pages_to_png
 from .publication import assemble_book, load_project
-from .validator import validate
+from .validator import validate, validate_output
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -22,11 +23,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--draft", action="store_true", help="Render a draft; do not finalize the edition object.")
     parser.add_argument("--skip-pdf", action="store_true", help="Generate HTML only.")
     parser.add_argument("--skip-validation", action="store_true", help="Skip preflight validation.")
+    parser.add_argument("--skip-pngs", action="store_true", help="Skip rendering PDF pages to PNGs.")
+    parser.add_argument("--png-dir", type=Path, help="Directory for PNG page renders.")
     args = parser.parse_args(argv)
 
     life_dir = args.life_dir
     if not life_dir:
-        life_dir = Path(__file__).resolve().parents[3] / "ethan-life"
+        # cli.py lives at ethan-os/scripts/hobby/lore_book/cli.py; ethan-life is a sibling of ethan-os.
+        life_dir = Path(__file__).resolve().parents[4] / "ethan-life"
     life_dir = Path(life_dir)
 
     edition, outline, lore_entries, media_entries, section_map = load_project(
@@ -36,7 +40,6 @@ def main(argv: list[str] | None = None) -> int:
         edition_id=args.edition_id,
     )
 
-    project_dir = life_dir / "hobby" / args.project if False else life_dir / "domains" / "hobby" / args.project
     project_dir = life_dir / "domains" / "hobby" / args.project
 
     output_path = args.output
@@ -75,6 +78,41 @@ def main(argv: list[str] | None = None) -> int:
     if not args.skip_pdf:
         pdf_path = output_path.with_suffix(".pdf")
         render_pdf(output_path, pdf_path)
+
+        if not args.skip_pngs:
+            png_dir = args.png_dir or output_path.parent / "pages"
+            render_pdf_pages_to_png(pdf_path, png_dir)
+
+        validation = validate_output(output_path, pdf_path)
+        print("\nPostflight validation:")
+        print(f"  HTML pages: {validation['html_page_count']}")
+        print(f"  PDF pages:  {validation['pdf_page_count']}")
+        print(f"  Page count match: {validation['page_count_match']}")
+        print(f"  PDF size 6x9 OK: {validation['size_ok']}")
+        if validation["overflows"]:
+            print(f"  Overflows: {len(validation['overflows'])}")
+            for o in validation["overflows"]:
+                print(f"    - {o}")
+        if validation["image_overruns"]:
+            print(f"  Image overruns: {len(validation['image_overruns'])}")
+            for o in validation["image_overruns"]:
+                print(f"    - {o}")
+        if validation["missing_backgrounds"]:
+            print(f"  Missing backgrounds: {len(validation['missing_backgrounds'])}")
+            for o in validation["missing_backgrounds"]:
+                print(f"    - {o}")
+        if validation["invalid_templates"]:
+            print(f"  Invalid templates: {len(validation['invalid_templates'])}")
+            for o in validation["invalid_templates"]:
+                print(f"    - {o}")
+
+        validation_path = output_path.with_suffix(".validation.json")
+        validation_path.write_text(json.dumps(validation, indent=2, default=str), encoding="utf-8")
+        print(f"Validation report: {validation_path}")
+
+        if not validation["page_count_match"] or not validation["size_ok"] or validation["overflows"]:
+            print("Validation failed — see report for details.", file=sys.stderr)
+            return 1
 
     return 0
 

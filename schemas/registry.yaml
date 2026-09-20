@@ -197,3 +197,9 @@ schemas:
   hobby.painting-log:
     version: 1
     file: domains/hobby/painting-log.schema.yaml
+  hobby.warhammer-datasheet:
+    version: 1
+    file: domains/hobby/warhammer-datasheet.schema.yaml
+  hobby.warhammer-points:
+    version: 1
+    file: domains/hobby/warhammer-points.schema.yaml

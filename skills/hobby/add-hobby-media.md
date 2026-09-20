@@ -23,10 +23,7 @@ Ingest an image or visual asset into a hobby project while preserving the origin
 - Always record provenance: source file path, creator or generator tool, rights note.
 - For generated artwork, set `is_generated: true` and record `generated_by`.
 - For photographs of real miniatures, set `media_type` to `miniature_photo` or `army_photo` and note that it is a real object.
-- For Pale Crown/Necron images, record `color_scheme` and `energy_color` using the canonical language:
-  - black-silver-cyan for normal dynasty forces
-  - black-silver-red for Destroyer Curse forces
-  - black-silver-purple for C'tan/Dominion forces
+- For Necron images, keep material and energy metadata separate: use `color_scheme: dynasty-standard` for black armor over silver mechanical structure, and use `energy_color: cyan`, `red`, or `purple` for illuminated elements. Never describe the energy color as the model's predominant armor scheme.
 - Use `canon_status` to distinguish:
   - `canonical` — approved visual canon
   - `candidate` — under review for canon

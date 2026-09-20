@@ -53,19 +53,19 @@ properties:
     description: Free-form topical tags (e.g., paint-reference, destroyer-cult, dominion, heraldry).
   faction:
     type: string
-    description: Dynasty/faction shown (e.g., pale-crown, necrons).
+    description: Dynasty/faction shown (e.g., jahrekt, necrons).
   unit_type:
     type: string
     description: Unit or model type shown (e.g., overlord, skorpekh-destroyers, doomstalker).
   color_scheme:
     type: string
-    description: Dominant color scheme (e.g., black-silver-cyan).
+    description: Canonical material scheme reference (e.g., dynasty-standard), separate from energy_color.
   energy_color:
     type: string
     description: Glow/energy color (e.g., cyan, red, purple).
   associated_lore_concept:
     type: string
-    description: Short lore concept label (e.g., destroyer-curse, c'tan-dominion, pale-crown-heraldry).
+    description: Short lore concept label (e.g., destroyer-curse, c'tan-dominion, piercing-dominion-sigil).
   canon_status:
     type: string
     enum:

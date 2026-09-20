@@ -22,10 +22,10 @@ Ingest a visual reference asset into the Necron hobby project.
 3. Choose the closest `media_type` and fill in as many metadata fields as can be confidently determined.
 4. If the image is generated art, record `is_generated: true` and the generator/model.
 5. If it is a photograph of a real miniature, record `miniature_photo` or `army_photo` and note the photographer.
-6. For Pale Crown imagery, record `color_scheme` and `energy_color` canonically:
-   - cyan = normal dynasty control
-   - red = Destroyer Curse / compulsion
-   - purple = C'tan / Dominion
+6. For Jahrekt Dynasty imagery, record `color_scheme` and `energy_color` canonically:
+   - cyan = normal dynasty control / discipline / calculation
+   - red = Destroyer Curse — destruction overriding rational restraint
+   - purple = C'tan / bound godlike power reduced to a controlled instrument
 7. Run `scripts/hobby/add_media.py` with the gathered metadata.
 8. Validate the resulting `hobby.media` record with the deterministic validator.
 9. Report the new media ID, the copied asset path, and the Markdown record path.

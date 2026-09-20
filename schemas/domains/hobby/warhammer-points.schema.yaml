@@ -1,0 +1,45 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Warhammer Current Points Snapshot
+type: object
+required: [schema, schema_version, game, faction, edition, source, verification_status, points, change_history]
+properties:
+  schema:
+    const: hobby.warhammer-points
+  schema_version:
+    type: integer
+    minimum: 1
+  game: {type: string}
+  faction: {type: string}
+  edition: {type: integer, minimum: 1}
+  source:
+    type: object
+    required: [provider, publication, url, version, retrieved_at, last_verified_at]
+    properties:
+      provider: {type: string}
+      publication: {type: string}
+      url: {type: string, format: uri}
+      version: {type: string}
+      source_updated_at: {type: [string, "null"]}
+      retrieved_at: {type: string, format: date}
+      last_verified_at: {type: string, format: date}
+  verification_status:
+    enum: [verified, needs-review, stale, failed]
+  points:
+    type: array
+    items:
+      type: object
+      required: [unit_id, unit, unit_size, value, cost_tier]
+      properties:
+        unit_id: {type: string}
+        unit: {type: string}
+        unit_size: {type: integer, minimum: 1}
+        value: {type: integer, minimum: 0}
+        cost_tier: {enum: [standard, first_unit, subsequent_unit]}
+  change_history:
+    type: array
+    items:
+      type: object
+      required: [detected_at, unit_id, unit_size, previous, new]
+  notes:
+    type: array
+    items: {type: string}

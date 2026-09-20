@@ -26,6 +26,120 @@ All personal data (collection, lore, sessions, reports) lives in `ethan-life/dom
 - **Physical truth drives narrative.** A tabletop outcome, a paint scheme decision, or a model acquisition is a real event that may generate lore, but it must be recorded first.
 - **No retconning without review.** If a newer fact contradicts older canon, flag it as `contradicted` or `deprecated` and explain why.
 
+## Jahrekt Dynasty — locked canon
+
+The Necron project uses the following locked canon for the dynasty (`warhammer-40k-necron-dynasty`):
+
+- **Name:** Jahrekt Dynasty — pronounced "JAH-rekt" (approximately "ja-wrecked"). The only canonical dynasty name; all previous working names are deprecated.
+- **"Pale Crown" is NOT canon.** It was only an early paint-scheme/concept label. Never use it as a dynasty name, Imperial nickname, ruler title, relic, campaign, location, symbol, or historical term. Do not reintroduce it unless the user explicitly instructs.
+- **Also banned:** "Kharaset" and "The Fixed Axis" — deprecated, non-canon; never introduce. Canonical terms: Jahrekt Dynasty, The Piercing Dominion, Dominion through Control, "What resists is… *corrected*."
+- **Sigil:** The Piercing Dominion — the approved dynasty symbol. Aggressive rather than ceremonial; evokes penetration, conquest, imposed order, and concentrated authority. Never call it The Fixed Axis, Pale Crown, Crown sigil, or any placeholder.
+- **Doctrine:** Dominion through Control. Battle is not valued for its own sake. Seek overwhelming advantage, calculated overmatch, battlespace control, efficient force, minimal unnecessary loss, decisive outcomes, and correction of failed assumptions. Victory should ideally be determined before combat begins. Possession is demonstrated by the ability to control, defend, and retain territory — not merely claimed. Retreat that preserves forces or corrects a failed calculation is rational, not dishonorable. Unnecessary losses are a failure of command; subordinates are not blamed for executing a flawed strategy devised by leadership. Leadership legitimacy is demonstrated through outcomes; repeated failure weakens a commander's claim.
+- **Maxim:** "What resists is… *corrected*." Preserve the exact wording, ellipsis, understated tone, and italic on *corrected* in finished prose. "Corrected" is a euphemism ranging from forced compliance to annihilation; the Jahrekt do not find it humorous — they describe violence as correcting an undesirable state. Do not lengthen the phrase. Formal attribution: — Jahrekt dynastic maxim.
+- **Visual language:** black armor, silver/metallic skeletal necrodermis, cyan energy for standard forces. Cyan = control/discipline/calculation (normal Jahrekt). Red = Destroyer Curse (destruction overriding rational restraint). Purple = C'tan / bound godlike power reduced to a controlled instrument. Do not introduce green as a major energy color.
+- **Destroyers:** remain usable, loyal Jahrekt forces — not traitors or exiles — but the Destroyer Curse erodes rational control; their violence increasingly governs their reasoning. Destroyer commanders may be tactically intelligent, but Destroyer ideology cannot represent ideal Jahrekt governance. Key contrast: a conventional commander ordered to take a hill calculates the force needed to guarantee possession; a Destroyer may conclude the reliable solution is eliminating everything on the hill — and possibly the hill itself.
+- **C'tan / purple forces:** rare expressions of bound or conquered godlike power. C'tan are not respected allies — their significance is that something approaching a god has been reduced to a Jahrekt weapon. The Void Dragon shard concept is compatible. Do not overdevelop until the C'tan chapter is intentionally written.
+
+## Lore-book division of labor
+
+The user manually creates and lays out the final lore-book pages in Affinity Publisher. The OS is NOT the page-layout engine unless specifically asked. The OS owns: canon management, worldbuilding, lore consistency, chapter planning, polished book-ready prose, character/location/unit records, unresolved-decision tracking, visual-asset identification, image prompts/asset descriptions on request, the annual outline, contradiction prevention, and canon-vs-draft distinction. The user owns: final page composition, text/image placement, typography, visual design, and export/printing layout.
+
+For approved book pages, the OS preserves page purpose, approved lore text, approved image assets, page order, and canon status — and does not redesign the Affinity pages unless explicitly asked. Reference/model images are development assets and never automatically appear in the final book; only approved illustrations belong in the final asset set.
+
+### Output format for new lore sections
+
+Deliver material the user can paste directly into a page layout:
+
+```
+### SECTION TITLE
+
+Book-ready prose.
+```
+
+Then, when useful, keep project notes separate from narrative copy:
+
+- **CANON NOTES** — factual decisions established by the section.
+- **ASSETS NEEDED** — illustration or photograph requirements.
+- **OPEN QUESTIONS** — only unresolved decisions that genuinely need user input.
+
+### Book structure and writing order
+
+The 2026 Jahrekt lore book targets ~40 interior pages; the count is a target, not a constraint — never compress sections to preserve a fixed page count. The narrative arc is: Awakening → Identity → Philosophy → Ancient Origin → Biotransference → Great Sleep → Modern Return → Realm → Leadership → Military → Abnormal/Special Forces → Reputation → Relics → Enemies → Campaigns → Timeline → Physical Army. Introduce information before later sections depend on it; avoid explaining a concept in detail before its dedicated section.
+
+Work through the book sequentially. Do not write a later section just because it appears in the outline. Before writing each spread:
+
+1. identify its purpose
+2. retrieve existing canon relevant to it
+3. identify unresolved dependencies
+4. resolve required worldbuilding with the user
+5. produce book-ready prose
+6. obtain user approval
+7. mark approved text/canon
+8. record required visual assets
+9. move to the next spread
+
+Track each page/spread with: PAGE(S), SECTION, TITLE, PURPOSE, CANON STATUS, TEXT STATUS, ART STATUS, DEPENDENCIES, APPROVED ASSETS, OPEN QUESTIONS. Status vocabulary: STRUCTURE LOCKED, CANON LOCKED, TEXT DRAFT, TEXT APPROVED, TEXT FINAL, ART NEEDED, ART DRAFT, ART APPROVED, WORLDBUILDING REQUIRED, DEPENDENT ON EARLIER SECTION, COMPLETE.
+
+Visual placement, typography, spacing, cropping, and page styling are not canon unless the user explicitly says so.
+
+### Page density and visual balance
+
+The Jahrekt lore book is **visually led** — an illustrated lore/codex volume, not a text document. Do not treat a page as a container to fill with prose.
+
+- **Body copy baseline:** ~11.5–12 pt with ~15–17 pt leading (user controls final typography). Never shrink body text to fit more lore. If content doesn't fit comfortably: shorten it, split it, move supporting detail to a later section, use a pull quote or sidebar, or continue onto another page if justified.
+- **Word targets:** ~140–190 words per normal text-bearing page; ~220 soft cap; fewer is fine; full-art pages may have none. Standard two-page spread: ~280–380 words total, mixed with pull quotes, short doctrine statements, illustrations, transparent unit assets, sigils, maps, diagrams, captions, and negative space — not continuous paragraphs across both pages.
+- **Density reference:** Page 2 (untitled prologue) of the 2026 edition is the approved density reference. Future prose-heavy pages should feel no denser than Page 2 unless the user approves a denser treatment.
+- **Content hierarchy per page:** (1) the single main idea, (2) strongest supporting lore, (3) one memorable line/pull quote, (4) visual breathing room. Do not include every related canon fact just because it exists.
+- **Warn on walls of text:** actively flag any proposed page that risks becoming dense prose.
+- Optimize writing for clarity, impact, coherence, page rhythm, and visual balance — never for maximum word count.
+
+### Print production (Jahrekt 2026 edition)
+
+- Vendor: **PrintNinja**. Interior setup per their modern comic-book guidance: **6.625 × 10.25 in** trim, **0.125 in** bleed on all four sides, **300 DPI/PPI**, **CMYK**, **facing pages ON**.
+- PrintNinja's minimum safe zone is 0.125 in inside trim, but the book intentionally uses larger working margins — never reduce them to the vendor minimum. Full-bleed art must extend through the whole bleed; text/logos/faces/critical art stay inside trim.
+- Binding/cover are **undecided** — do not finalize cover, spine, or cover-file structure until binding type and final page count are known. Saddle-stitch covers live in the same page/spread workflow; other bindings use a separate cover setup.
+- Page 1 is an **interior title/frontispiece**, not the physical front cover.
+- The current Affinity color profile is a working profile only — do not treat U.S. Web Coated (SWOP) v2 as a locked PrintNinja requirement.
+- Before final print export: re-check PrintNinja's current file-setup requirements; confirm binding, final page count, cover/spine template, PDF/export settings, and color-management profile; run a final bleed, safe-zone, image-resolution, and font preflight.
+
+### Canon confidence tiers
+
+Track three canon-confidence tiers, mapped to the schema statuses:
+
+- **LOCKED CANON** (`locked`) — explicitly approved; change only on user instruction.
+- **WORKING CANON** (`developing` / `provisional`) — current preferred interpretation; still revisable.
+- **UNRESOLVED** (`TBD`) — requires a decision; do not invent.
+
+Never silently promote an idea to locked canon. Treat explicit user approval ("lock it in", "that's canon", "that's the name", "perfect, keep that") as LOCKED CANON.
+
+### Lore development order
+
+Develop the Jahrekt Dynasty sequentially — later lore grows from earlier decisions; do not rush all items at once:
+
+1. Ancient Necrontyr origin
+2. Meaning/origin of the name "Jahrekt"
+3. Meaning and history of The Piercing Dominion
+4. Pre-biotransference political culture
+5. Biotransference experience
+6. Great Sleep
+7. Tomb world
+8. Dynasty territory
+9. Modern awakening
+10. Current ruler
+11. Noble court
+12. Crypteks
+13. Destroyer leadership
+14. Military formations
+15. Arrival omen / battlefield signature
+16. Relics
+17. Major worlds and locations
+18. Enemies and rivalries
+19. Major campaigns
+20. Timeline
+21. Character biographies
+22. Illustrated stories
+23. Army gallery / real-model integration
+
 ## Object flow
 
 ```
@@ -64,6 +178,8 @@ For miniature/model hobbies, the system actively helps the user improve rather t
 - the project's canonical color scheme,
 - the user's current skill profile,
 - which techniques have already been practiced.
+
+Keep physical material colors separate from energy/accent classification. For the Necron dynasty, always begin with the canonical shared material language—black armor over exposed silver mechanical structure, including predominantly black-and-silver weapons—then apply cyan, red, or purple only to the appropriate illuminated energy elements. Do not invent unit-specific armor schemes. If a new unit's energy classification is uncertain, request confirmation.
 
 Do not recommend buying additional supplies unless they are genuinely required for a color or technique the plan cannot achieve otherwise.
 
@@ -128,6 +244,8 @@ A collection item may move through:
 - `magnetization_status`: not_applicable / planned_review / decided_no / decided_yes / partially_magnetized / fully_magnetized
 
 Track `events` for notable moments: acquired, assembled, primed, painted, first_game, damaged, repaired, etc.
+
+For tabletop collections, keep canonical physical inventory, volatile rules/points history, army lists, purchase plans, storage, and lore/paint definitions in separate structured files. Army lists and purchase plans reference stable inventory IDs and never establish ownership. Points records are append-only, dated, edition-specific, and source-attributed; use the newest verified matching record and flag missing values rather than guessing.
 
 ## Lore candidate review rules
 

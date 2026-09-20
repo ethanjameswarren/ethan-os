@@ -1,4 +1,4 @@
-"""Publication data loading and content assembly for the lore book."""
+"""Publication data loading and canonical content routing for the lore book."""
 from __future__ import annotations
 
 import re
@@ -89,51 +89,6 @@ def _section_keywords(title: str) -> set[str]:
     return set(words)
 
 
-def _lore_score(section_title: str, lore_title: str) -> int:
-    section_kw = _section_keywords(section_title)
-    lore_kw = _section_keywords(lore_title)
-    score = len(section_kw & lore_kw)
-    sl = section_title.lower()
-    ll = lore_title.lower()
-    if "destroyer" in sl and "destroyer" in ll:
-        score += 3
-    if "ctan" in sl or "c'tan" in sl:
-        if "ctan" in ll or "c'tan" in ll:
-            score += 3
-    if "visual" in sl and "visual" in ll:
-        score += 3
-    if "philosophy" in sl and ("philosophy" in ll or "doctrine" in ll or "hierarchy" in ll):
-        score += 2
-    if "origins" in sl or "history" in sl:
-        if any(x in ll for x in ["pre-biotransference", "biotransference", "great sleep", "awakening", "mortality", "aftermath"]):
-            score += 2
-    return score
-
-
-def _media_score(section_title: str, lore_titles: list[str], media: dict[str, Any]) -> int:
-    if media.get("media_type") in ("page_decoration", "heraldry"):
-        return 0
-    section_kw = _section_keywords(section_title)
-    lore_kw: set[str] = set()
-    for lt in lore_titles:
-        lore_kw |= _section_keywords(lt)
-    media_text = " ".join([
-        str(media.get("subject", "")),
-        str(media.get("unit_type", "")),
-        str(media.get("associated_lore_concept", "")),
-        str(media.get("color_scheme", "")),
-        str(media.get("energy_color", "")),
-        " ".join(str(t) for t in media.get("tags", [])),
-    ])
-    media_kw = _section_keywords(media_text)
-    score = 0
-    for kw in (media_kw & section_kw):
-        score += 3
-    for kw in (media_kw & lore_kw):
-        score += 2
-    return score
-
-
 def _extract_outline_sections(content: str) -> list[tuple[str, str, str]]:
     sections: list[tuple[str, str, str]] = []
     pattern = re.compile(r"\s*(\d+)\.\s+(.+?)\s*[—–-]\s*([^\n\r]+?)(?=\s*\d+\.|\s*$)")
@@ -160,6 +115,7 @@ class Chapter:
     lore_entries: list[dict[str, Any]] = field(default_factory=list)
     presentation_media: list[dict[str, Any]] = field(default_factory=list)
     other_media: list[dict[str, Any]] = field(default_factory=list)
+    collection_items: list[dict[str, Any]] = field(default_factory=list)
     background_url: str | None = None
 
 
@@ -179,6 +135,7 @@ class Book:
     project_dir: Path
     default_theme: str = DEFAULT_THEME
     theme_backgrounds: dict[str, str | None] = field(default_factory=dict)
+    warnings: list[str] = field(default_factory=list)
 
 
 def _resolve_config(edition: dict[str, Any]) -> TrimConfig:
@@ -197,6 +154,24 @@ def _resolve_visual_themes(edition: dict[str, Any]) -> dict[str, dict[str, Any]]
     return {str(k): v or {} for k, v in declared.items()}
 
 
+def _find_default_background(
+    theme_id: str,
+    assets_dir: Path,
+    project_dir: Path,
+) -> str | None:
+    for filename in [f"{theme_id}-background.png", "background.png"]:
+        candidate = assets_dir / filename
+        if candidate.exists():
+            return f"assets/{filename}"
+    media_candidate = project_dir / "media" / "assets" / "page-decoration" / f"{theme_id}-background.png"
+    if media_candidate.exists():
+        assets_dir.mkdir(parents=True, exist_ok=True)
+        dest = assets_dir / media_candidate.name
+        shutil.copy2(media_candidate, dest)
+        return f"assets/{media_candidate.name}"
+    return None
+
+
 def _resolve_theme_background(
     theme_id: str,
     theme_config: dict[str, Any],
@@ -212,67 +187,152 @@ def _resolve_theme_background(
         return None
     media = find_object(media_entries, id=media_id)
     if not media:
-        print(f"Warning: background media {media_id} not found for theme {theme_id}", file=sys.stderr)
         return None
     return copy_media_asset(media, project_dir, assets_dir)
 
 
-def _choose_lore(
+# Canonical routing metadata. Sections without explicit source_*_ids use these rules.
+# A section matches a lore entry by title keyword (first pass) or by lore_type (second pass).
+SECTION_CONTENT_RULES: list[dict[str, Any]] = [
+    {"number": "5", "title_keywords": ["identity", "reputation", "dynasty", "glance"], "lore_types": {"identity", "doctrine"}},
+    {"number": "6", "title_keywords": ["pre-biotransference", "mortality", "biotransference", "culture"], "lore_types": {"history", "philosophy", "culture"}},
+    {"number": "7", "title_keywords": ["c'tan aftermath", "great sleep", "awakening", "silent king", "aftermath"], "lore_types": {"history", "technology"}},
+    {"number": "8", "title_keywords": ["philosophy", "failure", "accountability", "dominion", "indulgence", "biotransference and philosophy"], "lore_types": {"philosophy"}},
+    {"number": "9", "title_keywords": ["visual"], "lore_types": {"visual_language"}},
+    {"number": "11", "title_keywords": ["doctrine", "retreat", "zero-loss", "tabletop"], "lore_types": {"doctrine"}},
+    {"number": "12", "title_keywords": ["jahrekt", "cyan", "ruler", "court", "arrival", "flayed"], "lore_types": {"identity", "organization", "character", "culture"}},
+    {"number": "13", "title_keywords": ["destroyer", "curse", "red"], "lore_types": {"doctrine", "character", "culture"}},
+    {"number": "14", "title_keywords": ["c'tan", "dominion", "purple", "void dragon"], "lore_types": {"technology", "philosophy"}},
+    {"number": "15", "title_keywords": ["hierarchy", "command", "structure", "ruler", "court"], "lore_types": {"organization", "character"}},
+    {"number": "16", "title_keywords": ["ruler", "lord", "court", "character"], "lore_types": {"character"}},
+    {"number": "17", "title_keywords": ["unit", "formation", "warrior", "destroyer", "immortal"], "lore_types": {"unit", "doctrine"}},
+    {"number": "18", "title_keywords": ["relic", "artifact", "c'tan", "void dragon", "monolith"], "lore_types": {"technology"}},
+    {"number": "19", "title_keywords": ["tomb world", "territory", "world", "location"], "lore_types": {"territory"}},
+    {"number": "20", "title_keywords": ["timeline", "great sleep", "awakening", "biotransference"], "lore_types": {"history"}},
+    {"number": "23", "title_keywords": ["appendix", "faction", "deprecated", "relations"], "lore_types": {"faction_relations", "other", "doctrine"}},
+]
+
+
+def _title_matches(title: str, keywords: list[str]) -> bool:
+    lower = title.lower()
+    return any(kw.lower() in lower for kw in keywords)
+
+
+def _route_lore(
+    section_number: str,
     section_title: str,
     record: dict[str, Any] | None,
     edition: dict[str, Any],
     lore_entries: list[dict[str, Any]],
+    already_assigned: set[str],
+    warnings: list[str],
 ) -> list[dict[str, Any]]:
-    source_ids = (record or {}).get("source_lore_ids") or []
-    if source_ids:
-        chosen = [find_object(lore_entries, id=lid) for lid in source_ids]
-        return [l for l in chosen if l]
+    explicit = (record or {}).get("source_lore_ids") or []
+    if explicit:
+        chosen = [find_object(lore_entries, id=lid) for lid in explicit]
+        chosen = [l for l in chosen if l]
+        for l in chosen:
+            lid = l.get("id")
+            if lid in already_assigned:
+                warnings.append(f"Lore entry '{lid}' explicitly assigned to multiple sections (latest: {section_number})")
+        return chosen
 
-    edition_ids = edition.get("included_lore_ids") or []
-    if edition_ids:
-        pool = [l for l in lore_entries if l.get("id") in edition_ids]
-    else:
-        pool = list(lore_entries)
+    edition_ids = set(edition.get("included_lore_ids") or [])
+    pool = [l for l in lore_entries if not edition_ids or l.get("id") in edition_ids]
 
-    scored = [(score, l) for l in lore_entries if (score := _lore_score(section_title, l.get("title", ""))) > 0]
-    scored.sort(key=lambda x: x[0], reverse=True)
     matched: list[dict[str, Any]] = []
-    for _, l in scored[:4]:
-        matched.append(l)
-    if not matched:
-        print(f"Warning: no lore assigned to section '{section_title}' (inference fallback)", file=sys.stderr)
+    assigned_here: set[str] = set()
+
+    # First pass: assign by title keyword.
+    for l in pool:
+        if l.get("id") in already_assigned:
+            continue
+        for rule in SECTION_CONTENT_RULES:
+            if rule["number"] != section_number:
+                continue
+            if _title_matches(str(l.get("title", "")), rule["title_keywords"]):
+                matched.append(l)
+                assigned_here.add(l.get("id"))
+                break
+
+    # Second pass: assign by lore_type for entries not yet placed.
+    for l in pool:
+        lid = l.get("id")
+        if lid in already_assigned or lid in assigned_here:
+            continue
+        for rule in SECTION_CONTENT_RULES:
+            if rule["number"] != section_number:
+                continue
+            if str(l.get("lore_type", "")) in rule["lore_types"]:
+                matched.append(l)
+                assigned_here.add(lid)
+                break
+
     return matched
 
 
-def _choose_media(
+def _route_media(
+    section_number: str,
     section_title: str,
     record: dict[str, Any] | None,
-    edition: dict[str, Any],
     media_entries: list[dict[str, Any]],
-    lore_entries: list[dict[str, Any]],
+    already_assigned: set[str],
+    warnings: list[str],
 ) -> list[dict[str, Any]]:
-    source_ids = (record or {}).get("source_media_ids") or []
-    if source_ids:
-        chosen = [find_object(media_entries, id=mid) for mid in source_ids]
-        return [m for m in chosen if m]
+    explicit = (record or {}).get("source_media_ids") or []
+    if explicit:
+        chosen = [find_object(media_entries, id=mid) for mid in explicit]
+        chosen = [m for m in chosen if m]
+        for m in chosen:
+            mid = m.get("id")
+            if mid in already_assigned:
+                warnings.append(f"Media '{mid}' explicitly assigned to multiple sections (latest: {section_number})")
+        return chosen
 
-    edition_ids = edition.get("included_media_ids") or []
-    if edition_ids:
-        pool = [m for m in media_entries if m.get("id") in edition_ids]
-    else:
-        pool = list(media_entries)
+    chosen: list[dict[str, Any]] = []
+    for m in media_entries:
+        mid = m.get("id")
+        if mid in already_assigned:
+            continue
+        if str(m.get("lore_book_section_id")) == section_number:
+            chosen.append(m)
+            continue
+        if str(m.get("media_type")) == "heraldry" and section_number == "10":
+            chosen.append(m)
+            continue
+        if str(m.get("media_type")) in ("reference_image", "concept_art", "generated_art") and section_number == "22":
+            chosen.append(m)
+            continue
+    return chosen
 
-    lore_titles = [l.get("title", "") for l in lore_entries]
-    scored = []
-    for m in pool:
-        score = _media_score(section_title, lore_titles, m)
-        if score > 0:
-            scored.append((score, m))
-    scored.sort(key=lambda x: x[0], reverse=True)
-    if not scored:
-        print(f"Warning: no media assigned to section '{section_title}' (inference fallback)", file=sys.stderr)
+
+def _route_collection_items(
+    section_number: str,
+    record: dict[str, Any] | None,
+    collection_items: list[dict[str, Any]],
+    already_assigned: set[str],
+    warnings: list[str],
+) -> list[dict[str, Any]]:
+    explicit = (record or {}).get("source_collection_item_ids") or []
+    if explicit:
+        chosen = [c for c in collection_items if c.get("id") in explicit]
+        for c in chosen:
+            cid = c.get("id")
+            if cid in already_assigned:
+                warnings.append(f"Collection item '{cid}' explicitly assigned to multiple sections (latest: {section_number})")
+        return chosen
+
+    if section_number != "17":
         return []
-    return [m for _, m in scored[:1]]
+
+    chosen = []
+    for c in collection_items:
+        cid = c.get("id")
+        if cid in already_assigned:
+            continue
+        if str(c.get("item_type")) in ("unit", "miniature"):
+            chosen.append(c)
+    return chosen
 
 
 def _prepare_media(
@@ -301,9 +361,6 @@ def load_project(
     project_dir = life_dir / "domains" / DEFAULT_DOMAIN / project
     book_dir = project_dir / "lore-book"
 
-    # Load the master outline and all section records from the lore-book tree.
-    # Edition-specific records (e.g. 2026/lore-book-section-13.md) are found
-    # recursively under the project lore-book directory.
     section_records = load_objects(book_dir)
     editions = [s for s in section_records if s.get("schema") == "hobby.lore-book-edition"]
 
@@ -359,24 +416,26 @@ def assemble_book(
 
     assets_dir.mkdir(parents=True, exist_ok=True)
 
+    collection_items = load_objects(project_dir / "collection")
+
     heraldry = find_object(media_entries, media_type="heraldry", canon_status="canonical")
     heraldry_src = copy_media_asset(heraldry, project_dir, assets_dir) if heraldry else None
 
-    # resolve theme backgrounds deterministically from manifest
     theme_backgrounds: dict[str, str | None] = {}
     for theme_id, theme_config in visual_themes.items():
         theme_backgrounds[theme_id] = _resolve_theme_background(
             theme_id, theme_config, None, media_entries, project_dir, assets_dir
-        )
+        ) or _find_default_background(theme_id, assets_dir, project_dir)
 
     outline_items = _extract_outline_sections(outline.get("content", ""))
     included_ids = set(edition.get("included_section_ids") or [])
     chapters: list[Chapter] = []
+    warnings: list[str] = []
     assigned_lore: set[str] = set()
     assigned_media: set[str] = set()
+    assigned_collection: set[str] = set()
 
     for num, sec_title, status_note in outline_items:
-        # Front matter numbers 1-4 are not body sections.
         try:
             n = int(num)
         except ValueError:
@@ -393,28 +452,29 @@ def assemble_book(
         if theme not in visual_themes:
             theme = default_theme
 
-        if record and record.get("source_lore_ids"):
-            source_lore = _choose_lore(sec_title, record, edition, lore_entries)
-        else:
-            source_lore = _choose_lore(sec_title, None, edition, lore_entries)
-
-        if record and record.get("source_media_ids"):
-            source_media = [find_object(media_entries, id=mid) for mid in record["source_media_ids"]]
-            source_media = [m for m in source_media if m]
-            if not source_media:
-                source_media = _choose_media(sec_title, record, edition, media_entries, source_lore)
-        else:
-            source_media = _choose_media(sec_title, None, edition, media_entries, source_lore)
+        source_lore = _route_lore(num, sec_title, record, edition, lore_entries, assigned_lore, warnings)
+        source_media = _route_media(num, sec_title, record, media_entries, assigned_media, warnings)
+        source_collection = _route_collection_items(num, record, collection_items, assigned_collection, warnings)
 
         for l in source_lore:
             assigned_lore.add(l.get("id"))
         for m in source_media:
             assigned_media.add(m.get("id"))
+        for c in source_collection:
+            assigned_collection.add(c.get("id"))
 
         presentation, other = _prepare_media(source_media, project_dir, assets_dir)
-        background_url = _resolve_theme_background(
+        section_bg = _resolve_theme_background(
             theme, visual_themes.get(theme, {}), record, media_entries, project_dir, assets_dir
         )
+        background_url = section_bg or theme_backgrounds.get(theme) or _find_default_background(theme, assets_dir, project_dir)
+
+        if layout in ("full_bleed_image", "two_page_spread", "image_left", "image_right", "diagram", "comic", "gallery"):
+            pass
+        elif record and record.get("page_layout") == "editorial-profile":
+            layout = "editorial-profile"
+        elif presentation:
+            layout = "editorial-profile"
 
         chapters.append(Chapter(
             number=num,
@@ -425,8 +485,15 @@ def assemble_book(
             lore_entries=source_lore,
             presentation_media=presentation,
             other_media=other,
+            collection_items=source_collection,
             background_url=background_url,
         ))
+
+    # Detect entries that should be in a section but were not routed because no section matched.
+    edition_lore_ids = set(edition.get("included_lore_ids") or [l.get("id") for l in lore_entries])
+    for l in lore_entries:
+        if l.get("id") in edition_lore_ids and l.get("id") not in assigned_lore:
+            warnings.append(f"Lore entry '{l.get('id')}' ({l.get('title')}) was not assigned to any section")
 
     return Book(
         title=title,
@@ -443,4 +510,5 @@ def assemble_book(
         project_dir=project_dir,
         default_theme=default_theme,
         theme_backgrounds=theme_backgrounds,
+        warnings=warnings,
     )

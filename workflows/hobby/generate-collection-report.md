@@ -2,26 +2,26 @@
 
 ## Purpose
 
-Regenerate the digital collection report for the current hobby project.
+Regenerate the Collection Overview home page for the current physical army.
 
 ## Trigger
 
 - "Show me my current Necron collection."
-- "Generate the collection report."
-- "What do I still need to buy?"
+- "Generate the collection overview."
+- "What do I still need to paint or buy?"
 
 ## Inputs
 
-- Project slug (defaults to `warhammer-40k-necron-dynasty`).
+- Project slug, defaulting to `warhammer-40k-necron-dynasty`.
 
 ## Outputs
 
-- HTML file at `ethan-life/reports/hobby/<project>/reports/collection-report.html`.
-- Summary of owned, planned, and acquired items, plus build/paint/magnetization progress.
+- HTML at `ethan-life/reports/hobby/<project>/reports/collection-overview.html`.
+- Summary of owned and planned models, verified points, build/paint progress, represented groups, and army-list readiness.
 
 ## Steps
 
 1. Confirm the project if ambiguous.
 2. Run `ethan-os/skills/hobby/generate-collection-report.md`.
-3. Run `scripts/hobby/generate_digital_report.py collection --project <project> --life-dir <ethan-life>`.
-4. Report the output path and a brief summary.
+3. Run `python scripts/hobby/generate_collection_overview.py --project <ethan-life>/domains/hobby/<project>`.
+4. Report the output path and any points requiring verification or lists missing models.

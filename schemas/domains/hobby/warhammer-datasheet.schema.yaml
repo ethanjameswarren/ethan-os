@@ -1,0 +1,122 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Warhammer Datasheet Snapshot
+type: object
+required:
+  - schema
+  - schema_version
+  - unit_id
+  - unit
+  - faction
+  - edition
+  - source
+  - verification_status
+  - profile
+  - ranged_weapons
+  - melee_weapons
+  - core_abilities
+  - army_rules
+  - unit_abilities
+  - leader
+  - wargear_options
+  - keywords
+  - faction_keywords
+  - change_history
+properties:
+  schema:
+    const: hobby.warhammer-datasheet
+  schema_version:
+    type: integer
+    minimum: 1
+  unit_id:
+    type: string
+    minLength: 1
+  unit:
+    type: string
+    minLength: 1
+  faction:
+    type: string
+    minLength: 1
+  edition:
+    type: integer
+    minimum: 1
+  source:
+    type: object
+    required: [provider, url, faction_pack_version, source_last_updated, retrieved_at, last_verified_at]
+    properties:
+      provider: {type: string}
+      url: {type: string, format: uri}
+      faction_pack_version: {type: string}
+      source_last_updated: {type: string}
+      retrieved_at: {type: string, format: date}
+      last_verified_at: {type: string, format: date}
+  verification_status:
+    enum: [verified, needs-review, stale, failed]
+  profile:
+    type: object
+    required: [movement, toughness, save, wounds, leadership, objective_control, invulnerable_save]
+    properties:
+      movement: {type: [string, "null"]}
+      toughness: {type: [integer, "null"]}
+      save: {type: [string, "null"]}
+      wounds: {type: [integer, "null"]}
+      leadership: {type: [string, "null"]}
+      objective_control: {type: [integer, "null"]}
+      invulnerable_save: {type: [string, "null"]}
+  ranged_weapons:
+    type: array
+    items: {$ref: "#/$defs/weapon"}
+  melee_weapons:
+    type: array
+    items: {$ref: "#/$defs/weapon"}
+  core_abilities:
+    type: array
+    items: {type: string}
+  army_rules:
+    type: array
+    items: {type: string}
+  unit_abilities:
+    type: array
+    items:
+      type: object
+      required: [name, effect]
+      properties:
+        name: {type: string}
+        effect: {type: string}
+  leader:
+    type: object
+    required: [can_lead]
+    properties:
+      can_lead: {type: array, items: {type: string}}
+      can_be_led_by: {type: array, items: {type: string}}
+      attachment_type: {type: string}
+  wargear_options:
+    type: array
+    items: {type: string}
+  keywords:
+    type: array
+    items: {type: string}
+  faction_keywords:
+    type: array
+    items: {type: string}
+  notes:
+    type: array
+    items: {type: string}
+  change_history:
+    type: array
+    items:
+      type: object
+      required: [detected_at, field, previous, new]
+$defs:
+  weapon:
+    type: object
+    required: [name, range, attacks, skill, strength, ap, damage, keywords]
+    properties:
+      name: {type: string}
+      range: {type: string}
+      attacks: {type: [string, integer]}
+      skill: {type: string}
+      strength: {type: [string, integer]}
+      ap: {type: [string, integer]}
+      damage: {type: [string, integer]}
+      keywords: {type: array, items: {type: string}}
+      quantity: {type: integer, minimum: 1}
